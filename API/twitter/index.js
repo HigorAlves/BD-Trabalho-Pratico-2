@@ -6,17 +6,17 @@ const T = new Twit(twitterAuth);
 let tweetID = null;
 let tweetsToGet = bolsonaroTweets;
 
-erroMenssage = (mensagem) => {
+errorMenssage = (mensagem) => {
   return console.error(mensagem);
 }
 
-gotData = (error, data, response) => {
-  if (error) {
-    throw erroMenssage('Aconteceu algum erro na hora de contatar a API \n' + error);
+gotData = (err, data, response) => {
+  if (err) {
+    throw errorMenssage('Aconteceu algum erro na hora de contatar a API \n' + error);
   }
 
   data.map((data) => {
-    console.log(data.full_text);
+    console.log(data);
     tweetID = data.id;
   });
 }
