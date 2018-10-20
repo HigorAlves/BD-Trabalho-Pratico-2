@@ -77,12 +77,14 @@ export default class PegatTweets extends Component {
         })
 
     } else {
-      console.log('EXISTEM TWEETS NO BANCO')
+      console.log('EXISTEM TWEETS NO BANCO');
+      quantidade = parseInt(quantidade) + 1;
       tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended', 'max_id': this.state.lastId }, { 'count': quantidade });
 
       T.get('statuses/user_timeline', tweetsToGet)
         .then((result) => {
           this.setState({ alerta: sucesso })
+          result.data.shift();
           salvar(result.data);
           this.setState({ lastId: null });
         })
@@ -90,6 +92,10 @@ export default class PegatTweets extends Component {
           this.setState({ alerta: deuRuim })
         })
     }
+
+    setTimeout(() => {
+      this.setState({ alerta: null })
+    }, 8000)
   }
 
   render() {
@@ -116,8 +122,8 @@ export default class PegatTweets extends Component {
                     <label htmlFor="inputCandidato">Candidato:</label>
                     <select id="inputCandidato" className="form-control" value={this.state.candidato} onChange={this.handleChange}>
                       <option hidden value="">Escolher</option>
-                      <option value="Jair Bolsonaro">Bolsonaro</option>
-                      <option value="haddad" disabled>Haddada</option>
+                      <option value="Jair Bolsonaro">Jair Bolsonaro</option>
+                      <option value="Fernando Haddad" disabled>Fernando Haddad</option>
                     </select>
                   </div>
                   <div className="form-group col-md-6 col-sm-12">
