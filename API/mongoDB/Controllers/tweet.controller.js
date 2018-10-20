@@ -1,4 +1,4 @@
-const Product = require('../Models/product.model');
+const Product = require('../Models/tweet.model');
 
 cadastraTweet = function (req, res) {
   req.assert('name', 'O nome da pessoa que postou é obrigatorio').notEmpty();
@@ -10,8 +10,20 @@ cadastraTweet = function (req, res) {
 
   let product = new Product(
     {
-      name: req.body.name,
-      price: req.body.price
+      id: req.body.id,
+      full_text: req.body.full_text,
+      entities: req.body.entities,
+      coordinates: req.body.coordinates,
+      retweet_count: req.body.retweet_count,
+      favorite_count: req.body.favorite_count,
+      localtion: req.body.localtion,
+      user_name: req.body.user_name,
+      screen_name: req.body.screen_name,
+      location: req.body.location,
+      followers_count: req.body.followers_count,
+      verified: req.body.verified,
+      profile_image_url_https: req.body.profile_image_url_https,
+      profile_banner_url: req.body.profile_banner_url
     }
   );
 
