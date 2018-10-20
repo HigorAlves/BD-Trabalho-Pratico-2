@@ -55,7 +55,7 @@ export default class PegatTweets extends Component {
     let tweetsToGet = null;
 
     console.log('VERIFICANDO SE JA EXISTEM TWEETS\n')
-    await fetch('http://localhost:3000/api/lasttweet')
+    await fetch('http://localhost:3000/api/lasttweet/bolsonaro')
       .then(res => res.json())
       .then(json => {
         this.setState({ lastId: json.id })
@@ -79,7 +79,6 @@ export default class PegatTweets extends Component {
     } else {
       console.log('EXISTEM TWEETS NO BANCO')
       tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended', 'max_id': this.state.lastId }, { 'count': quantidade });
-      console.log(tweetsToGet);
 
       T.get('statuses/user_timeline', tweetsToGet)
         .then((result) => {

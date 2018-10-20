@@ -1,4 +1,4 @@
-const Tweet = require('../Models/tweet.model');
+const Tweet = require('../Models/tweetBolsonaro.model');
 
 cadastraTweet = function (req, res) {
   // req.assert('id', 'É obrigatorio que o ID seja preenchido').notEmpty();

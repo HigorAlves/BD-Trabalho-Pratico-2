@@ -2,7 +2,6 @@ export async function salvar(data) {
   var tweet = null;
 
   data.map((data) => {
-    console.log(data.id)
     tweet = {
       id: data.id,
       full_text: data.full_text,
@@ -28,8 +27,7 @@ export async function salvar(data) {
     }
 
     headers.append('Content-Type', 'application/json');
-    console.log(tweet.id)
-    const request = new Request('http://localhost:3000/api/tweet', options);
+    const request = new Request('http://localhost:3000/api/tweet/bolsonaro', options);
     const response = fetch(request);
     const status = response.status;
 
