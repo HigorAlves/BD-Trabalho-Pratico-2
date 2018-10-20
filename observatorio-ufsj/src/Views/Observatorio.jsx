@@ -6,7 +6,7 @@ export default class ObservatorioHome extends Component {
 	render() {
 		return (
 			<section>
-				<Navbar classes='navi-link, active' />
+				<Navbar ativo={'inicio'} />
 
 				<div class="jumbotron jumbotron-fluid">
 					<div class="container">

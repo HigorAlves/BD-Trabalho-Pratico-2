@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import $ from 'jquery';
-import Popper from 'popper.js';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react'; // eslint-disable-line no-unused-vars
+import ReactDOM from 'react-dom'; // eslint-disable-line no-unused-vars
+import $ from 'jquery'; // eslint-disable-line no-unused-vars
+import Popper from 'popper.js'; // eslint-disable-line no-unused-vars
+import 'bootstrap/dist/js/bootstrap.bundle.min'; // eslint-disable-line no-unused-vars
+import 'bootstrap/dist/css/bootstrap.min.css'; // eslint-disable-line no-unused-vars
 
 import './index.css';
 import Router from './Routes/Router';
