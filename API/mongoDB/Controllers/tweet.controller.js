@@ -1,22 +1,22 @@
 const Tweet = require('../Models/tweet.model');
 
 cadastraTweet = function (req, res) {
-  req.assert('id', 'É obrigatorio que o ID seja preenchido').notEmpty();
-  req.assert('full_text', 'É obrigatorio que o full_text seja preenchido').notEmpty();
-  req.assert('entities', 'É obrigatorio que o entities seja preenchido').notEmpty();
-  req.assert('coordinates', 'É obrigatorio que o coordinates seja preenchido').notEmpty();
-  req.assert('retweet_count', 'É obrigatorio que o retweet_count seja preenchido').notEmpty();
-  req.assert('favorite_count', 'É obrigatorio que o favorite_count seja preenchido').notEmpty();
-  req.assert('location', 'É obrigatorio que o location seja preenchido').notEmpty();
-  req.assert('followers_count', 'É obrigatorio que o followers_count seja preenchido').notEmpty();
-  req.assert('verified', 'É obrigatorio que o verified seja preenchido').notEmpty();
-  req.assert('profile_image_url_https', 'É obrigatorio que o profile_image_url_https seja preenchido').notEmpty();
-  req.assert('profile_banner_url', 'É obrigatorio que o profile_banner_url seja preenchido').notEmpty();
+  // req.assert('id', 'É obrigatorio que o ID seja preenchido').notEmpty();
+  // req.assert('full_text', 'É obrigatorio que o full_text seja preenchido').notEmpty();
+  // req.assert('entities', 'É obrigatorio que o entities seja preenchido').notEmpty();
+  // req.assert('coordinates', 'É obrigatorio que o coordinates seja preenchido').notEmpty();
+  // req.assert('retweet_count', 'É obrigatorio que o retweet_count seja preenchido').notEmpty();
+  // req.assert('favorite_count', 'É obrigatorio que o favorite_count seja preenchido').notEmpty();
+  // req.assert('location', 'É obrigatorio que o location seja preenchido').notEmpty();
+  // req.assert('followers_count', 'É obrigatorio que o followers_count seja preenchido').notEmpty();
+  // req.assert('verified', 'É obrigatorio que o verified seja preenchido').notEmpty();
+  // req.assert('profile_image_url_https', 'É obrigatorio que o profile_image_url_https seja preenchido').notEmpty();
+  // req.assert('profile_banner_url', 'É obrigatorio que o profile_banner_url seja preenchido').notEmpty();
 
-  if (req.validationErrors()) {
-    res.status(400).send('Ocorreu o erro voce nao deve ter preenchido todos os campos');
-    return;
-  }
+  // if (req.validationErrors()) {
+  //   res.status(400).send('Ocorreu o erro voce nao deve ter preenchido todos os campos');
+  //   return;
+  // }
 
   let tweet = new Tweet(
     {
