@@ -9,13 +9,12 @@ const client = clients.createJSONClient({
   version: '~1.0'
 });
 
-let tweet = null;
-
 errorMenssage = (mensagem) => {
   return console.error(mensagem);
 }
 
-async function gotData(err, data, response) {
+function gotData(err, data, response) {
+  let tweet = null;
   if (err) {
     throw errorMenssage('Aconteceu algum erro na hora de contatar a API \n' + err);
   }
