@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
+import Twit from 'twit';
 
 export default class PegatTweets extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      candidato: 'Escolha',
-      quantidade: ''
+      candidato: '',
+      quantidade: '',
+      alerta: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,10 +26,40 @@ export default class PegatTweets extends Component {
       this.setState({ quantidade: event.target.value })
     }
   }
-
+  //chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.quantidade)
+
+    let sucesso = (
+      <div className="alert alert-success col col-sm-12" role="alert">
+        Os tweets do candidato {this.state.candidato}, foram pegos com sucesso! Total de {this.state.quantidade} tweets.
+      </div>
+    )
+    let deuRuim = (
+      <div className="alert alert-danger col col-sm-12" role="alert">
+        Não foi possivel procurar os tweets do {this.state.candidato}.
+      </div>
+    )
+    let auth = {
+      consumer_key: "ta48mVMyQ3R4ai98VHBhhMJDg",
+      consumer_secret: "3Xj69GvoLNqRVhRuXFVCZNJ0pVceJ7eTFYusSYlcatjtxQMEK2",
+      access_token: "535826909-nxUNEcKHmY1Xcv18npYzMLkrgZOrSuriJfQpcHCJ",
+      access_token_secret: "PYgnmt0Cfy65Bgu3kk4u5dZvbNjvweCeKwkWnRbT2onm0",
+      timeout_ms: 60 * 1000
+    }
+    const T = new Twit(auth);
+    let error = null;
+    let quantidade = this.state.quantidade;
+    let tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended' }, { count: quantidade })
+
+    T.get('statuses/user_timeline', tweetsToGet)
+      .then((data) => {
+        this.setState({ alerta: sucesso })
+      })
+      .catch((err) => {
+        error = err;
+        this.setState({ alerta: deuRuim });
+      })
   }
 
   render() {
@@ -41,8 +73,8 @@ export default class PegatTweets extends Component {
             <p className="lead">Nesta pagina você pode escolher entre os candidatos pre-cadastrados, o escolhido vai ter seus dados do twitter pegos via a API.</p>
           </div>
         </div>
-
         <div className="container">
+          {this.state.alerta}
           <div className="row">
             <div className="col-sm-12 col-md-12">
               <h2 className="font-weight-light">Escolha um candidato</h2>
@@ -53,7 +85,8 @@ export default class PegatTweets extends Component {
                   <div className="form-group col-md-6 col-sm-12">
                     <label htmlFor="inputCandidato">Candidato:</label>
                     <select id="inputCandidato" className="form-control" value={this.state.candidato} onChange={this.handleChange}>
-                      <option value="bolsonaro">Bolsonaro</option>
+                      <option hidden value="">Escolher</option>
+                      <option value="Jair Bolsonaro">Bolsonaro</option>
                       <option value="haddad" disabled>Haddada</option>
                     </select>
                   </div>
