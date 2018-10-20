@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
 import Twit from 'twit';
+import { salvar } from '../Services/gravarDB';
+
 
 export default class PegatTweets extends Component {
   constructor(props) {
@@ -8,7 +10,8 @@ export default class PegatTweets extends Component {
     this.state = {
       candidato: '',
       quantidade: '',
-      alerta: ''
+      alerta: '',
+      lastId: null
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,10 +30,10 @@ export default class PegatTweets extends Component {
     }
   }
   //chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
 
-    let sucesso = (
+    var sucesso = (
       <div className="alert alert-success col col-sm-12" role="alert">
         Os tweets do candidato {this.state.candidato}, foram pegos com sucesso! Total de {this.state.quantidade} tweets.
       </div>
@@ -48,18 +51,46 @@ export default class PegatTweets extends Component {
       timeout_ms: 60 * 1000
     }
     const T = new Twit(auth);
-    let error = null;
     let quantidade = this.state.quantidade;
-    let tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended' }, { count: quantidade })
+    let tweetsToGet = null;
 
-    T.get('statuses/user_timeline', tweetsToGet)
-      .then((data) => {
-        this.setState({ alerta: sucesso })
+    console.log('VERIFICANDO SE JA EXISTEM TWEETS\n')
+    await fetch('http://localhost:3000/api/lasttweet')
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ lastId: json.id })
       })
-      .catch((err) => {
-        error = err;
-        this.setState({ alerta: deuRuim });
-      })
+      .catch(error => console.log(error))
+
+    if (this.state.lastId === null) {
+      console.log('NÃO EXISTEM TWEETS NO BANCO')
+      tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended' }, { count: quantidade });
+
+      T.get('statuses/user_timeline', tweetsToGet)
+        .then((result) => {
+          this.setState({ alerta: sucesso })
+          salvar(result.data);
+          this.setState({ lastId: null });
+        })
+        .catch((err) => {
+          this.setState({ alerta: deuRuim })
+        })
+
+    } else {
+      console.log('EXISTEM TWEETS NO BANCO')
+      tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended', 'max_id': this.state.lastId }, { 'count': quantidade });
+      console.log(tweetsToGet);
+
+      T.get('statuses/user_timeline', tweetsToGet)
+        .then((result) => {
+          this.setState({ alerta: sucesso })
+          salvar(result.data);
+          this.setState({ lastId: null });
+        })
+        .catch((err) => {
+          this.setState({ alerta: deuRuim })
+        })
+    }
   }
 
   render() {
@@ -80,7 +111,7 @@ export default class PegatTweets extends Component {
               <h2 className="font-weight-light">Escolha um candidato</h2>
             </div>
             <div className="col-sm-12 col-md-12 mt-3">
-              <form onSubmit={this.handleSubmit}>
+              <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className="form-row">
                   <div className="form-group col-md-6 col-sm-12">
                     <label htmlFor="inputCandidato">Candidato:</label>

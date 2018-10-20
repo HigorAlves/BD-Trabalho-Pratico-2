@@ -46,6 +46,17 @@ cadastraTweet = function (req, res) {
   })
 }
 
+last_tweet = function (req, res) {
+  Tweet.findOne({}, {}, { sort: { '$natural': -1 } }, function (err, tweet) {
+    if (err) {
+      res.status(400).send('Não foi possivel pegar o ultimo tweet');
+      return err;
+    }
+    res.status(200).send(tweet);
+  })
+};
+
 module.exports = {
-  cadastraTweet
+  cadastraTweet,
+  last_tweet
 }
