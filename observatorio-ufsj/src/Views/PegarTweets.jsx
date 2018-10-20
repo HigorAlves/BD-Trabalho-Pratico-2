@@ -32,20 +32,8 @@ export default class PegatTweets extends Component {
   //chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
   async handleSubmit(event) {
     event.preventDefault();
-    const T = new Twit(auth);
     let quantidade = this.state.quantidade;
     let tweetsToGet = null;
-
-    var sucesso = (
-      <div className="alert alert-success col col-sm-12" role="alert">
-        Os tweets do candidato {this.state.candidato}, foram pegos com sucesso! Total de {this.state.quantidade} tweets.
-      </div>
-    )
-    let deuRuim = (
-      <div className="alert alert-danger col col-sm-12" role="alert">
-        Não foi possivel procurar os tweets do {this.state.candidato}.
-      </div>
-    )
     let auth = {
       consumer_key: "ta48mVMyQ3R4ai98VHBhhMJDg",
       consumer_secret: "3Xj69GvoLNqRVhRuXFVCZNJ0pVceJ7eTFYusSYlcatjtxQMEK2",
@@ -53,6 +41,25 @@ export default class PegatTweets extends Component {
       access_token_secret: "PYgnmt0Cfy65Bgu3kk4u5dZvbNjvweCeKwkWnRbT2onm0",
       timeout_ms: 60 * 1000
     }
+    const T = new Twit(auth);
+
+    let sucesso = (
+      <div className="alert alert-success col col-sm-12" role="alert">
+        Os tweets do candidato {this.state.candidato}, foram pegos com sucesso! Total de {this.state.quantidade} tweets.
+      </div>
+    )
+
+    let esperarTempo = (
+      <div className="alert alert-warning col col-sm-12" role="alert">
+        Não foi possivel salvar mais tweets, a API do Twitter esta pedindo para esperar para realizar mais consultas.
+      </div>
+    )
+
+    let deuRuim = (
+      <div className="alert alert-danger col col-sm-12" role="alert">
+        Não foi possivel procurar os tweets do {this.state.candidato}.
+      </div>
+    )
 
     //VAMOS VERIFICAR NO BANCO DE DADOS SE JA EXISTE REGISTRO DE ALGUM TWEET DO CANDIDATO EM QUESTÃO
     console.log('VERIFICANDO SE JA EXISTEM TWEETS\n')
@@ -70,8 +77,12 @@ export default class PegatTweets extends Component {
       //COMO NÃO EXISTE TWEETS DO CANDIDATO VAMOS ENTÃO SOMENTE INSERIR OS DADOS PRE-SELECIONADOS DENTRO DO BANCO DE DADOS.
       T.get('statuses/user_timeline', tweetsToGet)
         .then((result) => {
-          this.setState({ alerta: sucesso })
-          salvar(result.data);
+          if (result.data.id === undefined) {
+            this.setState({ alerta: esperarTempo })
+          } else {
+            this.setState({ alerta: sucesso })
+            salvar(result.data);
+          }
           this.setState({ lastId: null });
         })
         .catch((err) => {
@@ -86,9 +97,13 @@ export default class PegatTweets extends Component {
 
       T.get('statuses/user_timeline', tweetsToGet)
         .then((result) => {
-          this.setState({ alerta: sucesso })
-          result.data.shift();
-          salvar(result.data);
+          if (result.data.id === undefined) {
+            this.setState({ alerta: esperarTempo })
+          } else {
+            this.setState({ alerta: sucesso })
+            result.data.shift();
+            salvar(result.data);
+          }
           this.setState({ lastId: null });
         })
         .catch((err) => {
@@ -99,7 +114,7 @@ export default class PegatTweets extends Component {
     //RETIRAMOS A BOX DE ALERTA DA TELA DO USUARIO
     setTimeout(() => {
       this.setState({ alerta: null })
-    }, 8000)
+    }, 5000)
   }
 
   render() {
