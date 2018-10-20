@@ -6,7 +6,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './index.css';
-import App from './App';
 import Router from './Routes/Router';
 import * as serviceWorker from './serviceWorker';
 
