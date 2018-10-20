@@ -32,6 +32,9 @@ export default class PegatTweets extends Component {
   //chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
   async handleSubmit(event) {
     event.preventDefault();
+    const T = new Twit(auth);
+    let quantidade = this.state.quantidade;
+    let tweetsToGet = null;
 
     var sucesso = (
       <div className="alert alert-success col col-sm-12" role="alert">
@@ -50,10 +53,8 @@ export default class PegatTweets extends Component {
       access_token_secret: "PYgnmt0Cfy65Bgu3kk4u5dZvbNjvweCeKwkWnRbT2onm0",
       timeout_ms: 60 * 1000
     }
-    const T = new Twit(auth);
-    let quantidade = this.state.quantidade;
-    let tweetsToGet = null;
 
+    //VAMOS VERIFICAR NO BANCO DE DADOS SE JA EXISTE REGISTRO DE ALGUM TWEET DO CANDIDATO EM QUESTÃO
     console.log('VERIFICANDO SE JA EXISTEM TWEETS\n')
     await fetch('http://localhost:3000/api/lasttweet/bolsonaro')
       .then(res => res.json())
@@ -66,6 +67,7 @@ export default class PegatTweets extends Component {
       console.log('NÃO EXISTEM TWEETS NO BANCO')
       tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended' }, { count: quantidade });
 
+      //COMO NÃO EXISTE TWEETS DO CANDIDATO VAMOS ENTÃO SOMENTE INSERIR OS DADOS PRE-SELECIONADOS DENTRO DO BANCO DE DADOS.
       T.get('statuses/user_timeline', tweetsToGet)
         .then((result) => {
           this.setState({ alerta: sucesso })
@@ -77,6 +79,7 @@ export default class PegatTweets extends Component {
         })
 
     } else {
+      //EXISTEM TWEETS ANTIGOS CADASTRADOS NO BANCO DE DADOS, IREMOS ENTÃO CADASTRAR SOMENTE OS NOVOS TWEETS APARTIR DA CONTAGEM DO ULTIMO TWEET INSERIDO DENTRO DO NOSSO BANCO
       console.log('EXISTEM TWEETS NO BANCO');
       quantidade = parseInt(quantidade) + 1;
       tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended', 'max_id': this.state.lastId }, { 'count': quantidade });
@@ -93,6 +96,7 @@ export default class PegatTweets extends Component {
         })
     }
 
+    //RETIRAMOS A BOX DE ALERTA DA TELA DO USUARIO
     setTimeout(() => {
       this.setState({ alerta: null })
     }, 8000)
