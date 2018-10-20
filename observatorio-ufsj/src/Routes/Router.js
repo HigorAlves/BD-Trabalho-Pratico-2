@@ -7,10 +7,6 @@ import PrivateRoute from '../Components/PrivateRoute';
 import Home from '../App';
 
 export default class Routers extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {}
-  }
 
   render() {
     return (
