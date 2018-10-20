@@ -128,12 +128,14 @@ export default class PegatTweets extends Component {
             <p className="lead">Nesta pagina você pode escolher entre os candidatos pre-cadastrados, o escolhido vai ter seus dados do twitter pegos via a API.</p>
           </div>
         </div>
+
         <div className="container">
           {this.state.alerta}
           <div className="row">
             <div className="col-sm-12 col-md-12">
               <h2 className="font-weight-light">Escolha um candidato</h2>
             </div>
+
             <div className="col-sm-12 col-md-12 mt-3">
               <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className="form-row">
@@ -145,11 +147,13 @@ export default class PegatTweets extends Component {
                       <option value="Fernando Haddad" disabled>Fernando Haddad</option>
                     </select>
                   </div>
+
                   <div className="form-group col-md-6 col-sm-12">
                     <label htmlFor="inputQuantidadeTweets">Quantidade de Tweets para cadastrar (Quantidade maxima de 200)</label>
                     <input type="text" className="form-control" id="inputQuantidadeTweets" value={this.state.quantidade} onChange={this.handleQuantidadeChange} />
                   </div>
                 </div>
+
                 <button type="submit" className="btn btn-dark">Coletar Tweets</button>
               </form>
             </div>

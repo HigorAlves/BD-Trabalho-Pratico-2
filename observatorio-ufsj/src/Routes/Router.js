@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import React, { Component } from 'react';// eslint-disable-line no-unused-vars
+import ReactDOM from 'react-dom';// eslint-disable-line no-unused-vars
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';// eslint-disable-line no-unused-vars
 
-import PrivateRoute from '../Components/PrivateRoute';
+import PrivateRoute from '../Components/PrivateRoute'; // eslint-disable-line no-unused-vars
 
 import Home from '../Views/Home';
 import ObservatorioHome from '../Views/Observatorio';
