@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import PrivateRoute from '../Components/PrivateRoute';
 
-import Home from '../App';
+import Home from '../Views/Home';
 
 export default class Routers extends Component {
 
@@ -12,7 +12,7 @@ export default class Routers extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/" render={Home} />
+          <Route exact path='/' component={Home} />
         </div>
       </Router>
     );

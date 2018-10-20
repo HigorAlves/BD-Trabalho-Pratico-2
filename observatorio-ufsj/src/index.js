@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './index.css';
 import App from './App';
-import Router from './Routes/Router'
+import Router from './Routes/Router';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<Router />, document.getElementById('root'));
