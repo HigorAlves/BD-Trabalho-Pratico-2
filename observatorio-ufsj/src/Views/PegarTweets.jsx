@@ -121,13 +121,16 @@ export default class PegatTweets extends Component {
         .then((result) => {
           if (result.data.id === undefined) {
             this.setState({ alerta: esperarTempo })
+            console.log('É PRECISO ESPERAR PARA PEGAR MAIS DADOS')
           } else {
             this.setState({ alerta: sucesso })
+            console.log('SALVANDO DADOS NO BANCO')
             salvar(result.data);
           }
           this.setState({ lastId: null });
         })
         .catch((err) => {
+          console.log('ACONTECEU ALGUM ERRO' + err)
           this.setState({ alerta: deuRuim })
         })
 
