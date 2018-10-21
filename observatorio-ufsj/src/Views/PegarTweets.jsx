@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
 import Twit from 'twit';
 import { salvar } from '../Services/gravarDB';
+import { AUTH } from '../Config/AUTH';
 
 
 export default class PegatTweets extends Component {
@@ -32,14 +33,7 @@ export default class PegatTweets extends Component {
 
   getTweetsStatus(candidato) {
     console.log('GET_TWEET_STATUS');
-    let auth = {
-      consumer_key: "ta48mVMyQ3R4ai98VHBhhMJDg",
-      consumer_secret: "3Xj69GvoLNqRVhRuXFVCZNJ0pVceJ7eTFYusSYlcatjtxQMEK2",
-      access_token: "535826909-nxUNEcKHmY1Xcv18npYzMLkrgZOrSuriJfQpcHCJ",
-      access_token_secret: "PYgnmt0Cfy65Bgu3kk4u5dZvbNjvweCeKwkWnRbT2onm0",
-      timeout_ms: 60 * 1000
-    }
-    const T = new Twit(auth);
+    const T = new Twit(AUTH);
     T.get('users/show', { screen_name: `${candidato}` }, (err, data, response) => {
       if (err) {
         console.log('ERRO: não foi possivel pegar a quantidade de Tweets recentes' + err);
@@ -72,17 +66,11 @@ export default class PegatTweets extends Component {
     }
   }
 
+  //PEGA OS TWEETS E SALVA OS MESMOS NO BANCO DE DADOS
   async getTweets(candidato) {
     let quantidade = this.state.quantidade;
     let tweetsToGet = null;
-    let auth = {
-      consumer_key: "ta48mVMyQ3R4ai98VHBhhMJDg",
-      consumer_secret: "3Xj69GvoLNqRVhRuXFVCZNJ0pVceJ7eTFYusSYlcatjtxQMEK2",
-      access_token: "535826909-nxUNEcKHmY1Xcv18npYzMLkrgZOrSuriJfQpcHCJ",
-      access_token_secret: "PYgnmt0Cfy65Bgu3kk4u5dZvbNjvweCeKwkWnRbT2onm0",
-      timeout_ms: 60 * 1000
-    }
-    const T = new Twit(auth);
+    const T = new Twit(AUTH);
 
     let sucesso = (
       <div className="alert alert-success col col-sm-12" role="alert">
@@ -105,7 +93,7 @@ export default class PegatTweets extends Component {
 
     //VAMOS VERIFICAR NO BANCO DE DADOS SE JA EXISTE REGISTRO DE ALGUM TWEET DO CANDIDATO EM QUESTÃO
     console.log('VERIFICANDO SE JA EXISTEM TWEETS\n')
-    await fetch('http://localhost:3000/api/lasttweet/bolsonaro')
+    await fetch(`http://localhost:3000/api/lasttweet/${candidato}`)
       .then(res => res.json())
       .then(json => {
         this.setState({ lastId: json.id })
@@ -165,6 +153,7 @@ export default class PegatTweets extends Component {
     //TODO: Inserir o codigo de consulta dos respectivos
     if (this.state.candidato === 'Jair Bolsonaro') {
       console.log('CANDIDATO: BOLSONARO');
+
       this.getTweets('jairbolsonaro');
     }
     if (this.state.candidato === 'Fernando Haddad') {
