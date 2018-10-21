@@ -31,7 +31,7 @@ export default class PegatTweets extends Component {
 	}
 
 	getTweetsStatus(candidato) {
-		console.log('GET_TWEET_STATUS');
+		console.log('FUNCTION: Pegando quantidade de tweets que existem  no perfil.');
 		const T = new Twit(AUTH);
 		T.get(
 			'users/show',
@@ -52,12 +52,22 @@ export default class PegatTweets extends Component {
 		console.log('ESCOLHENDO O CANDIDATO');
 
 		if (event.target.value === 'Jair Bolsonaro') {
+			console.log('CANDIDATO: Jair Bolsonaro')
 			this.getTweetsBanco('jairbolsonaro');
 			this.getTweetsStatus('jairbolsonaro');
 		}
 		if (event.target.value === 'Fernando Haddad') {
+			console.log('CANDIDATO: Fernando Haddad');
 			this.getTweetsBanco('Haddad_Fernando');
 			this.getTweetsStatus('Haddad_Fernando');
+		}
+		if (event.target.value === 'Manuela Davila') {
+			console.log('CANDIDATA: Manuela Davila');
+			this.getTweetsStatus('ManuelaDavila');
+		}
+		if (event.target.value === 'General Mourão') {
+			console.log('CANDIDATO: General Mourão');
+			this.getTweetsStatus('GeneraIMourao');
 		}
 	}
 
@@ -166,13 +176,18 @@ export default class PegatTweets extends Component {
 
 		//TODO: Inserir o codigo de consulta dos respectivos
 		if (this.state.candidato === 'Jair Bolsonaro') {
-			console.log('CANDIDATO: BOLSONARO');
-
+			console.log('CANDIDATO: Jair Bolsonaro');
 			this.getTweets('jairbolsonaro');
 		}
 		if (this.state.candidato === 'Fernando Haddad') {
-			console.log('CANDIDATO: Haddad');
+			console.log('CANDIDATO: Fernando Haddad');
 			this.getTweets('Haddad_Fernando');
+		}
+		if (this.state.candidato === 'Manuela Davila') {
+			console.log('CANDIDATO: Manuela Davila')
+		}
+		if (this.state.candidato === 'General Mourão') {
+			console.log('CANDIDATO: General Mourão')
 		}
 
 		//RETIRAMOS A BOX DE ALERTA DA TELA DO USUARIO
@@ -219,9 +234,9 @@ export default class PegatTweets extends Component {
 												Escolher
 											</option>
 											<option value="Fernando Haddad">Fernando Haddad</option>
-											<option value="Manuela Davila" disabled>Manuela Davila</option>
+											<option value="Manuela Davila">Manuela Davila</option>
 											<option value="Jair Bolsonaro">Jair Bolsonaro</option>
-											<option value="General Mourão" disabled>General Mourão</option>
+											<option value="General Mourão">General Mourão</option>
 										</select>
 									</div>
 
