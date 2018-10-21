@@ -1,0 +1,7 @@
+body {
+  display: flex;
+  justify-content: center;
+  background-color: #282C34;
+  color: #1DA1F2;
+  font-family: 'Fira Code','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}

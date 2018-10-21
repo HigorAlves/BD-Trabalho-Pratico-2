@@ -40,7 +40,7 @@ function gotData(err, data, response) {
       profile_banner_url: data.user.profile_banner_url
     }
     client.post('/api/tweet', tweet, function (err, req, res, retorno) {
-      // console.log('Consumindo o Servico do MongoDB\n');
+      console.log('Consumindo o Servico do MongoDB\n');
     })
   });
 }

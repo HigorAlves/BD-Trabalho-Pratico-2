@@ -5,6 +5,10 @@ const manuela = require('../Controllers/tweetmanuela.controller');
 const bolsonaro = require('../Controllers/tweet.controller');
 const general = require('../Controllers/tweetMourao.controller');
 
+router.get('/', function (req, res) {
+  res.render('api');
+})
+
 //ROTAR FERNANDO HADDAD
 router.post('/tweet/Haddad_Fernando', haddad.cadastraTweet);
 router.get('/lasttweet/Haddad_Fernando', haddad.last_tweet);
