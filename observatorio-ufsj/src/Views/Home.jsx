@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../logo.svg';
+import logo from '../assets/images/logo.svg';
 import '../App.css';
 
 export default class Home extends Component {
