@@ -30,8 +30,17 @@ export default class PegatTweets extends Component {
 			.catch(error => console.log(error));
 	}
 
+	//PEGA QUANTIDADE DE TWEETS QUE EXISTEM NO PERFIL DO TWITTER
 	getTweetsStatus(candidato) {
 		console.log('FUNCTION: Pegando quantidade de tweets que existem  no perfil.');
+
+		// fetch(`http://localhost:3000/api/tweets/${candidato}`, { mode: 'cors' })
+		// 	.then(res => console.log(res))
+		// 	.then(json => {
+		// 		console.log(json)
+		// 	})
+		// 	.catch(error => console.log('Não foi possivel pegar a quantidade atual de Tweets: ' + error))
+
 		const T = new Twit(AUTH);
 		T.get(
 			'users/show',
@@ -64,10 +73,12 @@ export default class PegatTweets extends Component {
 		if (event.target.value === 'Manuela Davila') {
 			console.log('CANDIDATA: Manuela Davila');
 			this.getTweetsStatus('ManuelaDavila');
+			this.getTweetsBanco('ManuelaDavila');
 		}
 		if (event.target.value === 'General Mourão') {
 			console.log('CANDIDATO: General Mourão');
 			this.getTweetsStatus('GeneraIMourao');
+			this.getTweetsBanco('GeneraIMourao');
 		}
 	}
 
@@ -171,7 +182,7 @@ export default class PegatTweets extends Component {
 		}
 	}
 
-	async handleSubmit(event) {
+	handleSubmit(event) {
 		event.preventDefault();
 
 		//TODO: Inserir o codigo de consulta dos respectivos
@@ -185,9 +196,11 @@ export default class PegatTweets extends Component {
 		}
 		if (this.state.candidato === 'Manuela Davila') {
 			console.log('CANDIDATO: Manuela Davila')
+			this.getTweets('ManuelaDavila');
 		}
 		if (this.state.candidato === 'General Mourão') {
 			console.log('CANDIDATO: General Mourão')
+			this.getTweets('GeneraIMourao');
 		}
 
 		//RETIRAMOS A BOX DE ALERTA DA TELA DO USUARIO

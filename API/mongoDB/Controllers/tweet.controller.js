@@ -57,6 +57,7 @@ last_tweet = function (req, res) {
 };
 
 total_tweets = function (req, res) {
+  console.log('PEGANDO NUMERO TOTAL DE TWEETS DO CANDIDATO')
   Tweet.countDocuments({}).count(function (err, tweet) {
     if (err) {
       res.sendStatus(400).send('Não foi possivel contar a quantidade de Tweets');
