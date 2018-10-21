@@ -155,14 +155,7 @@ export default class PegatTweets extends Component {
 			//EXISTEM TWEETS ANTIGOS CADASTRADOS NO BANCO DE DADOS, IREMOS ENTÃO CADASTRAR SOMENTE OS NOVOS TWEETS APARTIR DA CONTAGEM DO ULTIMO TWEET INSERIDO DENTRO DO NOSSO BANCO
 			console.log('EXISTEM TWEETS NO BANCO');
 			quantidade = parseInt(quantidade) + 1;
-			tweetsToGet = Object.assign(
-				{
-					screen_name: `${candidato}`,
-					tweet_mode: 'extended',
-					max_id: this.state.lastId
-				},
-				{ count: quantidade }
-			);
+			tweetsToGet = Object.assign({ screen_name: `${candidato}`, tweet_mode: 'extended', max_id: this.state.lastId }, { count: quantidade });
 
 			T.get('statuses/user_timeline', tweetsToGet)
 				.then(result => {

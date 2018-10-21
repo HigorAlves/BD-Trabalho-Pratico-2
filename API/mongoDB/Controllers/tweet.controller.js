@@ -17,6 +17,7 @@ cadastraTweet = function (req, res) {
   //   res.status(400).send('Ocorreu o erro voce nao deve ter preenchido todos os campos');
   //   return;
   // }
+  console.log('O Tweet foi cadastrado com sucesso no banco de dados')
 
   let tweet = new Tweet(
     {

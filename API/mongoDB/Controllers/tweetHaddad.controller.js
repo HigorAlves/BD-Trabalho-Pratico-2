@@ -1,6 +1,7 @@
 const Tweet = require('../Models/tweetHaddad.model');
 
 cadastraTweet = function (req, res) {
+  console.log('O Tweet foi cadastrado com sucesso no banco de dados')
 
   let tweet = new Tweet(
     {
