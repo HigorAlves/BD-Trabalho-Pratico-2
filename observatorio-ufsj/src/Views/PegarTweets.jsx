@@ -218,11 +218,10 @@ export default class PegatTweets extends Component {
 											<option hidden value="">
 												Escolher
 											</option>
-											<option value="Jair Bolsonaro">Jair Bolsonaro</option>
 											<option value="Fernando Haddad">Fernando Haddad</option>
-											<option value="" disabled>
-												Fernando Haddad
-											</option>
+											<option value="Manuela Davila" disabled>Manuela Davila</option>
+											<option value="Jair Bolsonaro">Jair Bolsonaro</option>
+											<option value="General Mourão" disabled>General Mourão</option>
 										</select>
 									</div>
 
