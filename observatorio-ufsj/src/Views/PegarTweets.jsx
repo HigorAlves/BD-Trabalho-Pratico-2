@@ -98,10 +98,7 @@ export default class PegatTweets extends Component {
 		//VAMOS VERIFICAR NO BANCO DE DADOS SE JA EXISTE REGISTRO DE ALGUM TWEET DO CANDIDATO EM QUESTÃO
 		console.log('VERIFICANDO SE JA EXISTEM TWEETS\n');
 		await fetch(`http://localhost:3000/api/lasttweet/${candidato}`)
-			.then(res => {
-				JSON.parse(res);
-				console.log(res);
-			})
+			.then(res => res.json())
 			.then(json => {
 				this.setState({ lastId: json.id });
 			})
@@ -148,12 +145,13 @@ export default class PegatTweets extends Component {
 
 			T.get('statuses/user_timeline', tweetsToGet)
 				.then(result => {
-					if (result.data.id === undefined) {
+					if (result.data[0].id === undefined) {
 						this.setState({ alerta: esperarTempo });
 					} else {
 						this.setState({ alerta: sucesso });
 						result.data.shift();
-						salvar(result.data);
+						salvar(result.data, candidato);
+						this.getTweetsBanco(candidato);
 					}
 					this.setState({ lastId: null });
 				})
