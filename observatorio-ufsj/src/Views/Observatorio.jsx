@@ -6,7 +6,6 @@ export default class ObservatorioHome extends Component {
 		return (
 			<section>
 				<Navbar ativo={'inicio'} />
-
 				<div className="jumbotron jumbotron-fluid">
 					<div className="container">
 						<h1 className="display-4">Bem vindo ao Observatorio</h1>
