@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/Navbar.js'
+import { pegarTweets } from '../Services/getPalavrasChaves.js';
+
 export default class ColetorHashtags extends Component {
   constructor(props) {
     super(props);
     this.state = {}
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log('ola mundo')
+    pegarTweets('bolsonaro', 1);
   }
 
   render() {
@@ -22,22 +31,22 @@ export default class ColetorHashtags extends Component {
         <div className='container'>
           <div className='row'>
             <div className='col-sm-12 col-md-12'>
-              <form>
+              <form onSubmit={this.handleSubmit}>
                 <div className='form-row'>
 
                   <div className="form-group col-md-8 col-sm-12">
-                    <label for="basic-url">Palavra Chave</label>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon3">Uma palavra por Vez</span>
+                    <label htmlFor="basic-url">Palavra Chave</label>
+                    <div className="input-group mb-3">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text" id="basic-addon3">Uma palavra por Vez</span>
                       </div>
-                      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" />
+                      <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3" />
                     </div>
                   </div>
 
                   <div className='form-group col-md-4 col-sm-12'>
-                    <label for="basic-url">Registros no banco de dados</label>
-                    <input type="text" class="form-control" disabled aria-describedby="basic-addon3" />
+                    <label htmlFor="basic-url">Registros no banco de dados</label>
+                    <input type="text" className="form-control" disabled aria-describedby="basic-addon3" />
                   </div>
 
                   <button type="submit" className="btn btn-dark mt-2">

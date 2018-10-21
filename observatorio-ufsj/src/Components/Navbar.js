@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/images/logo.svg';
 
-
 export default class NavBar extends Component {
 	constructor(props) {
 		super(props);
