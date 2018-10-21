@@ -13,6 +13,7 @@
     "npm": "^6.4.1",
     "restify": "^7.2.1",
     "restify-clients": "^2.6.2",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "watson-developer-cloud": "^3.12.0"
   }
 }

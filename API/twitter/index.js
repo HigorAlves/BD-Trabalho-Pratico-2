@@ -1,24 +1,23 @@
-const Twit = require('twit');
+var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
 
-
-const T = new Twit({
-  consumer_key: "vrbzk4jefg9hTHbnaFYkKwaeE",
-  consumer_secret: "MnBbB2hoov9xsdRFAg9waoF5Bx9TeUipSDOPsRU4g2EV2jhOI8",
-  access_token: "893323029182337024-PJWgKiftaZfhh0cBjiXyV1pWbzrnl8w",
-  access_token_secret: "c6lZTZGcGwx7cv3QZLPtAA2pood12h7wrrIwHaOF0LFtH",
-  timeout_ms: 60 * 1000
+var languageTranslator = new LanguageTranslatorV2({
+  "apikey": "j_cNZaoz_yb8OdT6Pv1JarKVTPvagA2k3nNsPyspeCPG",
+  "iam_apikey_description": "Auto generated apikey during resource-key operation for Instance - crn:v1:bluemix:public:language-translator:us-south:a/85cedb07b2c2c75dc6c8cf306d5ea0b5:a2c942ab-8e0d-475f-979c-15c7ebf62d6a::",
+  "iam_apikey_name": "auto-generated-apikey-b6545b95-72da-4632-96cf-ad2a9cf17206",
+  "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+  "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/85cedb07b2c2c75dc6c8cf306d5ea0b5::serviceid:ServiceId-5f665d81-fa34-4981-ac38-0ceb936a4e0b",
+  "url": "https://gateway.watsonplatform.net/language-translator/api"
 });
 
-let params = { q: 'bolsonaro', count: 1, tweet_mode: 'extended' };
+var parameters = {
+  text: 'Hello',
+  model_id: 'en-pt'
+};
 
-let tipoReq = 'search/tweets';
-
-T.get(tipoReq, params, function (err, data, response) {
-  if (err) {
-    console.log('ERROR')
-  }
-  console.log(data.statuses);
-  // data.statuses.map((data, index) => {
-  //   console.log(data.full_text + '\n')
-  // })
-})
+languageTranslator.translate(parameters, function (error, response) {
+  if (error)
+    console.log(error)
+  else
+    console.log(JSON.stringify(response, null, 2));
+}
+);
