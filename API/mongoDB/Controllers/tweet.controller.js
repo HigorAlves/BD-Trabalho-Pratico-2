@@ -56,7 +56,17 @@ last_tweet = function (req, res) {
   })
 };
 
+total_tweets = function (req, res) {
+  Tweet.countDocuments({}).count(function (err, tweet) {
+    if (err) {
+      res.sendStatus(400).send('Não foi possivel contar a quantidade de Tweets');
+    }
+    res.status(200).send({ tweet });
+  })
+}
+
 module.exports = {
   cadastraTweet,
-  last_tweet
+  last_tweet,
+  total_tweets
 }

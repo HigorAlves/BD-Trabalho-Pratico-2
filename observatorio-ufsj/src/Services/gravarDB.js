@@ -33,7 +33,7 @@ export async function salvar(data) {
     const status = response.status;
 
     if (status === 201) {
-      console.log('SUCESSO CARAI')
+      console.log('SUCESSO')
     }
   })
 }

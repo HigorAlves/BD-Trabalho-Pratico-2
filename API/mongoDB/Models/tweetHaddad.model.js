@@ -18,4 +18,4 @@ let TweetSchema = new Schema({
   profile_banner_url: { type: String, require: true }
 });
 
-module.exports = mongoose.model('jairbolsonaro', TweetSchema);
+module.exports = mongoose.model('Haddad_Fernando', TweetSchema);

@@ -7,15 +7,22 @@ export default class NavBar extends Component {
 		this.state = {
 			inicio: null,
 			pegarTweets: null,
+			listagemTweets: null,
+			dropdown: null
 		}
 	}
 
 	componentWillMount() {
 		if (this.props.ativo === 'inicio') {
-			this.setState({ inicio: ' active' });
+			this.setState({ inicio: 'active' });
 		}
 		if (this.props.ativo === 'pegartweets') {
-			this.setState({ pegarTweets: ' active' })
+			this.setState({ pegarTweets: 'active' })
+			this.setState({ dropdown: 'active' })
+		}
+		if (this.props.ativo === 'listagemtweets') {
+			this.setState({ listagemTweets: 'active' })
+			this.setState({ dropdown: 'active' })
 		}
 	}
 
@@ -29,19 +36,16 @@ export default class NavBar extends Component {
 
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav mr-auto">
-						<li className={'nav-item' + this.state.inicio}>
+						<li className={'nav-item' + " " + this.state.inicio}>
 							<Link className="nav-link" to="/observatorio">Inicio</Link>
 						</li>
-						<li className={"nav-item" + this.state.pegarTweets}>
-							<Link className="nav-link" to="/pegartweets">Pegar Tweets</Link>
-						</li>
 						<li className="nav-item dropdown">
-							<Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Dropdown
+							<Link className={"nav-link dropdown-toggle" + " " + this.state.dropdown} to="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Tweets
 					</Link>
 							<div className="dropdown-menu" aria-labelledby="navbarDropdown">
-								<Link className=" dropdown-item" to="/">Action</Link>
-								<Link className="dropdown-item" to="/">Another action</Link>
+								<Link className={"dropdown-item" + " " + this.state.pegarTweets} to="/pegartweets">Coletar Tweets</Link>
+								<Link className={"dropdown-item" + " " + this.state.listagemTweets} to="/listagemtweets">Listar Tweets</Link>
 								<div className="dropdown-divider"></div>
 								<Link className="dropdown-item" to="/">Something else here</Link>
 							</div>
@@ -55,7 +59,7 @@ export default class NavBar extends Component {
 						<button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 					</form>
 				</div>
-			</nav>
+			</nav >
 		);
 	}
 }

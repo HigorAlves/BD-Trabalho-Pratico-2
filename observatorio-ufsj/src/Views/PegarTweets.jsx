@@ -11,15 +11,57 @@ export default class PegatTweets extends Component {
       candidato: '',
       quantidade: '',
       alerta: '',
-      lastId: null
+      lastId: null,
+      qtTweets: null,
+      qtAtualTweets: null
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleQuantidadeChange = this.handleQuantidadeChange.bind(this);
   }
 
+  getTweetsBanco(candidato) {
+    this.setState({ qtTweets: null })
+    fetch(`http://localhost:3000/api/tweets/${candidato}`)
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ qtTweets: json.tweet })
+      })
+      .catch(error => console.log(error))
+  }
+
+  getTweetsStatus(candidato) {
+    console.log('GET_TWEET_STATUS');
+    let auth = {
+      consumer_key: "ta48mVMyQ3R4ai98VHBhhMJDg",
+      consumer_secret: "3Xj69GvoLNqRVhRuXFVCZNJ0pVceJ7eTFYusSYlcatjtxQMEK2",
+      access_token: "535826909-nxUNEcKHmY1Xcv18npYzMLkrgZOrSuriJfQpcHCJ",
+      access_token_secret: "PYgnmt0Cfy65Bgu3kk4u5dZvbNjvweCeKwkWnRbT2onm0",
+      timeout_ms: 60 * 1000
+    }
+    const T = new Twit(auth);
+    T.get('users/show', { screen_name: `${candidato}` }, (err, data, response) => {
+      if (err) {
+        console.log('ERRO: não foi possivel pegar a quantidade de Tweets recentes' + err);
+      }
+      this.setState({ qtAtualTweets: data.statuses_count })
+    });
+  }
+
   handleChange(event) {
     this.setState({ candidato: event.target.value });
+    console.log('ESCOLHENDO O CANDIDATO')
+
+    if (event.target.value === 'Jair Bolsonaro') {
+      this.getTweetsBanco('jairbolsonaro');
+      this.getTweetsStatus('jairbolsonaro')
+    }
+    if (event.target.value === 'Fernando Haddad') {
+      this.getTweetsBanco('Haddad_Fernando');
+      this.getTweetsStatus('Haddad_Fernando')
+    }
+
+
   }
 
   handleQuantidadeChange(event) {
@@ -29,9 +71,8 @@ export default class PegatTweets extends Component {
       this.setState({ quantidade: event.target.value })
     }
   }
-  //chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
-  async handleSubmit(event) {
-    event.preventDefault();
+
+  async getTweets(candidato) {
     let quantidade = this.state.quantidade;
     let tweetsToGet = null;
     let auth = {
@@ -61,6 +102,7 @@ export default class PegatTweets extends Component {
       </div>
     )
 
+
     //VAMOS VERIFICAR NO BANCO DE DADOS SE JA EXISTE REGISTRO DE ALGUM TWEET DO CANDIDATO EM QUESTÃO
     console.log('VERIFICANDO SE JA EXISTEM TWEETS\n')
     await fetch('http://localhost:3000/api/lasttweet/bolsonaro')
@@ -72,7 +114,7 @@ export default class PegatTweets extends Component {
 
     if (this.state.lastId === null) {
       console.log('NÃO EXISTEM TWEETS NO BANCO')
-      tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended' }, { count: quantidade });
+      tweetsToGet = Object.assign({ screen_name: `${candidato}`, tweet_mode: 'extended' }, { count: quantidade });
 
       //COMO NÃO EXISTE TWEETS DO CANDIDATO VAMOS ENTÃO SOMENTE INSERIR OS DADOS PRE-SELECIONADOS DENTRO DO BANCO DE DADOS.
       T.get('statuses/user_timeline', tweetsToGet)
@@ -93,7 +135,7 @@ export default class PegatTweets extends Component {
       //EXISTEM TWEETS ANTIGOS CADASTRADOS NO BANCO DE DADOS, IREMOS ENTÃO CADASTRAR SOMENTE OS NOVOS TWEETS APARTIR DA CONTAGEM DO ULTIMO TWEET INSERIDO DENTRO DO NOSSO BANCO
       console.log('EXISTEM TWEETS NO BANCO');
       quantidade = parseInt(quantidade) + 1;
-      tweetsToGet = Object.assign({ screen_name: 'jairbolsonaro', tweet_mode: 'extended', 'max_id': this.state.lastId }, { 'count': quantidade });
+      tweetsToGet = Object.assign({ screen_name: `${candidato}`, tweet_mode: 'extended', 'max_id': this.state.lastId }, { 'count': quantidade });
 
       T.get('statuses/user_timeline', tweetsToGet)
         .then((result) => {
@@ -109,6 +151,23 @@ export default class PegatTweets extends Component {
         .catch((err) => {
           this.setState({ alerta: deuRuim })
         })
+    }
+
+
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+
+    //TODO: Inserir o codigo de consulta dos respectivos
+    if (this.state.candidato === 'Jair Bolsonaro') {
+      console.log('CANDIDATO: BOLSONARO');
+      this.getTweets('jairbolsonaro');
+    }
+    if (this.state.candidato === 'Fernando Haddad') {
+      console.log('CANDIDATO: Haddad')
+      this.getTweets('Haddad_Fernando');
+
     }
 
     //RETIRAMOS A BOX DE ALERTA DA TELA DO USUARIO
@@ -144,7 +203,8 @@ export default class PegatTweets extends Component {
                     <select id="inputCandidato" className="form-control" value={this.state.candidato} onChange={this.handleChange}>
                       <option hidden value="">Escolher</option>
                       <option value="Jair Bolsonaro">Jair Bolsonaro</option>
-                      <option value="Fernando Haddad" disabled>Fernando Haddad</option>
+                      <option value="Fernando Haddad">Fernando Haddad</option>
+                      <option value="" disabled>Fernando Haddad</option>
                     </select>
                   </div>
 
@@ -154,7 +214,16 @@ export default class PegatTweets extends Component {
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-dark">Coletar Tweets</button>
+                <div className="form-row">
+                  <div className="col-sm-12 col-md-6">
+                    <p>Tweets no nosso banco: <span className="badge badge-secondary">{this.state.qtTweets}</span></p>
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <p>Tweets do candidato atualmente: <span className="badge badge-secondary">{this.state.qtAtualTweets}</span></p>
+                  </div>
+                </div>
+
+                <button type="submit" className="btn btn-dark mt-4">Coletar Tweets</button>
               </form>
             </div>
           </div>
