@@ -5,14 +5,21 @@ import { pegarTweets } from '../Services/getPalavrasChaves.js';
 export default class ColetorHashtags extends Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      palavraChave: ''
+    }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChangePalavra = this.handleChangePalavra.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
     console.log('ola mundo')
     pegarTweets('bolsonaro', 1);
+  }
+
+  handleChangePalavra(event) {
+    this.setState({ palavraChave: event.target.value });
   }
 
   render() {
@@ -40,7 +47,7 @@ export default class ColetorHashtags extends Component {
                       <div className="input-group-prepend">
                         <span className="input-group-text" id="basic-addon3">Uma palavra por Vez</span>
                       </div>
-                      <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3" />
+                      <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3" value={this.state.palavraChave} onChange={this.handleChangePalavra} />
                     </div>
                   </div>
 
