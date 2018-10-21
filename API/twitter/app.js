@@ -1,9 +1,10 @@
 const Twit = require('twit');
-const twitterAuth = require('./twitterAuth');
 const restify = require('restify');
 const clients = require('restify-clients');
 
-const T = new Twit(twitterAuth);
+const T = new Twit({
+
+});
 const client = clients.createJSONClient({
   url: 'http://localhost:3000',
   version: '~1.0'
@@ -21,6 +22,7 @@ function gotData(err, data, response) {
   console.log('Começando os cadastros no banco\n');
 
   data.map((data) => {
+    console.log(data.id)
     tweet = {
       id: data.id,
       full_text: data.full_text,
@@ -38,7 +40,7 @@ function gotData(err, data, response) {
       profile_banner_url: data.user.profile_banner_url
     }
     client.post('/api/tweet', tweet, function (err, req, res, retorno) {
-      console.log('Consumindo o Servico do MongoDB\n');
+      // console.log('Consumindo o Servico do MongoDB\n');
     })
   });
 }
