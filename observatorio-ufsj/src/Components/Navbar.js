@@ -50,9 +50,8 @@ export default class NavBar extends Component {
 							<div className="dropdown-menu" aria-labelledby="navbarDropdown">
 								<Link className={"dropdown-item" + " " + this.state.pegarTweets} to="/coletortweets">Coletar Tweets</Link> {/* eslint-disable-line */}
 								<Link className={"dropdown-item" + " " + this.state.listagemTweets} to="/coletorhashtag">Coletor Hashtag</Link> {/* eslint-disable-line */}
-								<Link className={"dropdown-item" + " " + this.state.listagemTweets} to="/listagemtweets">Listar Tweets</Link> {/* eslint-disable-line */}
 								<div className="dropdown-divider"></div>
-								<Link className="dropdown-item" to="/">Something else here</Link>
+								<Link className={"dropdown-item" + " " + this.state.listagemTweets} to="/listagemtweets">Listar Tweets</Link> {/* eslint-disable-line */}
 							</div>
 						</li>
 						<li className="nav-item dropdown">
