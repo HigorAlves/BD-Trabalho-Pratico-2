@@ -8,6 +8,7 @@ router.get('/', function (req, res) {
 });
 
 router.post('/cadastrar', controller.salvarTweets);
-router.get('/totaltweets', controller.totalTweets);
+router.post('/totaltweets', controller.totalTweets);
+router.post('/buscapalavra', controller.buscaPalavra);
 
 module.exports = router;

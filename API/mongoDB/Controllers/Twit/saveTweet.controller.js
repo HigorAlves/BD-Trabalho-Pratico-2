@@ -4,11 +4,12 @@ const TwitterAuth = require('../../Config/twitterAuth');
 const SalvarTweets = require('../../Services/salvarTweet');
 const Const = require('../../Config/consts');
 
-const T = new Twit(TwitterAuth);
+const Twitter = require('twitter');
 
 async function saveTweet(candidato, quantidade) {
   let id = null;
   let tweetsToGet;
+  const T = new Twit(TwitterAuth);
 
   await fetch(`http://localhost:3000/api/lasttweet/${candidato}`)
     .then(res => res.json())
@@ -70,18 +71,33 @@ salvarTweets = function (req, res) {
 }
 
 totalTweets = function (req, res) {
-  console.log('PEGANDO A QUANTIDADE DE TWEETS DO CANDIDATO');
-  T.get('users/show', { screen_name: `${req.body.candidato}` }, (err, data, response) => {
+  console.log('PEGANDO A QUANTIDADE DE TWEETS DO CANDIDATO: ' + req.body.candidato);
+  const client = new Twitter(TwitterAuth);
+
+  client.get('users/show', { screen_name: req.body.candidato }, function (err, data, response) {
     if (err) {
-      console.log('ERRO: não foi possivel pegar a quantidade de Tweets recentes' + err);
+      console.log('TWITTER ERROR: ', err)
     }
-    let count = data.statuses_count
-    res.status(200).send({ count });
-  }
-  );
+    let count = data.statuses_count;
+    res.status(200).send({ count })
+  })
 }
+
+buscaPalavra = function (req, res) {
+  console.log('BUSCANDO PELA PALAVRA CHAVE: ' + req.body.palavra + ' COM QUANTIDADE DE RETORNOS DE: ' + req.body.quantidade);
+  const client = new Twitter(TwitterAuth);
+
+  client.get('search/tweets', { q: req.body.palavra, count: req.body.quantidade, tweet_mode: 'extended' }, function (err, data, response) {
+    if (err) {
+      console.log('NÃO FOI POSSIVEL PEGAR AS OS TWEETS BASEADO NA PALAVRA')
+    }
+    res.status(200).send({ data })
+  })
+}
+
 
 module.exports = {
   salvarTweets,
-  totalTweets
+  totalTweets,
+  buscaPalavra
 }
