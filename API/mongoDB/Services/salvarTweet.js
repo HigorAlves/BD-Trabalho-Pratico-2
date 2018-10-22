@@ -2,7 +2,7 @@ const restify = require('restify');
 const clients = require('restify-clients');
 const Const = require('../Config/consts');
 
-//Transformar pra promise
+//TODO: Transformar em Promise
 async function salvarTweet(data, candidato) {
   console.log('TENTANDO SALVAR OS TWEETS')
   var tweet = null;
