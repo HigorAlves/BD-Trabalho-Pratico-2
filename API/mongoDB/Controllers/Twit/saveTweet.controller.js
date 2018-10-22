@@ -3,7 +3,9 @@ const fetch = require('node-fetch');
 const TwitterAuth = require('../../Config/twitterAuth');
 const SalvarTweets = require('../../Services/salvarTweet');
 const Const = require('../../Config/consts');
+const SalvarPalavraChave = require('../../Services/salvarPalavraChave');
 
+//TODO: trocar a api Twit pela do Twitter
 const Twitter = require('twitter');
 
 async function saveTweet(candidato, quantidade) {
@@ -83,15 +85,23 @@ totalTweets = function (req, res) {
   })
 }
 
-buscaPalavra = function (req, res) {
+async function buscaPalavra(req, res) {
   console.log('BUSCANDO PELA PALAVRA CHAVE: ' + req.body.palavra + ' COM QUANTIDADE DE RETORNOS DE: ' + req.body.quantidade);
   const client = new Twitter(TwitterAuth);
 
-  client.get('search/tweets', { q: req.body.palavra, count: req.body.quantidade, tweet_mode: 'extended' }, function (err, data, response) {
+  client.get('search/tweets', { q: req.body.palavra, count: parseInt(req.body.quantidade), tweet_mode: 'extended' }, function (err, data, response) {
     if (err) {
       console.log('NÃO FOI POSSIVEL PEGAR AS OS TWEETS BASEADO NA PALAVRA')
     }
-    res.status(200).send({ data })
+
+    SalvarPalavraChave(data.statuses, req.body.palavra)
+      .then(resposta => {
+        console.log(resposta);
+        res.status(200).send(resposta)
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
   })
 }
 
