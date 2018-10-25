@@ -1,12 +1,16 @@
 const Twit = require('twit');
 const fetch = require('node-fetch');
+const Twitter = require('twitter');
+
 const TwitterAuth = require('../../Config/twitterAuth');
-const SalvarTweets = require('../../Services/salvarTweet');
 const Const = require('../../Config/consts');
 const SalvarPalavraChave = require('../../Services/salvarPalavraChave');
+const SalvarTweet = require('../../Services/salvarTweet');
+
+const SalvarTweets = require('../../Services/salvarTweet'); //Esta função é o saveTweet ou seja tudo deve ser passado para o arquivo de services como uma promisse
 
 //TODO: trocar a api Twit pela do Twitter
-const Twitter = require('twitter');
+// as apis do mongo mudaram de URL tambem mudar as mesmas aqui
 
 async function saveTweet(candidato, quantidade) {
   let id = null;
@@ -67,13 +71,15 @@ async function saveTweet(candidato, quantidade) {
 }
 
 salvarTweets = function (req, res) {
-  console.log('CADASTRANDO NOVOS TWEETS')
-  saveTweet(req.body.candidato, req.body.quantidade)
+  console.log('CADASTRANDO NOVOS TWEETS');
+  SalvarTweet(req.body.candidato, req.body.quantidade);
+  // saveTweet(req.body.candidato, req.body.quantidade)
   res.status(201).send('SUCESSO');
 }
 
+// PEGAR TOTAL DE TWEETS QUE O CANDIDATO(A) JA POSTOU NO TWITTER
 totalTweets = function (req, res) {
-  console.log('PEGANDO A QUANTIDADE DE TWEETS DO CANDIDATO: ' + req.body.candidato);
+  console.log('PEGANDO A QUANTIDADE DE TWEETS NO TWITTER DO CANDIDATO: ' + req.body.candidato);
   const client = new Twitter(TwitterAuth);
 
   client.get('users/show', { screen_name: req.body.candidato }, function (err, data, response) {
@@ -85,9 +91,10 @@ totalTweets = function (req, res) {
   })
 }
 
-async function buscaPalavra(req, res) {
-  console.log('BUSCANDO PELA PALAVRA CHAVE: ' + req.body.palavra + ' COM QUANTIDADE DE RETORNOS DE: ' + req.body.quantidade);
+
+buscaPalavra = function (req, res) {
   const client = new Twitter(TwitterAuth);
+  console.log('BUSCANDO PELA PALAVRA CHAVE: ' + req.body.palavra + ' COM QUANTIDADE DE RETORNOS DE: ' + req.body.quantidade);
 
   client.get('search/tweets', { q: req.body.palavra, count: parseInt(req.body.quantidade), tweet_mode: 'extended' }, function (err, data, response) {
     if (err) {
