@@ -135,7 +135,6 @@ salvarTweets = async (candidato, quantidade) => {
                 salvarTweet(result, candidato);
                 resolve(Const.SUCESSO);
               }
-              id == null;
             })
             .catch(err => {
               console.log('ACONTECEU ALGUM ERRO: ' + err);
@@ -158,7 +157,6 @@ salvarTweets = async (candidato, quantidade) => {
                 salvarTweet(result, candidato);
                 return console.log(Const.SUCESSO)
               }
-              id = null
             })
             .catch(err => {
               console.log('NÃO FOI POSSIVEL PEGAR O ID DO ULTIMO TWEET, ELE NÃO DEVE EXISTIR NO BANCO OU ALGUM ERRO COM A API OCORREU: ' + err)
