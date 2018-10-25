@@ -1,4 +1,3 @@
-const restify = require('restify');
 const Const = require('../Config/consts');
 
 const saveData = (data, palavraChave) => {

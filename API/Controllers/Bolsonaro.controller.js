@@ -1,6 +1,6 @@
-const Tweet = require('../Models/tweetBolsonaro.model');
+const Tweet = require('../Models/Bolsonaro.model');
 
-cadastraTweet = function (req, res) {
+cadastrarTweet = function (req, res) {
   // req.assert('id', 'É obrigatorio que o ID seja preenchido').notEmpty();
   // req.assert('full_text', 'É obrigatorio que o full_text seja preenchido').notEmpty();
   // req.assert('entities', 'É obrigatorio que o entities seja preenchido').notEmpty();
@@ -17,7 +17,8 @@ cadastraTweet = function (req, res) {
   //   res.status(400).send('Ocorreu o erro voce nao deve ter preenchido todos os campos');
   //   return;
   // }
-  console.log('O Tweet foi cadastrado com sucesso no banco de dados')
+  console.log('MONGODB API\n');
+  console.log('MONGO_API: CADASTRANDO O TWEET NO BANCO DE DADOS');
 
   let tweet = new Tweet(
     {
@@ -40,35 +41,40 @@ cadastraTweet = function (req, res) {
 
   tweet.save(function (err) {
     if (err) {
-      res.status(400).send('Não foi possivel gravar os dados deste Tweet: ' + err);
+      res.status(400).send('NÃO FOI POSSIVEL SALVAR O TWEET: ' + err);
       return (err);
     }
-    res.status(201).send('O Tweet foi cadastrado com sucesso no banco de dados')
+    res.status(201).send('TWEET FOI CADASTRADO COM SUCESSO')
   })
 }
 
-last_tweet = function (req, res) {
-  Tweet.findOne({}, {}, { sort: { '$natural': -1 } }, function (err, tweet) {
-    if (err) {
-      res.status(400).send('Não foi possivel pegar o ultimo tweet');
+ultimoTweet = function (req, res) {
+  console.log('MONGODB API\n');
+  console.log('PEGANDO O ULTIMO TWEET SALVO NO BANCO DE DADOS DO(A) CANDIDATO BOLSONARO');
+
+  Tweet.findOne({}, {}, { sort: { '$natural': -1 } }, function (error, tweet) {
+    if (error) {
+      res.status(400).send('NÃO FOI POSSIVEL PEGAR O ULTIMO TWEET DO CANDIDATO: ' + error);
       return err;
     }
     res.status(200).send(tweet);
   })
 };
 
-total_tweets = function (req, res) {
-  console.log('PEGANDO NUMERO TOTAL DE TWEETS DO CANDIDATO')
-  Tweet.countDocuments({}).count(function (err, tweet) {
-    if (err) {
-      res.sendStatus(400).send('Não foi possivel contar a quantidade de Tweets');
+totalTweets = function (req, res) {
+  console.log('MONGODB API\n');
+  console.log('PEGANDO NUMERO TOTAL DE TWEETS DO CANDIDATO');
+
+  Tweet.countDocuments({}).count(function (error, tweet) {
+    if (error) {
+      res.sendStatus(400).send('NÃO FOI POSSIVEL CONTAR A QUANTIDADE DE TWEETS DO CANDIDATO: ' + error);
     }
     res.status(200).send({ tweet });
   })
 }
 
 module.exports = {
-  cadastraTweet,
-  last_tweet,
-  total_tweets
+  cadastrarTweet,
+  ultimoTweet,
+  totalTweets
 }

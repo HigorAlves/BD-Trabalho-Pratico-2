@@ -5,15 +5,13 @@ const expressValidator = require('express-validator');
 const app = express();
 
 const dbConnection = require('./DAO/dbConnection');
-const apiRoute = require('./Routes/api.route');
+const mongoRoute = require('./Routes/mongo.route');
 const twitterRoute = require('./Routes/twitter.route');
-
 const PORT = 3000;
 
 dbConnection();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.urlencoded());
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'pug');
@@ -22,11 +20,13 @@ app.use(expressValidator());
 //DEFINIÇÃO DAS ROTAS
 app.get('/', function (req, res) {
   res.render('home');
-})
-app.use('/api', apiRoute);
+});
+
+app.use('/mongodb', mongoRoute);
 app.use('/twitter', twitterRoute);
+// app.use('/watson', watsonRoute);
 
 
 app.listen(PORT, () => {
-  console.log('Servidor escutando na porta ' + PORT);
+  console.log('SERVIDOR ESCUTANDO NA PORTA: ' + PORT + '\n');
 })

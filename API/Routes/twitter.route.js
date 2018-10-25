@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../Controllers/Twit/saveTweet.controller')
+const controller = require('../Controllers/Twit/twitter.controller')
 
 router.get('/', function (req, res) {
-  console.warn('USUARIO TENTOU ACESSAR A API DO TWITTER')
+  console.warn('USUARIO TENTOU ACESSAR A API DO TWITTER\n')
   res.render('twitter')
 });
 
