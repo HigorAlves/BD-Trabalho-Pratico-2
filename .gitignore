@@ -62,3 +62,4 @@ typings/
 .DS_Store
 API/twitter/twitterAuth.js
 observatorio-ufsj/src/Config/AUTH.js
+API/Config/env-keys.js
