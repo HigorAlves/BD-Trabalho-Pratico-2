@@ -1,4 +1,3 @@
-const Twit = require('twit');
 const fetch = require('node-fetch');
 const Twitter = require('twitter');
 

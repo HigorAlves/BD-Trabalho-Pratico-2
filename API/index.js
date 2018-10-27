@@ -7,6 +7,7 @@ const app = express();
 const dbConnection = require('./DAO/dbConnection');
 const mongoRoute = require('./Routes/mongo.route');
 const twitterRoute = require('./Routes/twitter.route');
+const watsonRoute = require('./Routes/watson.route');
 const PORT = 3000;
 
 dbConnection();
@@ -18,15 +19,14 @@ app.set('view engine', 'pug');
 app.use(expressValidator());
 
 //DEFINIÇÃO DAS ROTAS
-app.get('/', function (req, res) {
-  res.render('home');
+app.get('/', function(req, res) {
+	res.render('home');
 });
 
 app.use('/mongodb', mongoRoute);
 app.use('/twitter', twitterRoute);
-// app.use('/watson', watsonRoute);
-
+app.use('/watson', watsonRoute);
 
 app.listen(PORT, () => {
-  console.log('SERVIDOR ESCUTANDO NA PORTA: ' + PORT + '\n');
-})
+	console.log('SERVIDOR ESCUTANDO NA PORTA: ' + PORT + '\n');
+});
