@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
-const NLU = require('../../Models/nluDataBolsonaro.model');
+const NLU_BOLSONARO = require('../../Models/nluDataBolsonaro.model');
+const Tweet = require('../../Models/Bolsonaro.model');
 const { analisarSalvar } = require('../../Services/watsonNLU');
 const CONST = require('../../Config/consts');
 
@@ -24,7 +25,8 @@ cadastrar = function(req, res) {
 							if (result === CONST.FALHOU) {
 								res.status(400).send(CONST.FALHOU);
 							} else {
-								let dados = new NLU(result);
+								let dados = new NLU_BOLSONARO(result);
+
 								dados.save(function(err) {
 									if (err) {
 										console.log(

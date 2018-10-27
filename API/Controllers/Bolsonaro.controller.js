@@ -1,4 +1,5 @@
 const Tweet = require('../Models/Bolsonaro.model');
+const NLU = require('../Models/nluDataBolsonaro.model');
 const CONST = require('../Config/consts');
 
 cadastrarTweet = function(req, res) {
@@ -89,14 +90,30 @@ getTweets = function(req, res) {
 	console.log('MONGODB API\n');
 	console.log('PEGANDO TWEETS DO USUARIO');
 	let quantidade = parseInt(req.params.quantidade);
-	Tweet.find({}, null, { limit: quantidade }, function(error, result) {
+
+	NLU.countDocuments({}).count(function(error, data) {
 		if (error) {
-			console.log(
-				'OCORREU UM ERRO AO PEGAR OS TWEETS DO CANDIDATO JAIR BOLSONARO'
-			);
-			res.status(400).send(CONST.FALHOU);
+			res
+				.sendStatus(400)
+				.send(
+					'NÃO FOI POSSIVEL CONTAR A QUANTIDADE DE TWEETS DO CANDIDATO: ' +
+						error
+				);
 		} else {
-			res.status(200).send(result);
+			console.log(data);
+			let query = Tweet.find({})
+				.skip(parseInt(data))
+				.limit(quantidade);
+			query.exec(function(error, data) {
+				if (error) {
+					console.log(
+						'OCORREU UM ERRO AO PEGAR OS TWEETS DO CANDIDATO JAIR BOLSONARO'
+					);
+					res.status(400).send(CONST.FALHOU);
+				} else {
+					res.status(200).send(data);
+				}
+			});
 		}
 	});
 };
