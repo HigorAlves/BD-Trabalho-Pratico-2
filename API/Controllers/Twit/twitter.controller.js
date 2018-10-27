@@ -61,7 +61,6 @@ buscaPalavra = function(req, res) {
 			if (err) {
 				console.log('NÃO FOI POSSIVEL PEGAR AS OS TWEETS BASEADO NA PALAVRA');
 			}
-
 			SalvarPalavraChave(data.statuses, req.body.palavra)
 				.then(resposta => {
 					console.log(resposta);

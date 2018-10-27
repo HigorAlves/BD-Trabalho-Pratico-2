@@ -5,11 +5,12 @@ const haddad = require('../Controllers/Haddad.controller');
 const manuela = require('../Controllers/Manuela.controller');
 const bolsonaro = require('../Controllers/Bolsonaro.controller');
 const general = require('../Controllers/Mourao.controller');
+const palavraChave = require('../Controllers/palavraChave.controller');
 
-router.get('/', function (req, res) {
-  console.log('USARIO TENTOU ACESSAR A API DO MONGO DB\n')
-  res.render('mongo');
-})
+router.get('/', function(req, res) {
+	console.log('USARIO TENTOU ACESSAR A API DO MONGO DB\n');
+	res.render('mongo');
+});
 
 //ROTAS FERNANDO HADDAD
 router.post('/cadastrartweet/Haddad_Fernando', haddad.cadastrarTweet);
@@ -30,5 +31,7 @@ router.get('/ultimotweet/jairbolsonaro', bolsonaro.ultimoTweet);
 router.post('/cadastrartweet/GeneraIMourao', general.cadastrarTweet);
 router.get('/ultimotweet/GeneraIMourao', general.totalTweets);
 router.get('/totaltweets/GeneraIMourao', general.ultimoTweet);
+
+router.post('/cadastrarpalavra', palavraChave.cadastrar);
 
 module.exports = router;
