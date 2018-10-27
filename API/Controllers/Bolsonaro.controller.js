@@ -1,4 +1,5 @@
 const Tweet = require('../Models/Bolsonaro.model');
+const CONST = require('../Config/consts');
 
 cadastrarTweet = function(req, res) {
 	// req.assert('id', 'É obrigatorio que o ID seja preenchido').notEmpty();
@@ -84,8 +85,24 @@ totalTweets = function(req, res) {
 	});
 };
 
+getTweets = function(req, res) {
+	console.log('MONGODB API\n');
+	console.log('PEGANDO TWEETS DO USUARIO');
+	Tweet.find({}, function(error, result) {
+		if (error) {
+			console.log(
+				'OCORREU UM ERRO AO PEGAR OS TWEETS DO CANDIDATO JAIR BOLSONARO'
+			);
+			res.status(400).send(CONST.FALHOU);
+		} else {
+			res.status(200).send(result);
+		}
+	});
+};
+
 module.exports = {
 	cadastrarTweet,
 	ultimoTweet,
-	totalTweets
+	totalTweets,
+	getTweets
 };
