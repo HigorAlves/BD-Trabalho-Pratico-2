@@ -88,7 +88,8 @@ totalTweets = function(req, res) {
 getTweets = function(req, res) {
 	console.log('MONGODB API\n');
 	console.log('PEGANDO TWEETS DO USUARIO');
-	Tweet.find({}, function(error, result) {
+	let quantidade = parseInt(req.params.quantidade);
+	Tweet.find({}, null, { limit: quantidade }, function(error, result) {
 		if (error) {
 			console.log(
 				'OCORREU UM ERRO AO PEGAR OS TWEETS DO CANDIDATO JAIR BOLSONARO'

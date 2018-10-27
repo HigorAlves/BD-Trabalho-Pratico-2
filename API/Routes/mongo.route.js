@@ -26,7 +26,7 @@ router.get('/totaltweets/ManuelaDavila', manuela.totalTweets);
 router.post('/cadastrartweet/jairbolsonaro', bolsonaro.cadastrarTweet);
 router.get('/totaltweets/jairbolsonaro', bolsonaro.totalTweets);
 router.get('/ultimotweet/jairbolsonaro', bolsonaro.ultimoTweet);
-router.get('/tweets/jairbolsonaro', bolsonaro.getTweets);
+router.get('/tweets/jairbolsonaro/:quantidade', bolsonaro.getTweets);
 
 //ROTAS GENERAL MOURÃO
 router.post('/cadastrartweet/GeneraIMourao', general.cadastrarTweet);
