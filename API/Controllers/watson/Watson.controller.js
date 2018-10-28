@@ -6,6 +6,7 @@ const NLU_MANUELA = require('../../Models/NLU/Manuela.model');
 const Texto = require('../../Models/BolsonaroEnglish.model');
 const { analisarSalvar } = require('../../Services/watsonNLU');
 const { tradutor } = require('../../Services/tradutor');
+const { personalityInsights } = require('../../Services/personalityInsigths');
 const CONST = require('../../Config/consts');
 
 cadastrar = function(req, res) {
@@ -180,11 +181,31 @@ traduzirTexto = (req, res) => {
 		});
 };
 
-personalidade = (req, res) => {
+analisarPersonalidade = (req, res) => {
 	console.log('PERSONALIDADE INICIANDO ANALISE');
+	fetch(`http://localhost:3000/mongodb/texto/${req.body.candidato}`)
+		.then(result => result.json())
+		.then(result => {
+			data = result[0].text;
+			personalityInsights(data)
+				.then(data => {
+					console.log(data);
+				})
+				.catch(error => {
+					console.log('NÃO FOI POSSIVEL ANALISAR A PERSONALIDADE: ' + error);
+					res.status(400).send(CONST.FALHOU);
+				});
+		})
+		.catch(error => {
+			console.log(
+				'NÃO FOI POSSIVEL PEGAR O ULTIMO TEXTO NO BANCO DE DADOS: ' + error
+			);
+			res.status(400).send(CONST.FALHOU);
+		});
 };
 
 module.exports = {
 	cadastrar,
-	traduzirTexto
+	traduzirTexto,
+	analisarPersonalidade
 };

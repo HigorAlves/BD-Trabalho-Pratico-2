@@ -1,5 +1,6 @@
 const Tweet = require('../Models/Bolsonaro.model');
 const NLU = require('../Models/NLU/Bolsonaro.model');
+const Texto = require('../Models/BolsonaroEnglish.model');
 const CONST = require('../Config/consts');
 
 cadastrarTweet = function(req, res) {
@@ -86,6 +87,7 @@ totalTweets = function(req, res) {
 	});
 };
 
+//Pega a quantidade de tweets do usuario para saber quais ja foram usados para analise de sentimento.
 getTweets = function(req, res) {
 	console.log('MONGODB API\n');
 	console.log('PEGANDO TWEETS DO USUARIO');
@@ -130,10 +132,24 @@ getAllTweets = function(req, res) {
 	});
 };
 
+//PEGA o ultimo texto gravado no banco de dados
+getText = function(req, res) {
+	let query = Texto.find({}, {}, { sort: { natural: -1 } });
+	query.exec(function(error, data) {
+		if (error) {
+			console.log('NÃO FOI POSSIVEL PEGAR O ULTIMO TEXTO CADASTRADO: ' + error);
+			res.status(400).send(CONST.FALHOU);
+		} else {
+			res.status(200).send(data);
+		}
+	});
+};
+
 module.exports = {
 	cadastrarTweet,
 	ultimoTweet,
 	totalTweets,
 	getTweets,
-	getAllTweets
+	getAllTweets,
+	getText
 };
