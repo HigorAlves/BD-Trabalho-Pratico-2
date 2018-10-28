@@ -145,6 +145,7 @@ cadastrar = function(req, res) {
 		});
 };
 
+//Ainda tem q ser inserido para os outros candidatos
 traduzirTexto = (req, res) => {
 	let texto = null;
 	fetch(`http://localhost:3000/mongodb/alltweets/${req.body.candidato}`)
@@ -177,6 +178,10 @@ traduzirTexto = (req, res) => {
 			console.log('ERROR: ' + error);
 			res.status(400).send(CONST.FALHOU);
 		});
+};
+
+personalidade = (req, res) => {
+	console.log('PERSONALIDADE INICIANDO ANALISE');
 };
 
 module.exports = {
