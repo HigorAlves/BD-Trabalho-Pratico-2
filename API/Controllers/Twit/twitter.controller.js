@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const Twitter = require('twitter');
 
+const TWITTER_AUTH = require('../../Config/env_twitter');
 const Const = require('../../Config/consts');
 const SalvarPalavraChave = require('../../Services/salvarPalavraChave');
 const salvarTweets = require('../../Services/salvarTweet'); //Esta função é o saveTweet ou seja tudo deve ser passado para o arquivo de services como uma promisse
@@ -22,20 +23,22 @@ cadastrarTweets = function(req, res) {
 totalTweets = function(req, res) {
 	console.log(
 		'PEGANDO A QUANTIDADE DE TWEETS NO TWITTER DO CANDIDATO: ' +
-			req.body.candidato
+			req.params.candidato
 	);
-	const client = new Twitter(Const.TWITTER_AUTH);
+	const client = new Twitter(TWITTER_AUTH);
 
-	client.get('users/show', { screen_name: req.body.candidato }, function(
+	client.get('users/show', { screen_name: req.params.candidato }, function(
 		err,
 		data,
 		response
 	) {
 		if (err) {
 			console.log('TWITTER ERROR: ', err);
+			res.status(400).send(Const.FALHOU);
+		} else {
+			let count = data.statuses_count;
+			res.status(200).send({ count });
 		}
-		let count = data.statuses_count;
-		res.status(200).send({ count });
 	});
 };
 

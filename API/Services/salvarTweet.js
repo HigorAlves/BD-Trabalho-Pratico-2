@@ -1,7 +1,7 @@
 const clients = require('restify-clients');
 const Twitter = require('twitter');
 const fetch = require('node-fetch');
-
+const TWITTER_AUTH = require('../Config/env_twitter');
 const Const = require('../Config/consts');
 
 salvarBD = (data, candidato) => {
@@ -63,7 +63,7 @@ salvarTweets = (candidato, quantidade) => {
 	return new Promise((resolve, reject) => {
 		console.log('\nSALVANDO TWEETS DO CANDIDATO(A): ' + candidato + '\n');
 
-		const T = new Twitter(Const.TWITTER_AUTH);
+		const T = new Twitter(TWITTER_AUTH);
 		let tweetsToGet = null;
 		let id = null;
 
@@ -102,7 +102,7 @@ salvarTweets = (candidato, quantidade) => {
 							}
 						})
 						.catch(err => {
-							console.log('ACONTECEU ALGUM ERRO: ' + err);
+							console.log('ACONTECEU ALGUM ERRO: ', err);
 						});
 				} else {
 					//EXISTEM TWEETS ANTIGOS CADASTRADOS NO BANCO DE DADOS, IREMOS ENTÃO CADASTRAR SOMENTE OS NOVOS TWEETS APARTIR DA CONTAGEM DO ULTIMO TWEET INSERIDO DENTRO DO NOSSO BANCO
