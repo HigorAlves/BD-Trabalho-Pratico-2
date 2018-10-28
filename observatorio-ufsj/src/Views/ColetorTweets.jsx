@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
-import Twit from 'twit';
-import { salvar } from '../Services/gravarDB';
-import { AUTH } from '../Config/AUTH';
 
 export default class PegatTweets extends Component {
 	constructor(props) {
@@ -20,179 +17,21 @@ export default class PegatTweets extends Component {
 		this.handleQuantidadeChange = this.handleQuantidadeChange.bind(this);
 	}
 
-	getTweetsBanco(candidato) {
-		this.setState({ qtTweets: null });
-		fetch(`http://localhost:3000/api/tweets/${candidato}`)
-			.then(res => res.json())
-			.then(json => {
-				this.setState({ qtTweets: json.tweet });
-			})
-			.catch(error => console.log(error));
-	}
-
-	//PEGA QUANTIDADE DE TWEETS QUE EXISTEM NO PERFIL DO TWITTER
-	getTweetsStatus(candidato) {
-		console.log('FUNCTION: Pegando quantidade de tweets que existem  no perfil.');
-
-		// fetch(`http://localhost:3000/api/tweets/${candidato}`, { mode: 'cors' })
-		// 	.then(res => console.log(res))
-		// 	.then(json => {
-		// 		console.log(json)
-		// 	})
-		// 	.catch(error => console.log('Não foi possivel pegar a quantidade atual de Tweets: ' + error))
-
-		const T = new Twit(AUTH);
-		T.get(
-			'users/show',
-			{ screen_name: `${candidato}` },
-			(err, data, response) => {
-				if (err) {
-					console.log(
-						'ERRO: não foi possivel pegar a quantidade de Tweets recentes' + err
-					);
-				}
-				this.setState({ qtAtualTweets: data.statuses_count });
-			}
-		);
-	}
-
 	handleChange(event) {
 		this.setState({ candidato: event.target.value });
 		console.log('ESCOLHENDO O CANDIDATO');
-
-		if (event.target.value === 'Jair Bolsonaro') {
-			console.log('CANDIDATO: Jair Bolsonaro')
-			this.getTweetsBanco('jairbolsonaro');
-			this.getTweetsStatus('jairbolsonaro');
-		}
-		if (event.target.value === 'Fernando Haddad') {
-			console.log('CANDIDATO: Fernando Haddad');
-			this.getTweetsBanco('Haddad_Fernando');
-			this.getTweetsStatus('Haddad_Fernando');
-		}
-		if (event.target.value === 'Manuela Davila') {
-			console.log('CANDIDATA: Manuela Davila');
-			this.getTweetsStatus('ManuelaDavila');
-			this.getTweetsBanco('ManuelaDavila');
-		}
-		if (event.target.value === 'General Mourão') {
-			console.log('CANDIDATO: General Mourão');
-			this.getTweetsStatus('GeneraIMourao');
-			this.getTweetsBanco('GeneraIMourao');
-		}
 	}
 
 	handleQuantidadeChange(event) {
-		if (event.target.value > 200) {
-			this.setState({ quantidade: 200 });
+		if (event.target.value >= 180) {
+			this.setState({ quantidade: 180 });
 		} else {
 			this.setState({ quantidade: event.target.value });
 		}
 	}
 
-	//PEGA OS TWEETS E SALVA OS MESMOS NO BANCO DE DADOS
-	async getTweets(candidato) {
-		let quantidade = this.state.quantidade;
-		let tweetsToGet = null;
-		const T = new Twit(AUTH);
-
-		let sucesso = (
-			<div className="alert alert-success col col-sm-12" role="alert">
-				Os tweets do candidato {this.state.candidato}, foram pegos com sucesso!
-				Total de {this.state.quantidade} tweets.
-			</div>
-		);
-
-		let esperarTempo = (
-			<div className="alert alert-warning col col-sm-12" role="alert">
-				Não foi possivel salvar mais tweets, a API do Twitter esta pedindo para
-				esperar para realizar mais consultas.
-			</div>
-		);
-
-		let deuRuim = (
-			<div className="alert alert-danger col col-sm-12" role="alert">
-				Não foi possivel procurar os tweets do {this.state.candidato}.
-			</div>
-		);
-
-		//VAMOS VERIFICAR NO BANCO DE DADOS SE JA EXISTE REGISTRO DE ALGUM TWEET DO CANDIDATO EM QUESTÃO
-		console.log('VERIFICANDO SE JA EXISTEM TWEETS\n');
-		await fetch(`http://localhost:3000/api/lasttweet/${candidato}`)
-			.then(res => res.json())
-			.then(json => {
-				this.setState({ lastId: json.id });
-			})
-			.catch(error => console.log(error));
-
-		if (this.state.lastId === null) {
-			console.log('NÃO EXISTEM TWEETS NO BANCO');
-			tweetsToGet = Object.assign({ screen_name: `${candidato}`, tweet_mode: 'extended', include_rts: true, exclude_replies: false }, { count: quantidade });
-
-			//COMO NÃO EXISTE TWEETS DO CANDIDATO VAMOS ENTÃO SOMENTE INSERIR OS DADOS PRE-SELECIONADOS DENTRO DO BANCO DE DADOS.
-			T.get('statuses/user_timeline', tweetsToGet)
-				.then(result => {
-					if (result.data[0].id === undefined) {
-						this.setState({ alerta: esperarTempo });
-						console.log('É PRECISO ESPERAR PARA PEGAR MAIS DADOS');
-						console.log(result.data.id);
-					} else {
-						this.setState({ alerta: sucesso });
-						console.log('SALVANDO DADOS NO BANCO');
-						salvar(result.data, candidato);
-						this.getTweetsBanco(candidato);
-					}
-					this.setState({ lastId: null });
-				})
-				.catch(err => {
-					console.log('ACONTECEU ALGUM ERRO' + err);
-					this.setState({ alerta: deuRuim });
-				});
-		} else {
-			//EXISTEM TWEETS ANTIGOS CADASTRADOS NO BANCO DE DADOS, IREMOS ENTÃO CADASTRAR SOMENTE OS NOVOS TWEETS APARTIR DA CONTAGEM DO ULTIMO TWEET INSERIDO DENTRO DO NOSSO BANCO
-			console.log('EXISTEM TWEETS NO BANCO');
-			quantidade = parseInt(quantidade) + 1;
-			tweetsToGet = Object.assign({ screen_name: `${candidato}`, tweet_mode: 'extended', max_id: this.state.lastId, include_rts: true, exclude_replies: false }, { count: quantidade });
-
-			T.get('statuses/user_timeline', tweetsToGet)
-				.then(result => {
-					if (result.data[0].id === undefined) {
-						this.setState({ alerta: esperarTempo });
-					} else {
-						this.setState({ alerta: sucesso });
-						result.data.shift();
-						salvar(result.data, candidato);
-						this.getTweetsBanco(candidato);
-					}
-					this.setState({ lastId: null });
-				})
-				.catch(err => {
-					this.setState({ alerta: deuRuim });
-				});
-		}
-	}
-
 	handleSubmit(event) {
 		event.preventDefault();
-
-		//TODO: Inserir o codigo de consulta dos respectivos
-		if (this.state.candidato === 'Jair Bolsonaro') {
-			console.log('CANDIDATO: Jair Bolsonaro');
-			this.getTweets('jairbolsonaro');
-		}
-		if (this.state.candidato === 'Fernando Haddad') {
-			console.log('CANDIDATO: Fernando Haddad');
-			this.getTweets('Haddad_Fernando');
-		}
-		if (this.state.candidato === 'Manuela Davila') {
-			console.log('CANDIDATO: Manuela Davila')
-			this.getTweets('ManuelaDavila');
-		}
-		if (this.state.candidato === 'General Mourão') {
-			console.log('CANDIDATO: General Mourão')
-			this.getTweets('GeneraIMourao');
-		}
-
 		//RETIRAMOS A BOX DE ALERTA DA TELA DO USUARIO
 		setTimeout(() => {
 			this.setState({ alerta: null });
