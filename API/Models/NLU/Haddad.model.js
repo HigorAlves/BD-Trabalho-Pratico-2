@@ -22,4 +22,4 @@ let NLU_DATA = new Schema({
 	categories: { type: Object, require: true }
 });
 
-module.exports = mongoose.model('nluDataBolsonaro', NLU_DATA);
+module.exports = mongoose.model('nluhaddad', NLU_DATA);

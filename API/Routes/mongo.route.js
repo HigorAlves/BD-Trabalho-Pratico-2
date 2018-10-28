@@ -16,11 +16,13 @@ router.get('/', function(req, res) {
 router.post('/cadastrartweet/Haddad_Fernando', haddad.cadastrarTweet);
 router.get('/ultimotweet/Haddad_Fernando', haddad.ultimoTweet);
 router.get('/totaltweets/Haddad_Fernando', haddad.totalTweets);
+router.get('/tweets/Haddad_Fernando/:quantidade', haddad.getTweets);
 
 //ROTAS MANUELA DAVILA
 router.post('/cadastrartweet/ManuelaDavila', manuela.cadastrarTweet);
 router.get('/ultimotweet/ManuelaDavila', manuela.ultimoTweet);
 router.get('/totaltweets/ManuelaDavila', manuela.totalTweets);
+router.get('/tweets/ManuelaDavila/:quantidade', manuela.getTweets);
 
 //ROTAS JAIR MESSIAS BOLSONARO
 router.post('/cadastrartweet/jairbolsonaro', bolsonaro.cadastrarTweet);
@@ -32,6 +34,7 @@ router.get('/tweets/jairbolsonaro/:quantidade', bolsonaro.getTweets);
 router.post('/cadastrartweet/GeneraIMourao', general.cadastrarTweet);
 router.get('/ultimotweet/GeneraIMourao', general.totalTweets);
 router.get('/totaltweets/GeneraIMourao', general.ultimoTweet);
+router.get('/tweets/GeneraIMourao/:quantidade', general.getTweets);
 
 router.post('/cadastrarpalavra', palavraChave.cadastrar);
 

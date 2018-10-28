@@ -1,5 +1,5 @@
 const Tweet = require('../Models/Bolsonaro.model');
-const NLU = require('../Models/nluDataBolsonaro.model');
+const NLU = require('../Models/NLU/Bolsonaro.model');
 const CONST = require('../Config/consts');
 
 cadastrarTweet = function(req, res) {
@@ -100,7 +100,6 @@ getTweets = function(req, res) {
 						error
 				);
 		} else {
-			console.log(data);
 			let query = Tweet.find({})
 				.skip(parseInt(data))
 				.limit(quantidade);
@@ -111,6 +110,7 @@ getTweets = function(req, res) {
 					);
 					res.status(400).send(CONST.FALHOU);
 				} else {
+					console.log('TWEETS PEGO COM SUCESSO');
 					res.status(200).send(data);
 				}
 			});
