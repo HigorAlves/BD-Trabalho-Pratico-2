@@ -29,6 +29,7 @@ router.post('/cadastrartweet/jairbolsonaro', bolsonaro.cadastrarTweet);
 router.get('/totaltweets/jairbolsonaro', bolsonaro.totalTweets);
 router.get('/ultimotweet/jairbolsonaro', bolsonaro.ultimoTweet);
 router.get('/tweets/jairbolsonaro/:quantidade', bolsonaro.getTweets);
+router.get('/alltweets/jairbolsonaro/', bolsonaro.getAllTweets);
 
 //ROTAS GENERAL MOURÃO
 router.post('/cadastrartweet/GeneraIMourao', general.cadastrarTweet);

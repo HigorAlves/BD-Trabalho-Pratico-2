@@ -9,7 +9,7 @@ const salvarTweets = require('../../Services/salvarTweet'); //Esta função é o
 cadastrarTweets = function(req, res) {
 	console.log('CADASTRANDO NOVOS TWEETS');
 	salvarTweets(req.body.candidato, req.body.quantidade)
-		.then(ressult => {
+		.then(result => {
 			console.log('TWEETS SALVOS COM SUCESSO');
 			res.status(201).send('SUCESSO');
 		})

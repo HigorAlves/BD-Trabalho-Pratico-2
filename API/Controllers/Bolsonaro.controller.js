@@ -118,9 +118,21 @@ getTweets = function(req, res) {
 	});
 };
 
+getAllTweets = function(req, res) {
+	let query = Tweet.find({});
+	query.exec(function(error, data) {
+		if (error) {
+			console.log('OCORREU UM ERRO AO PEGAR TODOS OS TWEETS DE JAIR BOLSONARO');
+		} else {
+			res.status(200).send(data);
+		}
+	});
+};
+
 module.exports = {
 	cadastrarTweet,
 	ultimoTweet,
 	totalTweets,
-	getTweets
+	getTweets,
+	getAllTweets
 };

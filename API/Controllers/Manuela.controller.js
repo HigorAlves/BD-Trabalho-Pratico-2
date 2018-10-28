@@ -34,7 +34,7 @@ cadastrarTweet = function(req, res) {
 ultimoTweet = function(req, res) {
 	console.log('MONGODB API\n');
 	console.log(
-		'PEGANDO O ULTIMO TWEET SALVO NO BANCO DE DADOS DO(A) CANDIDATO BOLSONARO'
+		'PEGANDO O ULTIMO TWEET SALVO NO BANCO DE DADOS DO(A) CANDIDATO HADDAD'
 	);
 
 	Tweet.findOne({}, {}, { sort: { $natural: -1 } }, function(error, tweet) {
@@ -44,7 +44,11 @@ ultimoTweet = function(req, res) {
 				.send('NÃO FOI POSSIVEL PEGAR O ULTIMO TWEET DO CANDIDATO: ' + error);
 			return err;
 		}
-		res.status(200).send(tweet);
+		if (tweet === null) {
+			res.status(204).send(null);
+		} else {
+			res.status(200).send({ tweet });
+		}
 	});
 };
 

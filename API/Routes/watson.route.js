@@ -8,5 +8,6 @@ router.get('/', function(req, res) {
 });
 
 router.post('/nlucadastrar', controller.cadastrar);
+router.post('/criartexto', controller.traduzirTexto);
 
 module.exports = router;

@@ -143,6 +143,12 @@ cadastrar = function(req, res) {
 		});
 };
 
+traduzirTexto = (req, res) => {
+	console.log('ola');
+	res.status(200).send(CONST.SUCESSO);
+};
+
 module.exports = {
-	cadastrar
+	cadastrar,
+	traduzirTexto
 };
