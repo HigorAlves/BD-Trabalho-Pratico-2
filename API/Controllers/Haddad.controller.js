@@ -1,6 +1,7 @@
 const Tweet = require('../Models/Haddad.model');
 const NLU = require('../Models/NLU/Haddad.model');
 const CONST = require('../Config/consts');
+const Texto = require('../Models/HaddadTexto.model');
 
 cadastrarTweet = function(req, res) {
 	console.log('MONGODB API\n');
@@ -102,9 +103,35 @@ getTweets = function(req, res) {
 	});
 };
 
+getAllTweets = function(req, res) {
+	let query = Tweet.find({}, { full_text: 1 });
+	query.exec(function(error, data) {
+		if (error) {
+			console.log('OCORREU UM ERRO AO PEGAR TODOS OS TWEETS DE JAIR BOLSONARO');
+		} else {
+			res.status(200).send(data);
+		}
+	});
+};
+
+//PEGA o ultimo texto gravado no banco de dados
+getText = function(req, res) {
+	let query = Texto.find({}, {}, { sort: { natural: -1 } });
+	query.exec(function(error, data) {
+		if (error) {
+			console.log('NÃO FOI POSSIVEL PEGAR O ULTIMO TEXTO CADASTRADO: ' + error);
+			res.status(400).send(CONST.FALHOU);
+		} else {
+			res.status(200).send(data);
+		}
+	});
+};
+
 module.exports = {
 	cadastrarTweet,
 	ultimoTweet,
 	totalTweets,
-	getTweets
+	getTweets,
+	getAllTweets,
+	getText
 };

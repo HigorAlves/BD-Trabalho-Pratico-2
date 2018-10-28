@@ -3,7 +3,17 @@ const NLU_BOLSONARO = require('../../Models/NLU/Bolsonaro.model');
 const NLU_GENERAL = require('../../Models/NLU/General.model');
 const NLU_HADDAD = require('../../Models/NLU/Haddad.model');
 const NLU_MANUELA = require('../../Models/NLU/Manuela.model');
-const Texto = require('../../Models/BolsonaroEnglish.model');
+
+const PersonalidadeBolsonaro = require('../../Models/Personalidade/Bolsonaro.model');
+const PersonalidadeHaddad = require('../../Models/Personalidade/Haddad.model');
+const PersonalidadeManuela = require('../../Models/Personalidade/Manuela.model');
+const PersonalidadeGeneral = require('../../Models/Personalidade/General.model');
+
+const TextoBolsonaro = require('../../Models/BolsonaroTexto.model');
+const TextoHaddad = require('../../Models/HaddadTexto.model');
+const TextoManuela = require('../../Models/ManuelaTexto.model');
+const TextoGeneral = require('../../Models/GeneralTexto.model');
+
 const { analisarSalvar } = require('../../Services/watsonNLU');
 const { tradutor } = require('../../Services/tradutor');
 const { personalityInsights } = require('../../Services/personalityInsigths');
@@ -157,16 +167,62 @@ traduzirTexto = (req, res) => {
 			});
 			tradutor(texto)
 				.then(data => {
-					texto = new Texto({ text: data.translations[0].translation });
-					texto.save(function(error) {
-						if (error) {
-							console.log('NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS');
-							res.status(400).send(CONST.FALOU);
-						} else {
-							console.log('DADOS SALVOS COM SUCESSO');
-							res.status(200).send(CONST.SUCESSO);
-						}
-					});
+					if (req.body.candidato === 'jairbolsonaro') {
+						texto = new TextoBolsonaro({
+							text: data.translations[0].translation
+						});
+						texto.save(function(error) {
+							if (error) {
+								console.log('NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS');
+								res.status(400).send(CONST.FALOU);
+							} else {
+								console.log('DADOS SALVOS COM SUCESSO');
+								res.status(200).send(CONST.SUCESSO);
+							}
+						});
+					} else if (req.body.candidato === 'Haddad_Fernando') {
+						texto = new TextoHaddad({
+							text: data.translations[0].translation
+						});
+						texto.save(function(error) {
+							if (error) {
+								console.log('NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS');
+								res.status(400).send(CONST.FALOU);
+							} else {
+								console.log('DADOS SALVOS COM SUCESSO');
+								res.status(200).send(CONST.SUCESSO);
+							}
+						});
+					} else if (req.body.candidato === 'ManuelaDavila') {
+						texto = new TextoManuela({
+							text: data.translations[0].translation
+						});
+						texto.save(function(error) {
+							if (error) {
+								console.log('NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS');
+								res.status(400).send(CONST.FALOU);
+							} else {
+								console.log('DADOS SALVOS COM SUCESSO');
+								res.status(200).send(CONST.SUCESSO);
+							}
+						});
+					} else if (req.body.candidato === 'GeneraIMourao') {
+						texto = new TextoGeneral({
+							text: data.translations[0].translation
+						});
+						texto.save(function(error) {
+							if (error) {
+								console.log('NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS');
+								res.status(400).send(CONST.FALOU);
+							} else {
+								console.log('DADOS SALVOS COM SUCESSO');
+								res.status(200).send(CONST.SUCESSO);
+							}
+						});
+					} else {
+						console.log('É PRECISO INSERIR UM CANDIDATO VALIDO');
+						res.status(400).send(CONST.FALHOU);
+					}
 				})
 				.catch(error => {
 					console.log(
@@ -189,7 +245,63 @@ analisarPersonalidade = (req, res) => {
 			data = result[0].text;
 			personalityInsights(data)
 				.then(data => {
-					console.log(data);
+					if (req.body.candidato === 'jairbolsonaro') {
+						let personalidade = new PersonalidadeBolsonaro({ data: data });
+						personalidade.save(function(error) {
+							if (error) {
+								console.log(
+									'NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS A PERSONALIDADE: ' +
+										error
+								);
+								res.status(400).send(CONST.FALHOU);
+							} else {
+								console.log('PERSONALIDADE SALVA COM SUCESSO');
+								res.status(201).send(CONST.SUCESSO);
+							}
+						});
+					} else if (req.body.candidato === 'Haddad_Fernando') {
+						let personalidade = new PersonalidadeHaddad({ data: data });
+						personalidade.save(function(error) {
+							if (error) {
+								console.log(
+									'NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS A PERSONALIDADE: ' +
+										error
+								);
+								res.status(400).send(CONST.FALHOU);
+							} else {
+								console.log('PERSONALIDADE SALVA COM SUCESSO');
+								res.status(201).send(CONST.SUCESSO);
+							}
+						});
+					} else if (req.body.candidato === 'ManuelaDavila') {
+						let personalidade = new PersonalidadeManuela({ data: data });
+						personalidade.save(function(error) {
+							if (error) {
+								console.log(
+									'NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS A PERSONALIDADE: ' +
+										error
+								);
+								res.status(400).send(CONST.FALHOU);
+							} else {
+								console.log('PERSONALIDADE SALVA COM SUCESSO');
+								res.status(201).send(CONST.SUCESSO);
+							}
+						});
+					} else if (req.body.candidato === 'GeneraIMourao') {
+						let personalidade = new PersonalidadeGeneral({ data: data });
+						personalidade.save(function(error) {
+							if (error) {
+								console.log(
+									'NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS A PERSONALIDADE: ' +
+										error
+								);
+								res.status(400).send(CONST.FALHOU);
+							} else {
+								console.log('PERSONALIDADE SALVA COM SUCESSO');
+								res.status(201).send(CONST.SUCESSO);
+							}
+						});
+					}
 				})
 				.catch(error => {
 					console.log('NÃO FOI POSSIVEL ANALISAR A PERSONALIDADE: ' + error);

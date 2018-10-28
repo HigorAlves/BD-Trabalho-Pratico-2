@@ -1,6 +1,6 @@
 const Tweet = require('../Models/Bolsonaro.model');
 const NLU = require('../Models/NLU/Bolsonaro.model');
-const Texto = require('../Models/BolsonaroEnglish.model');
+const Texto = require('../Models/BolsonaroTexto.model');
 const CONST = require('../Config/consts');
 
 cadastrarTweet = function(req, res) {
