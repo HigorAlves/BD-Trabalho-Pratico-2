@@ -2,6 +2,7 @@ const Tweet = require('../Models/Bolsonaro.model');
 const NLU = require('../Models/NLU/Bolsonaro.model');
 const Texto = require('../Models/BolsonaroTexto.model');
 const CONST = require('../Config/consts');
+const Personalidade = require('../Models/Personalidade/Bolsonaro.model');
 
 cadastrarTweet = function(req, res) {
 	// req.assert('id', 'É obrigatorio que o ID seja preenchido').notEmpty();
@@ -145,11 +146,24 @@ getText = function(req, res) {
 	});
 };
 
+getPersonalidade = function(req, res) {
+	let query = Personalidade.find({}, {}, { sort: { natural: -1 } });
+	query.exec(function(error, data) {
+		if (error) {
+			console.log('NÃO FOI POSSIVEL PEGAR O ULTIMO TEXTO CADASTRADO: ' + error);
+			res.status(400).send(CONST.FALHOU);
+		} else {
+			res.status(200).send(data);
+		}
+	});
+};
+
 module.exports = {
 	cadastrarTweet,
 	ultimoTweet,
 	totalTweets,
 	getTweets,
 	getAllTweets,
-	getText
+	getText,
+	getPersonalidade
 };

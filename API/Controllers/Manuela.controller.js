@@ -2,8 +2,25 @@ const Tweet = require('../Models/Manuela.model');
 const NLU = require('../Models/NLU/Manuela.model');
 const Texto = require('../Models/ManuelaTexto.model');
 const CONST = require('../Config/consts');
+const Personalidade = require('../Models/Personalidade/Manuela.model');
 
 cadastrarTweet = function(req, res) {
+	// req.assert('id', 'É obrigatorio que o ID seja preenchido').notEmpty();
+	// req.assert('full_text', 'É obrigatorio que o full_text seja preenchido').notEmpty();
+	// req.assert('entities', 'É obrigatorio que o entities seja preenchido').notEmpty();
+	// req.assert('coordinates', 'É obrigatorio que o coordinates seja preenchido').notEmpty();
+	// req.assert('retweet_count', 'É obrigatorio que o retweet_count seja preenchido').notEmpty();
+	// req.assert('favorite_count', 'É obrigatorio que o favorite_count seja preenchido').notEmpty();
+	// req.assert('location', 'É obrigatorio que o location seja preenchido').notEmpty();
+	// req.assert('followers_count', 'É obrigatorio que o followers_count seja preenchido').notEmpty();
+	// req.assert('verified', 'É obrigatorio que o verified seja preenchido').notEmpty();
+	// req.assert('profile_image_url_https', 'É obrigatorio que o profile_image_url_https seja preenchido').notEmpty();
+	// req.assert('profile_banner_url', 'É obrigatorio que o profile_banner_url seja preenchido').notEmpty();
+
+	// if (req.validationErrors()) {
+	//   res.status(400).send('Ocorreu o erro voce nao deve ter preenchido todos os campos');
+	//   return;
+	// }
 	console.log('MONGODB API\n');
 	console.log('MONGO_API: CADASTRANDO O TWEET NO BANCO DE DADOS');
 
@@ -36,7 +53,7 @@ cadastrarTweet = function(req, res) {
 ultimoTweet = function(req, res) {
 	console.log('MONGODB API\n');
 	console.log(
-		'PEGANDO O ULTIMO TWEET SALVO NO BANCO DE DADOS DO(A) CANDIDATO HADDAD'
+		'PEGANDO O ULTIMO TWEET SALVO NO BANCO DE DADOS DO(A) CANDIDATO BOLSONARO'
 	);
 
 	Tweet.findOne({}, {}, { sort: { $natural: -1 } }, function(error, tweet) {
@@ -67,10 +84,11 @@ totalTweets = function(req, res) {
 						error
 				);
 		}
-		res.status(200).send({ tweet });
+		res.status(200).send({ id: tweet });
 	});
 };
 
+//Pega a quantidade de tweets do usuario para saber quais ja foram usados para analise de sentimento.
 getTweets = function(req, res) {
 	console.log('MONGODB API\n');
 	console.log('PEGANDO TWEETS DO USUARIO');
@@ -91,7 +109,7 @@ getTweets = function(req, res) {
 			query.exec(function(error, data) {
 				if (error) {
 					console.log(
-						'OCORREU UM ERRO AO PEGAR OS TWEETS DO CANDIDATO MANUELA DAVILA'
+						'OCORREU UM ERRO AO PEGAR OS TWEETS DO CANDIDATO JAIR BOLSONARO'
 					);
 					res.status(400).send(CONST.FALHOU);
 				} else {
@@ -103,6 +121,7 @@ getTweets = function(req, res) {
 	});
 };
 
+// PEGA TODOS OS TEXTOS DOS TWEETS
 getAllTweets = function(req, res) {
 	let query = Tweet.find({}, { full_text: 1 });
 	query.exec(function(error, data) {
@@ -127,11 +146,24 @@ getText = function(req, res) {
 	});
 };
 
+getPersonalidade = function(req, res) {
+	let query = Personalidade.find({}, {}, { sort: { natural: -1 } });
+	query.exec(function(error, data) {
+		if (error) {
+			console.log('NÃO FOI POSSIVEL PEGAR O ULTIMO TEXTO CADASTRADO: ' + error);
+			res.status(400).send(CONST.FALHOU);
+		} else {
+			res.status(200).send(data);
+		}
+	});
+};
+
 module.exports = {
 	cadastrarTweet,
 	ultimoTweet,
 	totalTweets,
 	getTweets,
 	getAllTweets,
-	getText
+	getText,
+	getPersonalidade
 };

@@ -2,7 +2,6 @@ const clients = require('restify-clients');
 const Twitter = require('twitter');
 const fetch = require('node-fetch');
 
-const TwitterAuth = require('../Config/twitterAuth');
 const Const = require('../Config/consts');
 
 salvarBD = (data, candidato) => {
@@ -64,7 +63,7 @@ salvarTweets = (candidato, quantidade) => {
 	return new Promise((resolve, reject) => {
 		console.log('\nSALVANDO TWEETS DO CANDIDATO(A): ' + candidato + '\n');
 
-		const T = new Twitter(TwitterAuth);
+		const T = new Twitter(Const.TWITTER_AUTH);
 		let tweetsToGet = null;
 		let id = null;
 
