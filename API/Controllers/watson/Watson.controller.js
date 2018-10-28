@@ -3,7 +3,9 @@ const NLU_BOLSONARO = require('../../Models/NLU/Bolsonaro.model');
 const NLU_GENERAL = require('../../Models/NLU/General.model');
 const NLU_HADDAD = require('../../Models/NLU/Haddad.model');
 const NLU_MANUELA = require('../../Models/NLU/Manuela.model');
+const Texto = require('../../Models/BolsonaroEnglish.model');
 const { analisarSalvar } = require('../../Services/watsonNLU');
+const { tradutor } = require('../../Services/tradutor');
 const CONST = require('../../Config/consts');
 
 cadastrar = function(req, res) {
@@ -144,8 +146,37 @@ cadastrar = function(req, res) {
 };
 
 traduzirTexto = (req, res) => {
-	console.log('ola');
-	res.status(200).send(CONST.SUCESSO);
+	let texto = null;
+	fetch(`http://localhost:3000/mongodb/alltweets/${req.body.candidato}`)
+		.then(result => result.json())
+		.then(data => {
+			data.map(data => {
+				texto += data.full_text + '\n';
+			});
+			tradutor(texto)
+				.then(data => {
+					texto = new Texto({ text: data.translations[0].translation });
+					texto.save(function(error) {
+						if (error) {
+							console.log('NÃO FOI POSSIVEL SALVAR NO BANCO DE DADOS');
+							res.status(400).send(CONST.FALOU);
+						} else {
+							console.log('DADOS SALVOS COM SUCESSO');
+							res.status(200).send(CONST.SUCESSO);
+						}
+					});
+				})
+				.catch(error => {
+					console.log(
+						'NÃO FOI POSSIVEL REALIZAR A TRADUÇÃO DO CONTEUDO: ' + error + '\n'
+					);
+					res.status(400).send(CONST.FALHOU);
+				});
+		})
+		.catch(error => {
+			console.log('ERROR: ' + error);
+			res.status(400).send(CONST.FALHOU);
+		});
 };
 
 module.exports = {

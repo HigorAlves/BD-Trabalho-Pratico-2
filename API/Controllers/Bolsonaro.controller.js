@@ -118,8 +118,9 @@ getTweets = function(req, res) {
 	});
 };
 
+// PEGA TODOS OS TEXTOS DOS TWEETS
 getAllTweets = function(req, res) {
-	let query = Tweet.find({});
+	let query = Tweet.find({}, { full_text: 1 });
 	query.exec(function(error, data) {
 		if (error) {
 			console.log('OCORREU UM ERRO AO PEGAR TODOS OS TWEETS DE JAIR BOLSONARO');
