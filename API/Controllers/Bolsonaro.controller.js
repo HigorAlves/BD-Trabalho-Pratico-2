@@ -158,6 +158,18 @@ getPersonalidade = function(req, res) {
 	});
 };
 
+getAllTweetsData = function(req, res) {
+	let query = Tweet.find({}, {}, { limit: 10 });
+	query.exec(function(error, data) {
+		if (error) {
+			console.log('NAO FOI POSSIVEL PEGAR OS DADOS DOS TWEETS: ' + error);
+			res.status(400).send(CONST.FALHOU);
+		} else {
+			res.status(200).send(data);
+		}
+	});
+};
+
 module.exports = {
 	cadastrarTweet,
 	ultimoTweet,
@@ -165,5 +177,6 @@ module.exports = {
 	getTweets,
 	getAllTweets,
 	getText,
-	getPersonalidade
+	getPersonalidade,
+	getAllTweetsData
 };

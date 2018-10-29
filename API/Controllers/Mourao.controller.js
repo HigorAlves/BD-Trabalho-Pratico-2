@@ -53,7 +53,7 @@ cadastrarTweet = function(req, res) {
 ultimoTweet = function(req, res) {
 	console.log('MONGODB API\n');
 	console.log(
-		'PEGANDO O ULTIMO TWEET SALVO NO BANCO DE DADOS DO(A) CANDIDATO BOLSONARO'
+		'PEGANDO O ULTIMO TWEET SALVO NO BANCO DE DADOS DO(A) CANDIDATO GENERAL MOURÃO'
 	);
 
 	Tweet.findOne({}, {}, { sort: { $natural: -1 } }, function(error, tweet) {

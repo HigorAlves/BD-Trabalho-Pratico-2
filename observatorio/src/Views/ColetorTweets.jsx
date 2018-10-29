@@ -10,7 +10,7 @@ export default class PegatTweets extends Component {
 		this.state = {
 			candidato: '',
 			quantidade: '',
-			alerta: '',
+			alerta: null,
 			lastId: null,
 			qtTweets: null,
 			qtAtualTweets: null,
@@ -19,6 +19,7 @@ export default class PegatTweets extends Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleQuantidadeChange = this.handleQuantidadeChange.bind(this);
+		this.getTweets = this.getTweets.bind(this);
 	}
 	//PEGA OS TWEETS DO TWITTER E A QUANTIDADE QUE ESTA SALVA NO BANCO DE DADOS
 	getTweets(candidato) {
@@ -28,7 +29,7 @@ export default class PegatTweets extends Component {
 				this.setState({ qtAtualTweets: data.count });
 			})
 			.catch(error => {
-				console.log('NÃO FOI POSSIVEL PEGAR OS TWEETS DO CANDIDATO');
+				console.log('NÃO FOI POSSIVEL PEGAR OS TWEETS DO CANDIDATO: ' + error);
 			});
 
 		fetch(`http://localhost:3000/mongodb/totaltweets/${candidato}`)
@@ -37,7 +38,10 @@ export default class PegatTweets extends Component {
 				this.setState({ qtTweets: data.id });
 			})
 			.catch(error => {
-				console.log('NÃO FOI POSSIVEL PEGAR A QUANTIDADE DE TWEETS NO BANCO');
+				console.log(
+					'NÃO FOI POSSIVEL PEGAR A QUANTIDADE DE TWEETS NO BANCO: ' + error
+				);
+				return;
 			});
 	}
 
@@ -69,18 +73,22 @@ export default class PegatTweets extends Component {
 				candidato: this.state.candidato,
 				quantidade: this.state.quantidade
 			})
-		}).then(res => {
-			if (parseInt(res.status) === 201) {
-				this.setState({ alerta: true });
-				this.getTweets(this.state.candidato);
+		})
+			.then(res => {
+				if (parseInt(res.status) === 201) {
+					this.setState({ alerta: true });
+					this.setState({ carregando: false });
+					this.getTweets(this.state.candidato);
+					setTimeout(() => {
+						this.setState({ alerta: null });
+					}, 5000);
+				} else {
+					this.setState({ alerta: false });
+				}
+			})
+			.catch(error => {
 				this.setState({ carregando: false });
-				setTimeout(() => {
-					this.setState({ alerta: null });
-				}, 5000);
-			} else {
-				this.setState({ alerta: false });
-			}
-		});
+			});
 	}
 
 	render() {

@@ -87,10 +87,7 @@ export default class NavBar extends Component {
 								</Link>{' '}
 								{/* eslint-disable-line */}
 								<div className="dropdown-divider" />
-								<Link
-									className={'dropdown-item' + ' ' + ''}
-									to="/listagemtweets"
-								>
+								<Link className={'dropdown-item' + ' ' + ''} to="/listarTweets">
 									Listar Tweets
 								</Link>{' '}
 								{/* eslint-disable-line */}

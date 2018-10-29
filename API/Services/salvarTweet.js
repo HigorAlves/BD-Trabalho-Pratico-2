@@ -58,7 +58,7 @@ salvarBD = (data, candidato) => {
 	});
 };
 
-//PEGAR QUANTIDADE DE TWEETS DO CANDIDATO X E SALVAR OS MESMOS NO BANCO DE DADOS DO REFERENTE
+//PEGAR QUANTIDADE dE TWEETS DO CANDIDATO X E SALVAR OS MESMOS NO BANCO DE DADOS DO REFERENTE
 salvarTweets = (candidato, quantidade) => {
 	return new Promise((resolve, reject) => {
 		console.log('\nSALVANDO TWEETS DO CANDIDATO(A): ' + candidato + '\n');
@@ -77,7 +77,8 @@ salvarTweets = (candidato, quantidade) => {
 				}
 			})
 			.then(json => {
-				if (json === null) {
+				console.log(json);
+				if (json === null || json.id === 0) {
 					console.log('NÃO EXISTEM TWEETS NO BANCO');
 					tweetsToGet = Object.assign(
 						{ screen_name: `${candidato}`, tweet_mode: 'extended' },
