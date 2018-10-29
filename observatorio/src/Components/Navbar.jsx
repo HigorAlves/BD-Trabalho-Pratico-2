@@ -30,7 +30,7 @@ export default class NavBar extends Component {
 	render() {
 		return (
 			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-				<Link className="navbar-brand" to="/observatorio">
+				<Link className="navbar-brand" to="/home">
 					<img src={Logo} className="App-navbar" alt="" />
 					Observatorio UFSJ
 				</Link>
@@ -51,7 +51,7 @@ export default class NavBar extends Component {
 						<li className={'nav-item' + ' ' + this.state.inicio}>
 							{' '}
 							{/* eslint-disable-line */}
-							<Link className="nav-link" to="/observatorio">
+							<Link className="nav-link" to="/home">
 								Inicio
 							</Link>
 						</li>

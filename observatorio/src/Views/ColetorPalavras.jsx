@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
 import Jumbotron from '../Components/Jumbotron';
+import Loading from '../Components/Loader';
+import Alert from '../Components/Alert';
 
 export default class ColetorPalavras extends Component {
 	constructor(props) {
@@ -8,7 +10,9 @@ export default class ColetorPalavras extends Component {
 		this.state = {
 			quantidadeBanco: 0,
 			palavraChave: '',
-			quantidade: ''
+			quantidade: '',
+			carregando: false,
+			alert: null
 		};
 		this.onSubmit = this.onSubmit.bind(this);
 		this.onChangePalavraChave = this.onChangePalavraChave.bind(this);
@@ -36,6 +40,7 @@ export default class ColetorPalavras extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
+		this.setState({ carregando: true });
 		this.getPalavrasBD();
 		fetch(`http://localhost:3000/twitter/buscapalavra`, {
 			method: 'POST',
@@ -49,9 +54,14 @@ export default class ColetorPalavras extends Component {
 			})
 		}).then(res => {
 			if (parseInt(res.status) === 200) {
+				this.setState({ alert: true });
 				this.getPalavrasBD();
+				this.setState({ carregando: false });
+				setTimeout(() => {
+					this.setState({ alert: null });
+				}, 5000);
 			} else {
-				//nao foi salvo com sucesso
+				this.setState({ alert: false });
 			}
 		});
 	}
@@ -68,7 +78,9 @@ export default class ColetorPalavras extends Component {
 					titulo="Coletor de Palavras"
 					texto="Aqui você pode coletar os tweets baseados em palavras chaves de sua escolha"
 				/>
+				{this.state.carregando ? <Loading /> : null}
 				<div className="container">
+					{this.state.alert ? <Alert alert={this.state.alert} /> : null}
 					<div className="row">
 						<div className="col-md-12">
 							<form onSubmit={this.onSubmit}>

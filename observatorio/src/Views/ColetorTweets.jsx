@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
 import Jumbotron from '../Components/Jumbotron';
 import Alert from '../Components/Alert';
+import Loading from '../Components/Loader';
 
 export default class PegatTweets extends Component {
 	constructor(props) {
@@ -12,7 +13,8 @@ export default class PegatTweets extends Component {
 			alerta: '',
 			lastId: null,
 			qtTweets: null,
-			qtAtualTweets: null
+			qtAtualTweets: null,
+			carregando: false
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,7 +58,7 @@ export default class PegatTweets extends Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-
+		this.setState({ carregando: true });
 		fetch('http://localhost:3000/twitter/cadastrar', {
 			method: 'POST',
 			headers: {
@@ -71,6 +73,7 @@ export default class PegatTweets extends Component {
 			if (parseInt(res.status) === 201) {
 				this.setState({ alerta: true });
 				this.getTweets(this.state.candidato);
+				this.setState({ carregando: false });
 				setTimeout(() => {
 					this.setState({ alerta: null });
 				}, 5000);
@@ -92,6 +95,7 @@ export default class PegatTweets extends Component {
 				/>
 
 				<div className="container">
+					{this.state.carregando ? <Loading /> : null}
 					{this.state.alerta ? <Alert alert={this.state.alerta} /> : null}
 					<div className="row">
 						<div className="col-sm-12 col-md-12">
