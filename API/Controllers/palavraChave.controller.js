@@ -1,9 +1,9 @@
-const Tweet = require('../Models/palavraChave.model');
+const Palavra = require('../Models/palavraChave.model');
 
 cadastrar = (req, res) => {
 	console.log('CADASTRANDO PALAVRA CHAVE: ' + req.body.palavraChave);
 
-	let palavra = new Tweet({
+	let palavra = new Palavra({
 		palavra_chave: req.body.palavraChave,
 		screen_name: req.body.screen_name,
 		id: req.body.id,
@@ -26,6 +26,20 @@ cadastrar = (req, res) => {
 	});
 };
 
+quantidade = (req, res) => {
+	let query = Palavra.find({}).count();
+	query.exec(function(erro, data) {
+		if (erro) {
+			console.log('NÃO FOI POSSIVEL PEGAR A QUANTIDADE DE PALAVRAS: ', erro);
+			res.status(400).send('FALHOU');
+		} else {
+			console.log('QUANTIDADE PEGA COM SUCESSO');
+			res.status(200).send({ data });
+		}
+	});
+};
+
 module.exports = {
-	cadastrar
+	cadastrar,
+	quantidade
 };

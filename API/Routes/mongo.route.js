@@ -49,5 +49,6 @@ router.get('/texto/GeneraIMourao', general.getText);
 router.get('/personalidade/GeneraIMourao', general.getPersonalidade);
 
 router.post('/cadastrarpalavra', palavraChave.cadastrar);
+router.get('/quantidadepalavras', palavraChave.quantidade);
 
 module.exports = router;

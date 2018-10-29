@@ -7,6 +7,7 @@ import PrivateRoute from './Components/PrivateRoute'; // eslint-disable-line no-
 import App from './App';
 import Home from './Views/Home';
 import ColetorTweets from './Views/ColetorTweets';
+import ColetorPalavras from './Views/ColetorPalavras';
 
 export default class Routers extends Component {
 	render() {
@@ -16,6 +17,7 @@ export default class Routers extends Component {
 					<Route exact path="/" component={App} />
 					<Route exact path="/home" component={Home} />
 					<Route exact path="/coletorTweets" component={ColetorTweets} />
+					<Route exact path="/coletorPalavras" component={ColetorPalavras} />
 				</div>
 			</Router>
 		);

@@ -43,7 +43,7 @@ totalTweets = function(req, res) {
 };
 
 buscaPalavra = function(req, res) {
-	const client = new Twitter(Const.TWITTER_AUTH);
+	const client = new Twitter(TWITTER_AUTH);
 	console.log(
 		'BUSCANDO PELA PALAVRA CHAVE: ' +
 			req.body.palavra +

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
+import Jumbotron from '../Components/Jumbotron';
 import Alert from '../Components/Alert';
 
 export default class PegatTweets extends Component {
@@ -83,17 +84,12 @@ export default class PegatTweets extends Component {
 		return (
 			<section>
 				<Navbar ativo="pegartweets" />
-
-				<div className="jumbotron jumbotron-fluid">
-					<div className="container">
-						<h1 className="display-4">Coletor de Tweets</h1>
-						<p className="lead">
-							Nesta pagina você pode escolher entre os candidatos
+				<Jumbotron
+					titulo="Coletor de Tweets"
+					texto="Nesta pagina você pode escolher entre os candidatos
 							pre-cadastrados, o escolhido vai ter seus dados do twitter pegos
-							via a API.
-						</p>
-					</div>
-				</div>
+							via a API."
+				/>
 
 				<div className="container">
 					{this.state.alerta ? <Alert alert={this.state.alerta} /> : null}
@@ -126,7 +122,7 @@ export default class PegatTweets extends Component {
 									<div className="form-group col-md-6 col-sm-12">
 										<label htmlFor="inputQuantidadeTweets">
 											Quantidade de Tweets para cadastrar (Quantidade maxima de
-											200)
+											180)
 										</label>
 										<input
 											type="text"

@@ -8,7 +8,7 @@ export default class NavBar extends Component {
 		this.state = {
 			inicio: null,
 			pegarTweets: null,
-			listagemTweets: null,
+			coletorpalavras: null,
 			dropdown: null
 		};
 	}
@@ -21,8 +21,8 @@ export default class NavBar extends Component {
 			this.setState({ pegarTweets: 'active' });
 			this.setState({ dropdown: 'active' });
 		}
-		if (this.props.ativo === 'listagemtweets') {
-			this.setState({ listagemTweets: 'active' });
+		if (this.props.ativo === 'coletorpalavras') {
+			this.setState({ coletorpalavras: 'active' });
 			this.setState({ dropdown: 'active' });
 		}
 	}
@@ -80,15 +80,15 @@ export default class NavBar extends Component {
 								</Link>{' '}
 								{/* eslint-disable-line */}
 								<Link
-									className={'dropdown-item' + ' ' + this.state.listagemTweets}
-									to="/coletorhashtag"
+									className={'dropdown-item' + ' ' + this.state.coletorpalavras}
+									to="/coletorpalavras"
 								>
-									Coletor Hashtag
+									Coletor Palavras
 								</Link>{' '}
 								{/* eslint-disable-line */}
 								<div className="dropdown-divider" />
 								<Link
-									className={'dropdown-item' + ' ' + this.state.listagemTweets}
+									className={'dropdown-item' + ' ' + ''}
 									to="/listagemtweets"
 								>
 									Listar Tweets
