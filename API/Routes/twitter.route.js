@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/cadastrar', controller.cadastrarTweets);
-//Total de tweets que o candidato ja postou precisa de mandar no body o nome do mesmo
+//Total de tweets que o candidato ja postou
 router.get('/totaltweets/:candidato', controller.totalTweets);
 router.post('/buscapalavra', controller.buscaPalavra);
 
