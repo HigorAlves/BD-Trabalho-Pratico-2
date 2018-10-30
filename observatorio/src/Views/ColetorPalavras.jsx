@@ -27,7 +27,7 @@ export default class ColetorPalavras extends Component {
 				this.setState({ quantidadeBanco: res.data });
 			})
 			.catch(error => {
-				console.log('aconteceu um erro');
+				console.warn('Não foi possivel pegar a quantidade de Palvras');
 			});
 	}
 
@@ -80,7 +80,7 @@ export default class ColetorPalavras extends Component {
 				/>
 				{this.state.carregando ? <Loading /> : null}
 				<div className="container">
-					{this.state.alert ? <Alert alert={this.state.alert} /> : null}
+					<Alert alert={this.state.alert} />
 					<div className="row">
 						<div className="col-md-12">
 							<form onSubmit={this.onSubmit}>

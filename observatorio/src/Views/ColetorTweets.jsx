@@ -104,7 +104,7 @@ export default class PegatTweets extends Component {
 
 				<div className="container">
 					{this.state.carregando ? <Loading /> : null}
-					{this.state.alerta ? <Alert alert={this.state.alerta} /> : null}
+					<Alert alert={this.state.alerta} />
 					<div className="row">
 						<div className="col-sm-12 col-md-12">
 							<h2 className="font-weight-light">Escolha um candidato</h2>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
 import Jumbotron from '../Components/Jumbotron';
 import Tweet from '../Components/Tweet';
+import Alert from '../Components/Alert';
 
 export default class ListarTweets extends Component {
 	constructor(props) {
@@ -9,7 +10,8 @@ export default class ListarTweets extends Component {
 		this.state = {
 			quantidade: 0,
 			candidato: '',
-			tweets: []
+			tweets: [],
+			alerta: null
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -28,7 +30,10 @@ export default class ListarTweets extends Component {
 				this.setState({ tweets: [...this.state.tweets, ...data] });
 			})
 			.catch(error => {
-				console.warn('error: ', error);
+				this.setState({ alerta: false });
+				setTimeout(() => {
+					this.setState({ alerta: null });
+				}, 5000);
 			});
 	}
 	handleChange(e) {
@@ -60,7 +65,9 @@ export default class ListarTweets extends Component {
 				<div className="d-flex justify-content-center">
 					<div className="container">
 						<div className="row">
-							<div className="col-md-12 col-sm-12" />
+							<div className="col-md-12 col-sm-12">
+								<Alert alert={this.state.alerta} />
+							</div>
 						</div>
 						<form>
 							<div className="form-row">
