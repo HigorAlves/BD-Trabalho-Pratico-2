@@ -50,7 +50,6 @@ export default class ListarTweets extends Component {
 	};
 
 	render() {
-		var tweets = this.state.tweet;
 		return (
 			<React.Fragment>
 				<Navbar />

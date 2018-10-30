@@ -1,5 +1,5 @@
 import React from 'react';
-import { COMMENT, RETWEET, HEART } from '../lib/Icons.js';
+import { RETWEET, HEART } from '../lib/Icons.js';
 
 export default function Tweet(props) {
 	return (
@@ -9,6 +9,7 @@ export default function Tweet(props) {
 					src={props.data.profile_image_url_https}
 					className="rounded-circle"
 					style={{ width: '48px', height: '48px' }}
+					alt="Foto de perfil"
 				/>
 				<code className="ml-2">{props.data.screen_name}</code>
 			</div>
