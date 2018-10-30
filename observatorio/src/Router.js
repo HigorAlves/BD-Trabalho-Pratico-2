@@ -9,6 +9,7 @@ import Home from './Views/Home';
 import ColetorTweets from './Views/ColetorTweets';
 import ColetorPalavras from './Views/ColetorPalavras';
 import ListarTweets from './Views/ListarTweets';
+import ListarTweetsPC from './Views/ListarTweetsPalavrasChaves';
 
 export default class Routers extends Component {
 	render() {
@@ -20,6 +21,11 @@ export default class Routers extends Component {
 					<Route exact path="/coletorTweets" component={ColetorTweets} />
 					<Route exact path="/coletorPalavras" component={ColetorPalavras} />
 					<Route exact path="/listarTweets" component={ListarTweets} />
+					<Route
+						exact
+						path="/listarTweetsPalavras"
+						component={ListarTweetsPC}
+					/>
 				</div>
 			</Router>
 		);

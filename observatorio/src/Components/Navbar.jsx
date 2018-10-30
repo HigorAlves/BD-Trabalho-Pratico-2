@@ -84,14 +84,17 @@ export default class NavBar extends Component {
 								<Link className={'dropdown-item' + ' ' + ''} to="/listarTweets">
 									Listar Tweets Candidatos
 								</Link>
-								<Link className={'dropdown-item' + ' ' + ''} to="/listarTweets">
+								<Link
+									className={'dropdown-item' + ' ' + ''}
+									to="/listarTweetsPalavras"
+								>
 									Listar Tweets Palavras Chaves
 								</Link>
 							</div>
 						</li>
 						<li className="nav-item dropdown">
 							<Link
-								className={'nav-link dropdown-toggle'}
+								className={'nav-link dropdown-toggle disabled'}
 								to="/"
 								id="navbarDropdown"
 								role="button"
@@ -128,7 +131,7 @@ export default class NavBar extends Component {
 						</li>
 						<li className="nav-item dropdown">
 							<Link
-								className={'nav-link dropdown-toggle'}
+								className={'nav-link dropdown-toggle disabled'}
 								to="/"
 								id="navbarDropdown"
 								role="button"
@@ -152,7 +155,7 @@ export default class NavBar extends Component {
 						</li>
 						<li className="nav-item">
 							<Link className="nav-link disabled" to="/">
-								Disabled
+								Creditos
 							</Link>
 						</li>
 					</ul>

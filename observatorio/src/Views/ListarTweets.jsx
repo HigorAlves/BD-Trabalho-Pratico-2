@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
 import Jumbotron from '../Components/Jumbotron';
 import Tweet from '../Components/Tweet';
-import { COMMENT, RETWEET, HEART } from '../lib/Icons';
 
 export default class ListarTweets extends Component {
 	constructor(props) {
@@ -55,7 +54,10 @@ export default class ListarTweets extends Component {
 		return (
 			<React.Fragment>
 				<Navbar />
-				<Jumbotron titulo="Listar Tweets" texto="Aqui você pode ver todos os tweets cadastrados no banco de dados do candidato que escolher" />
+				<Jumbotron
+					titulo="Listar Tweets"
+					texto="Aqui você pode ver todos os tweets cadastrados no banco de dados do candidato que escolher"
+				/>
 				<div className="d-flex justify-content-center">
 					<div className="container">
 						<div className="row">

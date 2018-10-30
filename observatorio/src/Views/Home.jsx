@@ -6,7 +6,7 @@ import Footer from '../Components/Footer';
 export default class ObservatorioHome extends Component {
 	render() {
 		return (
-			<section>
+			<React.Fragment>
 				<Navbar ativo={'inicio'} />
 				<Jumbotron
 					titulo="Bem vindo ao Observatorio"
@@ -40,7 +40,7 @@ export default class ObservatorioHome extends Component {
 										Veja dados sobre os candidatos e o que as pessoas estão
 										falando dos candidatos
 									</p>
-									<button type="button" className="btn btn-success">
+									<button type="button" className="btn btn-dark">
 										Visitar
 									</button>
 								</div>
@@ -49,7 +49,7 @@ export default class ObservatorioHome extends Component {
 					</div>
 				</div>
 				<Footer />
-			</section>
+			</React.Fragment>
 		);
 	}
 }
