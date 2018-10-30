@@ -61,10 +61,9 @@ ultimoTweet = function(req, res) {
 			res
 				.status(400)
 				.send('NÃO FOI POSSIVEL PEGAR O ULTIMO TWEET DO CANDIDATO: ' + error);
-			return err;
 		}
 		if (tweet === null) {
-			res.status(204).send(null);
+			res.status(204).send(CONST.FALHOU);
 		} else {
 			res.status(200).send({ tweet });
 		}
