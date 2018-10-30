@@ -9,7 +9,6 @@ export default class ListarTweets extends Component {
 		super(props);
 		this.state = {
 			quantidade: 0,
-			scrolling: false,
 			candidato: '',
 			tweets: []
 		};
@@ -42,13 +41,11 @@ export default class ListarTweets extends Component {
 	}
 
 	handleScroll = e => {
-		if (this.state.scrolling) return;
 		let ultimoItem = document.querySelector('div > div.card:last-child');
 		let ultimoItemOffset = ultimoItem.offsetTop + ultimoItem.clientHeight;
 		let pageOffset = window.pageYOffset + window.innerHeight;
 		let bottomOffset = 20;
 		if (pageOffset > ultimoItemOffset + bottomOffset) {
-			// this.setState({ scrolling: true });
 			this.carregarItens(this.state.candidato);
 		}
 	};
@@ -58,7 +55,7 @@ export default class ListarTweets extends Component {
 		return (
 			<React.Fragment>
 				<Navbar />
-				<Jumbotron titulo="Listar Tweets" texto="as" />
+				<Jumbotron titulo="Listar Tweets" texto="Aqui você pode ver todos os tweets cadastrados no banco de dados do candidato que escolher" />
 				<div className="d-flex justify-content-center">
 					<div className="container">
 						<div className="row">
