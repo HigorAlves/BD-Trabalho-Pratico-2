@@ -159,7 +159,11 @@ getPersonalidade = function(req, res) {
 };
 
 getAllTweetsData = function(req, res) {
-	let query = Tweet.find({}, {}, { limit: 10 });
+	let query = Tweet.find({}, null, {
+		limit: 10,
+		skip: parseInt(req.params.quantidade)
+	});
+	console.log(req.params.quantidade);
 	query.exec(function(error, data) {
 		if (error) {
 			console.log('NAO FOI POSSIVEL PEGAR OS DADOS DOS TWEETS: ' + error);
