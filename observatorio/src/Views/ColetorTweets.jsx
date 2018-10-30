@@ -14,7 +14,8 @@ export default class PegatTweets extends Component {
 			lastId: null,
 			qtTweets: null,
 			qtAtualTweets: null,
-			carregando: false
+			carregando: false,
+			error: null
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,7 +42,6 @@ export default class PegatTweets extends Component {
 				console.log(
 					'NÃO FOI POSSIVEL PEGAR A QUANTIDADE DE TWEETS NO BANCO: ' + error
 				);
-				return;
 			});
 	}
 
@@ -84,6 +84,11 @@ export default class PegatTweets extends Component {
 					}, 5000);
 				} else {
 					this.setState({ alerta: false });
+					this.setState({ carregando: false });
+					this.setState({
+						error:
+							'Não foi possivel cadastrar no banco de dados pois o servidor não esta online!'
+					});
 				}
 			})
 			.catch(error => {
@@ -104,7 +109,7 @@ export default class PegatTweets extends Component {
 
 				<div className="container">
 					{this.state.carregando ? <Loading /> : null}
-					<Alert alert={this.state.alerta} />
+					<Alert alert={this.state.alerta} error={this.state.error} />
 					<div className="row">
 						<div className="col-sm-12 col-md-12">
 							<h2 className="font-weight-light">Escolha um candidato</h2>
