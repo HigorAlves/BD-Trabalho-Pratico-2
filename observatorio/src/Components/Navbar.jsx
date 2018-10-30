@@ -49,8 +49,6 @@ export default class NavBar extends Component {
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav mr-auto">
 						<li className={'nav-item' + ' ' + this.state.inicio}>
-							{' '}
-							{/* eslint-disable-line */}
 							<Link className="nav-link" to="/home">
 								Inicio
 							</Link>
@@ -67,8 +65,6 @@ export default class NavBar extends Component {
 								aria-haspopup="true"
 								aria-expanded="false"
 							>
-								{' '}
-								{/* eslint-disable-line */}
 								Tweets
 							</Link>
 							<div className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -77,20 +73,20 @@ export default class NavBar extends Component {
 									to="/coletortweets"
 								>
 									Coletar Tweets
-								</Link>{' '}
-								{/* eslint-disable-line */}
+								</Link>
 								<Link
 									className={'dropdown-item' + ' ' + this.state.coletorpalavras}
 									to="/coletorpalavras"
 								>
 									Coletor Palavras
-								</Link>{' '}
-								{/* eslint-disable-line */}
+								</Link>
 								<div className="dropdown-divider" />
 								<Link className={'dropdown-item' + ' ' + ''} to="/listarTweets">
-									Listar Tweets
-								</Link>{' '}
-								{/* eslint-disable-line */}
+									Listar Tweets Candidatos
+								</Link>
+								<Link className={'dropdown-item' + ' ' + ''} to="/listarTweets">
+									Listar Tweets Palavras Chaves
+								</Link>
 							</div>
 						</li>
 						<li className="nav-item dropdown">
@@ -103,11 +99,54 @@ export default class NavBar extends Component {
 								aria-haspopup="true"
 								aria-expanded="false"
 							>
-								Administração
+								Watson
 							</Link>
 							<div className="dropdown-menu" aria-labelledby="navbarDropdown">
 								<Link className="dropdown-item" to="/">
-									Sem função
+									NLU Candidato
+								</Link>
+								<Link className="dropdown-item" to="/">
+									NLU Palavra Chave
+								</Link>
+								<Link className="dropdown-item" to="/">
+									Criar Texto
+								</Link>
+								<Link className="dropdown-item" to="/">
+									Analisar Personalidade
+								</Link>
+								<div className="dropdown-divider" />
+								<Link className="dropdown-item" to="/">
+									Listar NLU dos Candidatos
+								</Link>
+								<Link className="dropdown-item" to="/">
+									Listar NLU Palavras Chaves
+								</Link>
+								<Link className="dropdown-item" to="/">
+									Observar Personalidade
+								</Link>
+							</div>
+						</li>
+						<li className="nav-item dropdown">
+							<Link
+								className={'nav-link dropdown-toggle'}
+								to="/"
+								id="navbarDropdown"
+								role="button"
+								data-toggle="dropdown"
+								aria-haspopup="true"
+								aria-expanded="false"
+							>
+								MongoDB
+							</Link>
+							<div className="dropdown-menu" aria-labelledby="navbarDropdown">
+								<Link className="dropdown-item" to="/">
+									Quantidade de Tweets
+								</Link>
+								<Link className="dropdown-item" to="/">
+									Entidades mais usadas
+								</Link>
+								<Link className="dropdown-item" to="/">
+									Sentimentos mais usados
 								</Link>
 							</div>
 						</li>
