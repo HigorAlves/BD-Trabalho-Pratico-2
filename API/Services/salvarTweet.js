@@ -31,23 +31,9 @@ salvarBD = (data, candidato) => {
 				profile_banner_url: data.user.profile_banner_url
 			};
 
-			client.post(`/mongodb/cadastrartweet/${candidato}`, tweet, function(
-				err,
-				req,
-				res,
-				retorno
-			) {
-				if (
-					err + '' ===
-						'RestError: Invalid JSON in response; caused by SyntaxError: Unexpected token O in JSON at position 0' ||
-					err + '' ===
-						'RestError: Invalid JSON in response; caused by SyntaxError: Unexpected token T in JSON at position 0'
-				) {
-					console.log('TWEETS SALVOS COM: ' + Const.SUCESSO);
-					resolve(Const.SUCESSO);
-				} else if (err) {
+			client.post('/mongodb/cadastrartweet', tweet, function (err, req, res) {
+				if (err === 'RestError: Invalid JSON in response; caused by SyntaxError: Unexpectedtoken S in JSON at position 0') {
 					console.log('OCORREU UM ERRO AO CADASTRAR NO BANCO: ' + err);
-					console.log(Const.FALHA);
 					reject(Const.FALHOU);
 				} else {
 					console.log('TWEETS SALVOS COM: ' + Const.SUCESSO);
@@ -77,13 +63,9 @@ salvarTweets = (candidato, quantidade) => {
 				}
 			})
 			.then(json => {
-				console.log(json);
 				if (json === null || json.id === 0) {
 					console.log('NÃO EXISTEM TWEETS NO BANCO');
-					tweetsToGet = Object.assign(
-						{ screen_name: `${candidato}`, tweet_mode: 'extended' },
-						{ count: quantidade }
-					);
+					tweetsToGet = Object.assign({ screen_name: `${candidato}`, tweet_mode: 'extended' }, { count: quantidade });
 					//COMO NÃO EXISTE TWEETS NO BANCO VAMOS PEGAR TWEETS BASEADO NA QUANTIDADE PEDIDDA
 					T.get('statuses/user_timeline', tweetsToGet)
 						.then(result => {
@@ -109,14 +91,7 @@ salvarTweets = (candidato, quantidade) => {
 					//EXISTEM TWEETS ANTIGOS CADASTRADOS NO BANCO DE DADOS, IREMOS ENTÃO CADASTRAR SOMENTE OS NOVOS TWEETS APARTIR DA CONTAGEM DO ULTIMO TWEET INSERIDO DENTRO DO NOSSO BANCO
 					console.log('EXISTEM TWEETS NO BANCO');
 					quantidade = parseInt(quantidade) + 1;
-					tweetsToGet = Object.assign(
-						{
-							screen_name: `${candidato}`,
-							tweet_mode: 'extended',
-							max_id: json.tweet.id
-						},
-						{ count: quantidade }
-					);
+					tweetsToGet = Object.assign({ screen_name: `${candidato}`, tweet_mode: 'extended', max_id: json.id }, { count: quantidade });
 					T.get('statuses/user_timeline', tweetsToGet)
 						.then(result => {
 							if (result[0].id === undefined) {
@@ -145,7 +120,7 @@ salvarTweets = (candidato, quantidade) => {
 			.catch(error =>
 				console.log(
 					'\nNÃO FOI POSSIVEL PEGAR O ID DO ULTIMO TWEET, ELE NÃO DEVE EXISTIR NO BANCO OU ALGUM ERRO COM A API OCORREU: ' +
-						error
+					error
 				)
 			);
 	});

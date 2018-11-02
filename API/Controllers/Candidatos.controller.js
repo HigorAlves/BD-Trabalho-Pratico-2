@@ -20,11 +20,14 @@ cadastrarTweet = function (req, res) {
   });
 
   Tweet.save(function (err) {
-    if (err) {
+    if (err === ' RestError: Invalid JSON in response; caused by SyntaxError: Unexpected token S in JSON at position 0') {
+      res.status(201).send(CONST.SUCESSO);
+    } else if (err) {
       res.status(400).send('NÃO FOI POSSIVEL SALVAR O TWEET: ' + err);
       return err;
+    } else {
+      res.status(201).send(CONST.SUCESSO);
     }
-    res.status(201).send(CONST.SUCESSO);
   });
 };
 
@@ -50,9 +53,14 @@ ultimoTweet = function (req, res) {
     { $limit: 1 }
   ])
     .then(result => {
-      let data = result[0].id
-      res.status(200).send({ id: data })
+      if (result == '') {
+        res.status(204).send(CONST.FALHOU)
+      } else {
+        res.status(200).send({ id: result[0].id })
+      }
     })
+    .catch(error => console.log('ULTIMOTWEET: ', error));
+
 };
 
 // PEGA TODOS OS TEXTOS DOS TWEETS
@@ -70,9 +78,33 @@ pegarTextoTweets = function (req, res) {
     })
 };
 
+getAllTweetsData = function (req, res) {
+  Model.aggregate([
+    { $match: { screen_name: `${req.params.candidato}` } }
+  ])
+    .then(data => {
+      res.send(data)
+    })
+
+  // let query = Tweet.find({}, null, {
+  //   limit: 10,
+  //   skip: parseInt(req.params.quantidade)
+  // });
+  // console.log(req.params.quantidade);
+  // query.exec(function (error, data) {
+  //   if (error) {
+  //     console.log('NAO FOI POSSIVEL PEGAR OS DADOS DOS TWEETS: ' + error);
+  //     res.status(400).send(CONST.FALHOU);
+  //   } else {
+  //     res.status(200).send(data);
+  //   }
+  // });
+};
+
 module.exports = {
   totalTweets,
   ultimoTweet,
   cadastrarTweet,
-  pegarTextoTweets
+  pegarTextoTweets,
+  getAllTweetsData
 }

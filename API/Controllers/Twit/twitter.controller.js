@@ -4,9 +4,9 @@ const Twitter = require('twitter');
 const TWITTER_AUTH = require('../../Config/env_twitter');
 const Const = require('../../Config/consts');
 const SalvarPalavraChave = require('../../Services/salvarPalavraChave');
-const salvarTweets = require('../../Services/salvarTweet'); //Esta função é o saveTweet ou seja tudo deve ser passado para o arquivo de services como uma promisse
+const salvarTweets = require('../../Services/salvarTweet');
 
-cadastrarTweets = function(req, res) {
+cadastrarTweets = function (req, res) {
 	console.log('CADASTRANDO NOVOS TWEETS');
 	salvarTweets(req.body.candidato, req.body.quantidade)
 		.then(result => {
@@ -20,14 +20,14 @@ cadastrarTweets = function(req, res) {
 };
 
 // PEGAR TOTAL DE TWEETS QUE O CANDIDATO(A) JA POSTOU NO TWITTER
-totalTweets = function(req, res) {
+totalTweets = function (req, res) {
 	console.log(
 		'PEGANDO A QUANTIDADE DE TWEETS NO TWITTER DO CANDIDATO: ' +
-			req.params.candidato
+		req.params.candidato
 	);
 	const client = new Twitter(TWITTER_AUTH);
 
-	client.get('users/show', { screen_name: req.params.candidato }, function(
+	client.get('users/show', { screen_name: req.params.candidato }, function (
 		err,
 		data,
 		response
@@ -42,13 +42,13 @@ totalTweets = function(req, res) {
 	});
 };
 
-buscaPalavra = function(req, res) {
+buscaPalavra = function (req, res) {
 	const client = new Twitter(TWITTER_AUTH);
 	console.log(
 		'BUSCANDO PELA PALAVRA CHAVE: ' +
-			req.body.palavra +
-			' COM QUANTIDADE DE RETORNOS DE: ' +
-			req.body.quantidade
+		req.body.palavra +
+		' COM QUANTIDADE DE RETORNOS DE: ' +
+		req.body.quantidade
 	);
 
 	client.get(
@@ -58,7 +58,7 @@ buscaPalavra = function(req, res) {
 			count: parseInt(req.body.quantidade),
 			tweet_mode: 'extended'
 		},
-		function(err, data, response) {
+		function (err, data, response) {
 			if (err) {
 				console.log('NÃO FOI POSSIVEL PEGAR AS OS TWEETS BASEADO NA PALAVRA');
 			}
