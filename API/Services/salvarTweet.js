@@ -12,14 +12,13 @@ salvarBD = (data, candidato) => {
 			url: 'http://localhost:3000',
 			version: '~1.0'
 		});
-		console.log(data)
 		data.map(data => {
 			tweet = {
 				id: data.id,
 				full_text: data.full_text,
 				display_text_range: data.display_text_range,
 				entities: data.entities,
-				user_name: data.user.user_name,
+				user_name: data.user.name,
 				screen_name: data.user.screen_name,
 				location: data.user.location,
 				description: data.user.description,

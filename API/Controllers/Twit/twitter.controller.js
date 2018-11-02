@@ -6,6 +6,7 @@ const Const = require('../../Config/consts');
 const SalvarPalavraChave = require('../../Services/salvarPalavraChave');
 const salvarTweets = require('../../Services/salvarTweet');
 
+//PRONTO
 cadastrarTweets = function (req, res) {
 	console.log('CADASTRANDO NOVOS TWEETS');
 	salvarTweets(req.body.candidato, req.body.quantidade)
@@ -29,8 +30,7 @@ totalTweets = function (req, res) {
 
 	client.get('users/show', { screen_name: req.params.candidato }, function (
 		err,
-		data,
-		response
+		data, response
 	) {
 		if (err) {
 			console.log('TWITTER ERROR: ', err);
@@ -44,12 +44,7 @@ totalTweets = function (req, res) {
 
 buscaPalavra = function (req, res) {
 	const client = new Twitter(TWITTER_AUTH);
-	console.log(
-		'BUSCANDO PELA PALAVRA CHAVE: ' +
-		req.body.palavra +
-		' COM QUANTIDADE DE RETORNOS DE: ' +
-		req.body.quantidade
-	);
+	console.log('BUSCANDO PELA PALAVRA CHAVE: ' + req.body.palavra + ' COM QUANTIDADE DE RETORNOS DE: ' + req.body.quantidade);
 
 	client.get(
 		'search/tweets',
