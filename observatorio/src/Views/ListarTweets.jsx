@@ -10,7 +10,6 @@ export default class ListarTweets extends Component {
 		this.state = {
 			quantidade: 0,
 			candidato: '',
-			oldCandidato: null,
 			tweets: [],
 			alerta: null
 		};
@@ -19,16 +18,15 @@ export default class ListarTweets extends Component {
 
 	carregarItens(candidato) {
 		let qt = null;
-
 		fetch(`http://localhost:3000/mongodb/totaltweets/${candidato}`)
 			.then(data => data.json())
 			.then(data => {
 				if (this.state.quantidade < data.id) {
+					qt = parseInt(this.state.quantidade) + 10;
+					this.setState({ quantidade: qt });
 					fetch(`http://localhost:3000/mongodb/todostweets/${candidato}/${this.state.quantidade}`)
 						.then(res => res.json())
 						.then(data => {
-							qt = parseInt(this.state.quantidade) + 10;
-							this.setState({ quantidade: qt });
 							this.setState({ tweets: [...this.state.tweets, ...data] });
 						})
 						.catch(error => {

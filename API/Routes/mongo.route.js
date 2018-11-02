@@ -19,7 +19,7 @@ router.post('/cadastrartweet', candidatos.cadastrarTweet);
 router.get('/totaltweets/:candidato', candidatos.totalTweets);
 router.get('/ultimotweet/:candidato', candidatos.ultimoTweet);
 router.get('/textotweets/:candidato', candidatos.pegarTextoTweets);
-router.get('/todostweets/:candidato/:quantidade', candidatos.getAllTweetsData);
+router.get('/todostweets/:candidato/:quantidade', candidatos.pegarTodosTweets);
 
 // //ROTAS FERNANDO HADDAD
 // router.post('/cadastrartweet/Haddad_Fernando', haddad.cadastrarTweet);

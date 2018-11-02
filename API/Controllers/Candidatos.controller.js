@@ -78,27 +78,16 @@ pegarTextoTweets = function (req, res) {
     })
 };
 
-getAllTweetsData = function (req, res) {
+// RETORNA O DADO DE TODOS OS TWEETS DENTRO DE UM LIMITE INSERIDO PELO USUARIO
+pegarTodosTweets = function (req, res) {
+  console.log(parseInt(req.params.quantidade))
   Model.aggregate([
-    { $match: { screen_name: `${req.params.candidato}` } }
+    { $match: { screen_name: `${req.params.candidato}` } },
+    { $limit: parseInt(req.params.quantidade) }
   ])
     .then(data => {
-      res.send(data)
+      res.status(200).send(data)
     })
-
-  // let query = Tweet.find({}, null, {
-  //   limit: 10,
-  //   skip: parseInt(req.params.quantidade)
-  // });
-  // console.log(req.params.quantidade);
-  // query.exec(function (error, data) {
-  //   if (error) {
-  //     console.log('NAO FOI POSSIVEL PEGAR OS DADOS DOS TWEETS: ' + error);
-  //     res.status(400).send(CONST.FALHOU);
-  //   } else {
-  //     res.status(200).send(data);
-  //   }
-  // });
 };
 
 module.exports = {
@@ -106,5 +95,5 @@ module.exports = {
   ultimoTweet,
   cadastrarTweet,
   pegarTextoTweets,
-  getAllTweetsData
+  pegarTodosTweets
 }
