@@ -80,15 +80,16 @@ pegarTextoTweets = function (req, res) {
 
 // RETORNA O DADO DE TODOS OS TWEETS DENTRO DE UM LIMITE INSERIDO PELO USUARIO
 pegarTodosTweets = function (req, res) {
-  console.log(parseInt(req.params.quantidade))
+
   Model.aggregate([
     { $match: { screen_name: `${req.params.candidato}` } },
-    { $limit: parseInt(req.params.quantidade) }
+    { $skip: parseInt(req.params.quantidade) },
+    { $limit: 5 }
   ])
     .then(data => {
       res.status(200).send(data)
-    })
-};
+    });
+}
 
 module.exports = {
   totalTweets,

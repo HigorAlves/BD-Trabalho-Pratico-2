@@ -21,12 +21,12 @@ export default class ListarTweets extends Component {
 		fetch(`http://localhost:3000/mongodb/totaltweets/${candidato}`)
 			.then(data => data.json())
 			.then(data => {
-				if (this.state.quantidade < data.id) {
-					qt = parseInt(this.state.quantidade) + 10;
-					this.setState({ quantidade: qt });
+				if (this.state.quantidade <= data.id) {
 					fetch(`http://localhost:3000/mongodb/todostweets/${candidato}/${this.state.quantidade}`)
 						.then(res => res.json())
 						.then(data => {
+							qt = parseInt(this.state.quantidade) + 5;
+							this.setState({ quantidade: qt });
 							this.setState({ tweets: [...this.state.tweets, ...data] });
 						})
 						.catch(error => {
@@ -37,11 +37,13 @@ export default class ListarTweets extends Component {
 						});
 				}
 			})
+
 	}
 
 	handleChange(e) {
-		this.setState({ quantidade: 0 })
 		this.setState({ tweets: [] })
+		this.state.quantidade = 0;
+		console.log(this.state.quantidade)
 		this.setState({ candidato: e.target.value });
 		this.carregarItens(e.target.value);
 		this.scrollListener = window.addEventListener('scroll', e => {
