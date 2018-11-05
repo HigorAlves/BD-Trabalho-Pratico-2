@@ -25,6 +25,7 @@ router.get('/todostweets/:candidato/', candidatos.pegarTodosTweets);
 router.post('/cadastrarpalavra', palavraChave.cadastrar);
 router.get('/quantidadepalavras', palavraChave.quantidade);
 router.get('/ultimotweetp/:palavra', palavraChave.ultimoTweet);
+router.get('/listartweets/:palavra/:id', palavraChave.listarTweets);
 router.get('/listartweets/:palavra', palavraChave.listarTweets);
 
 // //ROTAS FERNANDO HADDAD

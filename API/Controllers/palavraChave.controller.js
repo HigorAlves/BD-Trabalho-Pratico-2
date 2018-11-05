@@ -59,18 +59,22 @@ ultimoTweet = function (req, res) {
 };
 
 listarTweets = function (req, res) {
-	Palavra.aggregate([
-		{ $match: { palavra_chave: `${req.params.palavra}` } },
-		{ $limit: 5 }
-	])
-		.then(result => {
-			if (result == '') {
-				res.status(204).send(CONST.FALHOU)
-			} else {
-				res.status(200).send(result)
-			}
-		})
-		.catch(error => console.log('ULTIMOTWEET: ', error));
+	if (req.params.id > 1) {
+		Palavra.aggregate([
+			{ $match: { $and: [{ palavra_chave: `${req.params.palavra}` }, { id: { $lt: parseInt(req.params.id) } }] } },
+			{ $limit: 5 }
+		]).then(data => {
+			res.status(200).send(data)
+		}).catch(error => console.log(error))
+	} else {
+		console.log(req.params.palavra)
+		Palavra.aggregate([
+			{ $match: { palavra_chave: `${req.params.palavra}` } },
+			{ $limit: 5 }
+		]).then(data => {
+			res.status(200).send(data)
+		}).catch(error => console.log(error))
+	}
 }
 
 module.exports = {

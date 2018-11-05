@@ -10,15 +10,17 @@ export default class ListarTweetsPalavrasChaves extends Component {
 		this.state = {
 			data: [],
 			palavra: '',
+			id: null,
 			alert: null
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleChange(e) {
-		this.carregarItens(e.target.value);
-		this.setState({ palavra: e.target.value });
+		this.setState({ id: null })
 		this.setState({ data: [] })
+		this.setState({ palavra: e.target.value });
+		this.carregarItens(e.target.value, this.state.id);
 		this.scrollListener = window.addEventListener('scroll', e => {
 			this.handleScroll(e);
 		});
@@ -30,14 +32,15 @@ export default class ListarTweetsPalavrasChaves extends Component {
 		let pageOffset = window.pageYOffset + window.innerHeight;
 		let bottomOffset = 20;
 		if (pageOffset > ultimoItemOffset + bottomOffset) {
-			this.carregarItens(this.state.palavra);
+			this.carregarItens(this.state.palavra, this.state.id);
 		}
 	};
 
-	carregarItens(palavra) {
-		fetch(`http://localhost:3000/mongodb/listartweets/${palavra}`)
+	carregarItens(palavra, id) {
+		fetch(`http://localhost:3000/mongodb/listartweets/${palavra}/${id}`)
 			.then(res => res.json())
 			.then(data => {
+				this.setState({ id: data.pop().id })
 				this.setState({ data: [...this.state.data, ...data] });
 			})
 			.catch(error => {
