@@ -95,7 +95,7 @@ export default class NavBar extends Component {
 						</li>
 						<li className="nav-item dropdown">
 							<Link
-								className={'nav-link dropdown-toggle disabled'}
+								className={'nav-link dropdown-toggle'}
 								to="/"
 								id="navbarDropdown"
 								role="button"

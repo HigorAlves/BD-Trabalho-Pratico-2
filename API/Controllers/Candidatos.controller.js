@@ -66,7 +66,7 @@ ultimoTweet = function (req, res) {
 pegarTextoTweets = function (req, res) {
   Model.aggregate([
     { $match: { screen_name: `${req.params.candidato}` } },
-    { $group: { _id: '$full_text' } }
+    { $group: { _id: '$_id', full_text: { $push: '$full_text' } } }
   ])
     .then(data => {
       res.status(200).send({ text: data });
@@ -97,10 +97,24 @@ pegarTodosTweets = function (req, res) {
   }
 }
 
+updateTweet = function (req, res) {
+  let id = req.body.id;
+
+  Model.findByIdAndUpdate(id, { $set: { sentiment: req.body.sentiment, keywords: req.body.keywords, entitiesNLU: req.body.entitiesNLU, categories: req.body.categories } }, { new: true }, function (error, model) {
+    if (error) {
+      res.status(400).send(CONST.FALHOU)
+    } else {
+      res.status(201).send(CONST.SUCESSO)
+    }
+  })
+}
+
+
 module.exports = {
   totalTweets,
   ultimoTweet,
   cadastrarTweet,
   pegarTextoTweets,
-  pegarTodosTweets
+  pegarTodosTweets,
+  updateTweet
 }

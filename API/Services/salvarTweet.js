@@ -43,7 +43,7 @@ salvarBD = (data, candidato) => {
 	});
 };
 
-//PEGAR QUANTIDADE dE TWEETS DO CANDIDATO X E SALVAR OS MESMOS NO BANCO DE DADOS DO REFERENTE
+//PEGAR QUANTIDADE dE TWEETS DO CANDIDATO X E SALVAR OS MESMOS NO BANCO DE DADOS
 salvarTweets = (candidato, quantidade) => {
 	return new Promise((resolve, reject) => {
 		console.log('\nSALVANDO TWEETS DO CANDIDATO(A): ' + candidato + '\n');
