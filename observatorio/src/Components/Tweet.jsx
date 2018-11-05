@@ -6,11 +6,12 @@ export default function Tweet(props) {
 		<div className="card border m-4">
 			<div className="card-header">
 				<img
-					src={props.data.profile_image_url_https}
+					src={props.data.profile_image_url_https || props.data.profile_image_url}
 					className="rounded-circle"
 					style={{ width: '48px', height: '48px' }}
 					alt="Foto de perfil"
 				/>
+				<span className="ml-2">{props.data.user_name || props.data.name}</span>
 				<code className="ml-2">{props.data.screen_name}</code>
 			</div>
 			<div className="card-body">
