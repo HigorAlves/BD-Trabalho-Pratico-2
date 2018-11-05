@@ -10,7 +10,9 @@ import ColetorTweets from './Views/ColetorTweets';
 import ColetorPalavras from './Views/ColetorPalavras';
 import ListarTweets from './Views/ListarTweets';
 import ListarTweetsPC from './Views/ListarTweetsPalavrasChaves';
+
 import NluCandidato from './Views/Watson/NluCandidato';
+import CriarTexto from './Views/Watson/CriarTexto';
 
 export default class Routers extends Component {
 	render() {
@@ -24,6 +26,7 @@ export default class Routers extends Component {
 					<Route exact path="/listarTweets" component={ListarTweets} />
 					<Route exact path="/listarTweetsPalavras" component={ListarTweetsPC} />
 					<Route exact path="/nlucandidato" component={NluCandidato} />
+					<Route exact path="/gerartexto" component={CriarTexto} />
 				</div>
 			</Router>
 		);
