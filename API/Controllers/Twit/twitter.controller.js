@@ -1,9 +1,7 @@
-const fetch = require('node-fetch');
 const Twitter = require('twitter');
-
 const TWITTER_AUTH = require('../../Config/env_twitter');
 const Const = require('../../Config/consts');
-const SalvarPalavraChave = require('../../Services/salvarPalavraChave');
+const verificarTweet = require('../../Services/salvarPalavraChave');
 const salvarTweets = require('../../Services/salvarTweet');
 
 //PRONTO
@@ -43,30 +41,14 @@ totalTweets = function (req, res) {
 };
 
 buscaPalavra = function (req, res) {
-	const client = new Twitter(TWITTER_AUTH);
 	console.log('BUSCANDO PELA PALAVRA CHAVE: ' + req.body.palavra + ' COM QUANTIDADE DE RETORNOS DE: ' + req.body.quantidade);
-
-	client.get(
-		'search/tweets',
-		{
-			q: req.body.palavra,
-			count: parseInt(req.body.quantidade),
-			tweet_mode: 'extended'
-		},
-		function (err, data, response) {
-			if (err) {
-				console.log('NÃO FOI POSSIVEL PEGAR AS OS TWEETS BASEADO NA PALAVRA');
-			}
-			SalvarPalavraChave(data.statuses, req.body.palavra)
-				.then(resposta => {
-					console.log(resposta);
-					res.status(200).send(resposta);
-				})
-				.catch(err => {
-					res.status(400).send(err);
-				});
-		}
-	);
+	verificarTweet(req.body.palavra, req.body.quantidade)
+		.then(result => {
+			res.status(201).send(result)
+		})
+		.catch(error => {
+			res.status(400).send(error);
+		})
 };
 
 module.exports = {

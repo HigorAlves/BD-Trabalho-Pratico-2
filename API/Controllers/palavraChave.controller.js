@@ -42,7 +42,6 @@ quantidade = (req, res) => {
 
 //PEGA O ULTIMO TWEET CADASTRADO NO BANCO
 ultimoTweet = function (req, res) {
-	console.log('ola')
 	Palavra.aggregate([
 		{ $match: { palavra_chave: `${req.params.palavra}` } },
 		{ $sort: { _id: -1 } },

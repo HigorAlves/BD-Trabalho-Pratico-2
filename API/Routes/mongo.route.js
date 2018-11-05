@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const haddad = require('../Controllers/Haddad.controller');
-const manuela = require('../Controllers/Manuela.controller');
-const bolsonaro = require('../Controllers/Bolsonaro.controller');
-const general = require('../Controllers/Mourao.controller');
+// const haddad = require('../Controllers/Haddad.controller');
+// const manuela = require('../Controllers/Manuela.controller');
+// const bolsonaro = require('../Controllers/Bolsonaro.controller');
+// const general = require('../Controllers/Mourao.controller');
 const palavraChave = require('../Controllers/palavraChave.controller');
 
 const candidatos = require('../Controllers/Candidatos.controller');
