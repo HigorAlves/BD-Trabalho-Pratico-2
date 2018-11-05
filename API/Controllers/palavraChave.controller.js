@@ -58,8 +58,24 @@ ultimoTweet = function (req, res) {
 
 };
 
+listarTweets = function (req, res) {
+	Palavra.aggregate([
+		{ $match: { palavra_chave: `${req.params.palavra}` } },
+		{ $limit: 5 }
+	])
+		.then(result => {
+			if (result == '') {
+				res.status(204).send(CONST.FALHOU)
+			} else {
+				res.status(200).send(result)
+			}
+		})
+		.catch(error => console.log('ULTIMOTWEET: ', error));
+}
+
 module.exports = {
 	cadastrar,
 	quantidade,
-	ultimoTweet
-};
+	ultimoTweet,
+	listarTweets
+	};

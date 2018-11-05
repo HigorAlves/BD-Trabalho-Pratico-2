@@ -29,11 +29,7 @@ export default class ListarTweetsPalavrasChaves extends Component {
 
 	carregarItens() {
 		let qt = null;
-		fetch(
-			`http://localhost:3000/mongodb/todostweets/jairbolsonaro/${
-				this.state.quantidade
-			}`
-		)
+		fetch(`http://localhost:3000/mongodb/todostweets/jairbolsonaro/${this.state.quantidade}`)
 			.then(res => res.json())
 			.then(data => {
 				qt = parseInt(this.state.quantidade) + 10;

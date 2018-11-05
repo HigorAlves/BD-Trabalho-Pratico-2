@@ -60,7 +60,6 @@ ultimoTweet = function (req, res) {
       }
     })
     .catch(error => console.log('ULTIMOTWEET: ', error));
-
 };
 
 // PEGA TODOS OS TEXTOS DOS TWEETS
