@@ -1,5 +1,6 @@
 const Model = require('../Models/Candidatos.model');
 const CONST = require('../Config/consts');
+const ModelText = require('../Models/TextoCandidatos.model');
 
 cadastrarTweet = function (req, res) {
   let Tweet = new Model({
@@ -97,6 +98,7 @@ pegarTodosTweets = function (req, res) {
   }
 }
 
+// ATUALIZA UM TWEET COM OS DADOS DA NLU
 updateTweet = function (req, res) {
   let id = req.body.id;
 
@@ -109,6 +111,21 @@ updateTweet = function (req, res) {
   })
 }
 
+// JUNTA TODOS OS TEXTO DENTRO DE UMA COLEÇÃO PROPRIA
+cadastrarTexto = function (req, res) {
+  let Texto = new ModelText({
+    screen_name: req.body.candidato,
+    texto: req.body.texto
+  });
+
+  Texto.save(function (error) {
+    if (error) {
+      res.status(400).send(CONST.FALHOU);
+    } else {
+      res.status(201).send(CONST.SUCESSO)
+    }
+  })
+}
 
 module.exports = {
   totalTweets,
@@ -116,5 +133,6 @@ module.exports = {
   cadastrarTweet,
   pegarTextoTweets,
   pegarTodosTweets,
-  updateTweet
+  updateTweet,
+  cadastrarTexto
 }

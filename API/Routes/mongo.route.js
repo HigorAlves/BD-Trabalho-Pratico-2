@@ -12,6 +12,7 @@ router.get('/', function (req, res) {
 //NOVAS ROTAS
 router.post('/cadastrartweet', candidatos.cadastrarTweet);
 router.post('/atualizartweet', candidatos.updateTweet);
+router.post('/cadastrarTexto/:candidato', candidatos.cadastrarTexto);
 router.get('/totaltweets/:candidato', candidatos.totalTweets);
 router.get('/ultimotweet/:candidato', candidatos.ultimoTweet);
 router.get('/textotweets/:candidato', candidatos.pegarTextoTweets);
