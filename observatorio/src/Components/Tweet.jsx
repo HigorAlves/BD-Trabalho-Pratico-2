@@ -1,5 +1,5 @@
 import React from 'react';
-import { RETWEET, HEART } from '../lib/Icons.js';
+import { RETWEET, HEART, SENTIMENT, CLIPBOARD } from '../lib/Icons.js';
 
 export default function Tweet(props) {
 	return (
@@ -12,7 +12,7 @@ export default function Tweet(props) {
 					alt="Foto de perfil"
 				/>
 				<span className="ml-2">{props.data.user_name || props.data.name}</span>
-				<code className="ml-2">{props.data.screen_name}</code>
+				<code className="ml-4">{props.data.screen_name}</code>
 			</div>
 			<div className="card-body">
 				<p className="card-text">{props.data.full_text}</p>
@@ -25,6 +25,14 @@ export default function Tweet(props) {
 				<div className="ml-3 mb-2 text-muted">
 					<HEART />
 					<span className="ml-2">{props.data.favorite_count}</span>
+				</div>
+				<div className="ml-3 mb-2 text-muted">
+					<SENTIMENT />
+					<span className="ml-2">{props.data.sentiment.document.label.toUpperCase()}</span>
+				</div>
+				<div className="ml-3 mb-2 text-muted">
+					<CLIPBOARD />
+					<span className="ml-2">{props.data.categories.map(categories => categories.label.toUpperCase())}</span>
 				</div>
 			</div>
 			<ul />

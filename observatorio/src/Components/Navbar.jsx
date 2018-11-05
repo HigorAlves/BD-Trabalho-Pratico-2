@@ -106,26 +106,20 @@ export default class NavBar extends Component {
 								Watson
 							</Link>
 							<div className="dropdown-menu" aria-labelledby="navbarDropdown">
-								<Link className="dropdown-item" to="/">
+								<Link className="dropdown-item" to="/nlucandidato">
 									NLU Candidato
 								</Link>
-								<Link className="dropdown-item" to="/">
+								<Link className="dropdown-item disabled" to="#">
 									NLU Palavra Chave
 								</Link>
-								<Link className="dropdown-item" to="/">
+								<Link className="dropdown-item" to="/gerartexto">
 									Criar Texto
 								</Link>
-								<Link className="dropdown-item" to="/">
+								<Link className="dropdown-item disabled" to="#">
 									Analisar Personalidade
 								</Link>
 								<div className="dropdown-divider" />
-								<Link className="dropdown-item" to="/">
-									Listar NLU dos Candidatos
-								</Link>
-								<Link className="dropdown-item" to="/">
-									Listar NLU Palavras Chaves
-								</Link>
-								<Link className="dropdown-item" to="/">
+								<Link className="dropdown-item disabled" to="#">
 									Observar Personalidade
 								</Link>
 							</div>

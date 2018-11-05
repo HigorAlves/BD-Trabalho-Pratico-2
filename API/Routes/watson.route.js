@@ -8,7 +8,6 @@ router.get('/', function (req, res) {
 });
 
 router.post('/analisarnlu', controller.analisarNLU);
-// router.post('/criartexto', controller.traduzirTexto);
 // router.post('/analisarpersonalidade', controller.analisarPersonalidade);
 
 module.exports = router;
