@@ -19,7 +19,8 @@ router.post('/cadastrartweet', candidatos.cadastrarTweet);
 router.get('/totaltweets/:candidato', candidatos.totalTweets);
 router.get('/ultimotweet/:candidato', candidatos.ultimoTweet);
 router.get('/textotweets/:candidato', candidatos.pegarTextoTweets);
-router.get('/todostweets/:candidato/:quantidade', candidatos.pegarTodosTweets);
+router.get('/todostweets/:candidato/:id', candidatos.pegarTodosTweets);
+router.get('/todostweets/:candidato/', candidatos.pegarTodosTweets);
 
 router.post('/cadastrarpalavra', palavraChave.cadastrar);
 router.get('/quantidadepalavras', palavraChave.quantidade);
