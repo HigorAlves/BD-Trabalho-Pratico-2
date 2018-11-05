@@ -3,26 +3,32 @@ const router = express.Router();
 
 const palavraChave = require('../Controllers/palavraChave.controller');
 const candidatos = require('../Controllers/Candidatos.controller');
+const texto = require('../Controllers/Texto.controller');
 
 router.get('/', function (req, res) {
 	console.log('USARIO TENTOU ACESSAR A API DO MONGO DB\n');
 	res.render('mongo');
 });
 
-//NOVAS ROTAS
+// ROTAS PARA CONTROLE DOS CANDIDATOS
 router.post('/cadastrartweet', candidatos.cadastrarTweet);
 router.post('/atualizartweet', candidatos.updateTweet);
-router.post('/cadastrartexto', candidatos.cadastrarTexto); //REGISTRA O TEXTO NO BANCO DE DADOS
 router.get('/totaltweets/:candidato', candidatos.totalTweets);
 router.get('/ultimotweet/:candidato', candidatos.ultimoTweet);
 router.get('/textotweets/:candidato', candidatos.pegarTextoTweets);
 router.get('/todostweets/:candidato/:id', candidatos.pegarTodosTweets);
 router.get('/todostweets/:candidato', candidatos.pegarTodosTweets);
 
+// ROTAS PARA CONTROLE DAS PALAVRAS CHAVES
 router.post('/cadastrarpalavra', palavraChave.cadastrar);
 router.get('/quantidadepalavras', palavraChave.quantidade);
 router.get('/ultimotweetp/:palavra', palavraChave.ultimoTweet);
 router.get('/listartweets/:palavra/:id', palavraChave.listarTweets);
 router.get('/listartweets/:palavra', palavraChave.listarTweets);
+
+// ROTAS PARA OS TEXTOS
+router.post('/cadastrartexto', texto.cadastrarTexto); //REGISTRA O TEXTO NO BANCO DE DADOS
+router.get('/ultimotexto/:candidato', texto.ultimoTexto);
+router.post('/atualizartexto', texto.atualizarTexto);
 
 module.exports = router;

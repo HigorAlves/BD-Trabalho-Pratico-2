@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const { analisarnlu } = require('../../Services/analiseNlu');
+const { tradutor } = require('../../Services/tradutor');
 const CONST = require('../../Config/consts');
 
 // ANALISA O TWEET DO CANDIDATO PEDIDO E RETONA JA PARA O PEDIDO DO MESMO O RESULTADO DA ANALISE DO WATSON
@@ -39,6 +40,11 @@ analisarNLU = (req, res) => {
 			console.log('ERROR: ', error);
 			res.status(400).send(CONST.FALHOU);
 		})
+}
+
+// TRADUZIR O TEXTO PARA INGLES
+traduzirTexto = (req, res) => {
+
 }
 
 // cadastrar = function (req, res) {
