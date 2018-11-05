@@ -1,4 +1,5 @@
 const Palavra = require('../Models/palavraChave.model');
+const CONST = require('../Config/consts');
 
 cadastrar = (req, res) => {
 	console.log('CADASTRANDO PALAVRA CHAVE: ' + req.body.palavraChave);
@@ -17,7 +18,7 @@ cadastrar = (req, res) => {
 		profile_banner_url: req.body.profile_banner_url
 	});
 
-	palavra.save(function(err) {
+	palavra.save(function (err) {
 		if (err) {
 			res.status(400).send('NÃO FOI POSSIVEL SALVAR A PALAVRA CHAVE: ' + err);
 			return err;
@@ -28,7 +29,7 @@ cadastrar = (req, res) => {
 
 quantidade = (req, res) => {
 	let query = Palavra.find({}).count();
-	query.exec(function(erro, data) {
+	query.exec(function (erro, data) {
 		if (erro) {
 			console.log('NÃO FOI POSSIVEL PEGAR A QUANTIDADE DE PALAVRAS: ', erro);
 			res.status(400).send('FALHOU');
@@ -39,7 +40,27 @@ quantidade = (req, res) => {
 	});
 };
 
+//PEGA O ULTIMO TWEET CADASTRADO NO BANCO
+ultimoTweet = function (req, res) {
+	console.log('ola')
+	Palavra.aggregate([
+		{ $match: { palavra_chave: `${req.params.palavra}` } },
+		{ $sort: { _id: -1 } },
+		{ $limit: 1 }
+	])
+		.then(result => {
+			if (result == '') {
+				res.status(204).send(CONST.FALHOU)
+			} else {
+				res.status(200).send({ id: result[0].id })
+			}
+		})
+		.catch(error => console.log('ULTIMOTWEET: ', error));
+
+};
+
 module.exports = {
 	cadastrar,
-	quantidade
+	quantidade,
+	ultimoTweet
 };
