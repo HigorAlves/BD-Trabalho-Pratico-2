@@ -9,7 +9,7 @@ cadastrarTexto = function (req, res) {
     texto: req.body.texto
   });
 
-  Model.save(function (error) {
+  Texto.save(function (error) {
     if (error) {
       res.status(400).send(error);
     } else {
@@ -18,6 +18,7 @@ cadastrarTexto = function (req, res) {
   })
 }
 
+// RETORNA O ULTIMO TEXTO CADASTRADO DO CANDIDATO EM QUESTÃO
 ultimoTexto = function (req, res) {
   Model.aggregate([
     { $match: { screen_name: `${req.params.candidato}` } },
@@ -34,10 +35,11 @@ ultimoTexto = function (req, res) {
     .catch(error => console.log('ULTIMOTWEET: ', error));
 }
 
+// ATUALIZA O TEXTO DO CANDIDATO
 atualizarTexto = function (req, res) {
   let id = req.body.id;
 
-  Model.findByIdAndUpdate(id, { $set: { texto: req.body.texto } }, { new: true }, function (error, model) {
+  Model.findByIdAndUpdate(id, { $set: { screen_name: req.body.screen_name, texto: req.body.texto } }, { new: true }, function (error, model) {
     if (error) {
       res.status(400).send(CONST.FALHOU)
     } else {

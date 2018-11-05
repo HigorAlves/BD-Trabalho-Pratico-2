@@ -55,7 +55,7 @@ buscaPalavra = function (req, res) {
 tweetsToTexto = function (req, res) {
 	criarTexto(req.params.candidato)
 		.then(result => {
-			res.status(2001).send(result);
+			res.status(201).send(Const.SUCESSO);
 		})
 		.catch(error => {
 			res.status(400).send(error);
