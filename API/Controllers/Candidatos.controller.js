@@ -113,14 +113,15 @@ updateTweet = function (req, res) {
 
 // JUNTA TODOS OS TEXTO DENTRO DE UMA COLEÇÃO PROPRIA
 cadastrarTexto = function (req, res) {
+
   let Texto = new ModelText({
-    screen_name: req.body.candidato,
+    screen_name: req.body.screen_name,
     texto: req.body.texto
   });
 
   Texto.save(function (error) {
     if (error) {
-      res.status(400).send(CONST.FALHOU);
+      res.status(400).send(error);
     } else {
       res.status(201).send(CONST.SUCESSO)
     }

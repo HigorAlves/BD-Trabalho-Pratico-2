@@ -3,8 +3,8 @@ const TWITTER_AUTH = require('../../Config/env_twitter');
 const Const = require('../../Config/consts');
 const verificarTweet = require('../../Services/salvarPalavraChave');
 const salvarTweets = require('../../Services/salvarTweet');
+const criarTexto = require('../../Services/criarTexto');
 
-//PRONTO
 cadastrarTweets = function (req, res) {
 	console.log('CADASTRANDO NOVOS TWEETS');
 	salvarTweets(req.body.candidato, req.body.quantidade)
@@ -51,8 +51,19 @@ buscaPalavra = function (req, res) {
 		})
 };
 
+tweetsToTexto = function (req, res) {
+	criarTexto(req.params.candidato)
+		.then(result => {
+			res.send(result)
+		})
+		.catch(error => {
+			res.send(error)
+		})
+}
+
 module.exports = {
 	cadastrarTweets,
 	totalTweets,
-	buscaPalavra
+	buscaPalavra,
+	tweetsToTexto
 };
