@@ -1,9 +1,4 @@
 const fetch = require('node-fetch');
-const NLU_BOLSONARO = require('../../Models/NLU/Bolsonaro.model');
-const NLU_GENERAL = require('../../Models/NLU/General.model');
-const NLU_HADDAD = require('../../Models/NLU/Haddad.model');
-const NLU_MANUELA = require('../../Models/NLU/Manuela.model');
-
 const { analisarnlu } = require('../../Services/analiseNlu');
 const CONST = require('../../Config/consts');
 

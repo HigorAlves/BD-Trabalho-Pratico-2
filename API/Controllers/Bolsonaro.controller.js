@@ -1,8 +1,7 @@
-const Tweet = require('../Models/Bolsonaro.model');
-const NLU = require('../Models/NLU/Bolsonaro.model');
-const Texto = require('../Models/BolsonaroTexto.model');
-const CONST = require('../Config/consts');
-const Personalidade = require('../Models/Personalidade/Bolsonaro.model');
+// const Tweet = require('../Models/Bolsonaro.model');
+// const Texto = require('../Models/BolsonaroTexto.model');
+// const CONST = require('../Config/consts');
+// const Personalidade = require('../Models/Personalidade/Bolsonaro.model');
 
 //FEITO
 cadastrarTweet = function (req, res) {
@@ -83,9 +82,9 @@ totalTweets = function (req, res) {
 	])
 
 
-let certo = null;
+	let certo = null;
 	total.then(result => {
-		certo = result ;
+		certo = result;
 		console.log(certo)
 	})
 
@@ -96,7 +95,7 @@ let certo = null;
 			res.sendStatus(400).send('NÃO FOI POSSIVEL CONTAR A QUANTIDADE DE TWEETS DO CANDIDATO: ' + error);
 		}
 		res.status(200).send({ id: tweet });
-	});              
+	});
 }
 
 // FEITO
@@ -105,10 +104,10 @@ getAllTweets = function (req, res) {
 	query.exec(function (error, data) {
 		if (error) {
 			console.log('OCORREU UM ERRO AO PEGAR TODOS OS TWEETS DE JAIR BOLSONARO');
-		}  else {
-		res.status(200).send(data);
+		} else {
+			res.status(200).send(data);
 		}
-});
+	});
 };
 
 //Pega a quantidade de tweets do usuario para saber quais ja foram usados para analise de sentimento.
@@ -151,10 +150,10 @@ getText = function (req, res) {
 		if (error) {
 			console.log('NÃO FOI POSSIVEL PEGAR O ULTIMO TEXTO CADASTRADO: ' + error);
 			res.status(400).send(CONST.FALHOU);
-		}  else {
-		res.status(200).send(data);
+		} else {
+			res.status(200).send(data);
 		}
-});
+	});
 };
 
 getPersonalidade = function (req, res) {
@@ -163,10 +162,10 @@ getPersonalidade = function (req, res) {
 		if (error) {
 			console.log('NÃO FOI POSSIVEL PEGAR O ULTIMO TEXTO CADASTRADO: ' + error);
 			res.status(400).send(CONST.FALHOU);
-		}  else {
-		res.status(200).send(data);
+		} else {
+			res.status(200).send(data);
 		}
-});
+	});
 };
 
 getAllTweetsData = function (req, res) {
@@ -175,13 +174,13 @@ getAllTweetsData = function (req, res) {
 		skip: parseInt(req.params.quantidade)
 	});
 	console.log(req.params.quantidade);
-query.exec(function (error, data) {
-	if (error) {
-		console.log('NAO FOI POSSIVEL PEGAR OS DADOS DOS TWEETS: ' + error);
-		res.status(400).send(CONST.FALHOU);
-	}  else {
-	res.status(200).send(data);
-	}
+	query.exec(function (error, data) {
+		if (error) {
+			console.log('NAO FOI POSSIVEL PEGAR OS DADOS DOS TWEETS: ' + error);
+			res.status(400).send(CONST.FALHOU);
+		} else {
+			res.status(200).send(data);
+		}
 	});
 };
 

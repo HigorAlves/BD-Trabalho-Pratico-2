@@ -11,6 +11,7 @@ router.post('/cadastrar', controller.cadastrarTweets);
 //Total de tweets que o candidato ja postou
 router.get('/totaltweets/:candidato', controller.totalTweets);
 router.post('/buscapalavra', controller.buscaPalavra);
+//GERA TEXTOS DO CANDIDATO
 router.get('/tweetstotexto/:candidato', controller.tweetsToTexto);
 
 module.exports = router;

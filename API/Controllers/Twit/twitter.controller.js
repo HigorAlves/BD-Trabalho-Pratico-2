@@ -51,13 +51,14 @@ buscaPalavra = function (req, res) {
 		})
 };
 
+// CRIA UM TEXTO DOE TODOS OS TWEETS DO USUARIO E SALVA NO BANCO DE DADOS
 tweetsToTexto = function (req, res) {
 	criarTexto(req.params.candidato)
 		.then(result => {
-			res.send(result)
+			res.status(2001).send(result);
 		})
 		.catch(error => {
-			res.send(error)
+			res.status(400).send(error);
 		})
 }
 
