@@ -30,5 +30,6 @@ router.get('/listartweets/:palavra', palavraChave.listarTweets);
 router.post('/cadastrartexto', texto.cadastrarTexto); //REGISTRA O TEXTO NO BANCO DE DADOS
 router.get('/ultimotexto/:candidato', texto.ultimoTexto);
 router.post('/atualizartexto', texto.atualizarTexto);
+router.get('/pegarTexto/:candidato', texto.pegarTexto);
 
 module.exports = router;

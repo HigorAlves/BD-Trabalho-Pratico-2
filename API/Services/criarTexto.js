@@ -66,7 +66,7 @@ criarTexto = (candidato) => {
               })
             })
             .then(result => {
-              dataText = { id: id, screen_name: candidato, texto: texto };
+              dataText = { id: id, texto: texto };
               client.post('/mongodb/atualizartexto', dataText, (error, req, res) => {
                 if (error === 'RestError: Invalid JSON in response; caused by SyntaxError: Unexpectedtoken S in JSON at position 0') {
                   reject(CONST.FALHOU);

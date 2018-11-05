@@ -39,7 +39,7 @@ ultimoTexto = function (req, res) {
 atualizarTexto = function (req, res) {
   let id = req.body.id;
 
-  Model.findByIdAndUpdate(id, { $set: { screen_name: req.body.screen_name, texto: req.body.texto } }, { new: true }, function (error, model) {
+  Model.findByIdAndUpdate(id, { $set: { texto: req.body.texto } }, { new: true }, function (error, model) {
     if (error) {
       res.status(400).send(CONST.FALHOU)
     } else {
@@ -48,8 +48,19 @@ atualizarTexto = function (req, res) {
   })
 }
 
+//  PEGAR O TEXTO DO CANDIDATO
+pegarTexto = function (req, res) {
+  Model.aggregate([
+    { $match: { screen_name: `${req.params.candidato}` } }
+  ])
+    .then(result => {
+      res.status(200).send(result)
+    })
+}
+
 module.exports = {
   cadastrarTexto,
   ultimoTexto,
-  atualizarTexto
+  atualizarTexto,
+  pegarTexto
 }
