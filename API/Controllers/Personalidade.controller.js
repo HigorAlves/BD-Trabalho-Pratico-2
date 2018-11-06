@@ -3,7 +3,6 @@ const Model = require('../Models/CandidatosPersonalidade.model');
 
 // JUNTA TODOS OS TEXTO DENTRO DE UMA COLEÇÃO PROPRIA
 cadastrarTexto = function (req, res) {
-  console.log('CADASTRAR: ', req.body.screen_name)
   let Personalidade = new Model({
     screen_name: req.body.screen_name,
     personality: req.body.personality,
@@ -16,10 +15,27 @@ cadastrarTexto = function (req, res) {
     if (error) {
       res.status(400).send(error);
     } else {
-      res.status(201).send(req.body)
+      res.status(201).send(CONST.SUCESSO)
     }
   })
 }
+
+pegarPersonalidade = function (req, res) {
+  Model.aggregate([
+    { $match: { screen_name: `${req.params.candidato}` } },
+    { $sort: { _id: -1 } },
+    { $limit: 1 }
+  ])
+    .then(result => {
+      if (result == '') {
+        res.status(204).send(CONST.FALHOU)
+      } else {
+        res.status(200).send(result)
+      }
+    })
+    .catch(error => console.log('ULTIMOTWEET: ', error));
+}
 module.exports = {
-  cadastrarTexto
+  cadastrarTexto,
+  pegarPersonalidade
 }

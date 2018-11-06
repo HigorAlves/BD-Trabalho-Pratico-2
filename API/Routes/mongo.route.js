@@ -35,5 +35,6 @@ router.get('/pegarTexto/:candidato', texto.pegarTexto);
 
 // ROTAS PARA PERSONALIDADE
 router.post('/cadastrarpersonalidade', personalidade.cadastrarTexto);
+router.get('/pegarpersonalidade/:candidato', personalidade.pegarPersonalidade);
 
 module.exports = router;

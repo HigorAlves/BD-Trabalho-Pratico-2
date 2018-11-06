@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let TweetSchema = new Schema({
-  scren_name: { type: String, required: true },
+  screen_name: { type: String, required: true },
   personality: { type: Object, required: true },
   needs: { type: Object, required: true },
   values: { type: Object, required: true },

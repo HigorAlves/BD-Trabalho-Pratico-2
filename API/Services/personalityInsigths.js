@@ -1,7 +1,6 @@
 const PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
 const CONST = require('../Config/consts');
 const KEYS = require('../Config/env-keys');
-const clients = require('restify-clients');
 
 saveData = (personalidade, candidato) => {
 	return new Promise((resolve, reject) => {
@@ -20,7 +19,7 @@ saveData = (personalidade, candidato) => {
 				reject(CONST.FALHOU);
 			} else {
 				console.log('PERSONALIDADE SALVOS COM: ' + CONST.SUCESSO);
-				resolve(data);
+				resolve(CONST.SUCESSO);
 			}
 		});
 
