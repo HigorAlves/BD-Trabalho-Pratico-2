@@ -4,6 +4,7 @@ const router = express.Router();
 const palavraChave = require('../Controllers/palavraChave.controller');
 const candidatos = require('../Controllers/Candidatos.controller');
 const texto = require('../Controllers/Texto.controller');
+const personalidade = require('../Controllers/Personalidade.controller');
 
 router.get('/', function (req, res) {
 	console.log('USARIO TENTOU ACESSAR A API DO MONGO DB\n');
@@ -31,5 +32,8 @@ router.post('/cadastrartexto', texto.cadastrarTexto); //REGISTRA O TEXTO NO BANC
 router.get('/ultimotexto/:candidato', texto.ultimoTexto);
 router.post('/atualizartexto', texto.atualizarTexto);
 router.get('/pegarTexto/:candidato', texto.pegarTexto);
+
+// ROTAS PARA PERSONALIDADE
+router.post('/cadastrarpersonalidade', personalidade.cadastrarTexto);
 
 module.exports = router;

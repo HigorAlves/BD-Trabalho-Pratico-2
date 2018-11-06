@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const { analisarnlu } = require('../../Services/analiseNlu');
 const { tradutor } = require('../../Services/tradutor');
 const CONST = require('../../Config/consts');
+const { personalityInsights } = require('../../Services/personalityInsigths');
 
 // ANALISA O TWEET DO CANDIDATO PEDIDO E RETONA JA PARA O PEDIDO DO MESMO O RESULTADO DA ANALISE DO WATSON
 analisarNLU = (req, res) => {
@@ -58,6 +59,14 @@ traduzirTexto = (req, res) => {
 
 analisarPersonalidade = (req, res) => {
 
+	fetch(`http://localhost:3000/mongodb/pegarTexto/jairbolsonaro`)
+		.then(result => result.json())
+		.then(result => {
+			let texto = result[0].texto;
+			personalityInsights(texto, 'jairbolsonaro')
+				.then(result => res.send(result))
+		})
+		.catch(error => console.log(error))
 }
 
 module.exports = {

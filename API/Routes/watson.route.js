@@ -9,6 +9,6 @@ router.get('/', function (req, res) {
 
 router.post('/analisarnlu', controller.analisarNLU);
 router.post('/traduzirtexto', controller.traduzirTexto);
-// router.post('/analisarpersonalidade', controller.analisarPersonalidade);
+router.get('/analisarpersonalidade', controller.analisarPersonalidade);
 
 module.exports = router;
