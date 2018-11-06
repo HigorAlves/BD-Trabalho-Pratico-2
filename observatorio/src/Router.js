@@ -13,6 +13,7 @@ import ListarTweetsPC from './Views/ListarTweetsPalavrasChaves';
 
 import NluCandidato from './Views/Watson/NluCandidato';
 import CriarTexto from './Views/Watson/CriarTexto';
+import Personalidade from './Views/Watson/Personalidade';
 
 export default class Routers extends Component {
 	render() {
@@ -27,6 +28,7 @@ export default class Routers extends Component {
 					<Route exact path="/listarTweetsPalavras" component={ListarTweetsPC} />
 					<Route exact path="/nlucandidato" component={NluCandidato} />
 					<Route exact path="/gerartexto" component={CriarTexto} />
+					<Route exact path="/personalidade" component={Personalidade} />
 				</div>
 			</Router>
 		);
