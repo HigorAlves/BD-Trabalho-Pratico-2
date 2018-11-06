@@ -20,6 +20,7 @@ cadastrarTexto = function (req, res) {
   })
 }
 
+//Pega a ultima personalidade cadastrada
 pegarPersonalidade = function (req, res) {
   Model.aggregate([
     { $match: { screen_name: `${req.params.candidato}` } },
