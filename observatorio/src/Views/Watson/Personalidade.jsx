@@ -11,7 +11,9 @@ export default class Personalidade extends Component {
     this.state = {
       candidato: '',
       personalidade: [],
-      needs: []
+      needs: [],
+      values: [],
+      consumption_preferences: []
     }
   }
 
@@ -23,6 +25,8 @@ export default class Personalidade extends Component {
         console.log(result)
         this.setState({ personalidade: result[0].personality })
         this.setState({ needs: result[0].needs })
+        this.setState({ values: result[0].values })
+        this.setState({ consumption_preferences: result[0].consumption_preferences })
       })
   }
 
@@ -69,13 +73,10 @@ export default class Personalidade extends Component {
           </div>
 
         </div>
-      </React.Fragment>
-    )
-  }
-}
 
-{/* <div className='row mt-4'>
-            <div className='col-sm-12 col-md-4'>
+        <div className='container-fluid mt-4'>
+          <div className='row'>
+            <div className='col-sm-12 col-md-3'>
               <div className="card bg-light mb-3">
                 <div className="card-header">Personalidade</div>
                 <div className="card-body">
@@ -84,4 +85,40 @@ export default class Personalidade extends Component {
                   ))}
                 </div>
               </div>
-            </div> */}
+            </div>
+            <div className='col-sm-12 col-md-3'>
+              <div className="card bg-light mb-3">
+                <div className="card-header">Necessidades</div>
+                <div className="card-body">
+                  {this.state.needs.map(data => (
+                    <CardPersonalidade data={data} />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className='col-sm-12 col-md-3'>
+              <div className="card bg-light mb-3">
+                <div className="card-header">Valores</div>
+                <div className="card-body">
+                  {this.state.values.map(data => (
+                    <CardPersonalidade data={data} />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className='col-sm-12 col-md-3'>
+              <div className="card bg-light mb-3">
+                <div className="card-header">Preferencias de Consumo</div>
+                <div className="card-body">
+                  {this.state.personalidade.map(data => (
+                    <CardPersonalidade data={data} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+    )
+  }
+}
