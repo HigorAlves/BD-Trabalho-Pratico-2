@@ -12,7 +12,11 @@ let TweetSchema = new Schema({
   name: { type: String, require: true },
   profile_image_url: { type: String, require: true },
   profile_banner_url: { type: String, require: true },
-  screen_name: { type: String, require: true }
+  screen_name: { type: String, require: true },
+  sentiment: { type: Object, require: true },
+  keywords: { type: Object, require: true },
+  entitiesNLU: { type: Object, require: true },
+  categories: { type: Object, require: true }
 });
 
 module.exports = mongoose.model('palavrachave', TweetSchema);
