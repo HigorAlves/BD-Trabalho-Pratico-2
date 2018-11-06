@@ -28,11 +28,7 @@ export default class Personalidade extends Component {
         this.setState({ values: result[0].values })
         this.setState({ consumption_preferences: result[0].consumption_preferences })
       })
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log(this.state.needs);
+      .catch(error => console.log(error))
   }
 
   render() {
@@ -45,9 +41,9 @@ export default class Personalidade extends Component {
 
           <div className='row'>
             <div className='col-sm-12 col-md-12'>
-              <form onSubmit={this.handleSubmit.bind(this)} >
+              <form >
                 <div className="form-row">
-                  <div className="form-group col-md-4 col-sm-12">
+                  <div className="form-group col-md-12 col-sm-12">
                     <label htmlFor="inputCandidato">Candidato:</label>
                     <select
                       id="inputCandidato"
@@ -61,11 +57,6 @@ export default class Personalidade extends Component {
                       <option value="jairbolsonaro">Jair Bolsonaro</option>
                       <option value="GeneraIMourao">General Mourão</option>
                     </select>
-                  </div>
-                  <div className="form-group mt-2 ml-4 col-md-4 col-sm-12">
-                    <button type="submit" className="btn btn-dark mt-4">
-                      Visualizar Personalidade
-								</button>
                   </div>
                 </div>
               </form>

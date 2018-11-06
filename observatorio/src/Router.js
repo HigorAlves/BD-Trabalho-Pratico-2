@@ -14,6 +14,7 @@ import ListarTweetsPC from './Views/ListarTweetsPalavrasChaves';
 import NluCandidato from './Views/Watson/NluCandidato';
 import CriarTexto from './Views/Watson/CriarTexto';
 import Personalidade from './Views/Watson/Personalidade';
+//ANALISAR PERSONALIDADE: http://localhost:3000/watson/analisarpersonalidade
 
 export default class Routers extends Component {
 	render() {
