@@ -58,12 +58,12 @@ traduzirTexto = (req, res) => {
 }
 
 analisarPersonalidade = (req, res) => {
-
-	fetch(`http://localhost:3000/mongodb/pegarTexto/jairbolsonaro`)
+	let candidato = req.body.candidato
+	fetch(`http://localhost:3000/mongodb/pegarTexto/${candidato}`)
 		.then(result => result.json())
 		.then(result => {
 			let texto = result[0].texto;
-			personalityInsights(texto, 'jairbolsonaro')
+			personalityInsights(texto, candidato)
 				.then(result => res.send(result))
 		})
 		.catch(error => console.log(error))
