@@ -53,7 +53,8 @@ export default class ColetorPalavras extends Component {
 				quantidade: this.state.quantidade
 			})
 		}).then(res => {
-			if (parseInt(res.status) === 200) {
+			console.log(res)
+			if (parseInt(res.status) === 201) {
 				this.setState({ alert: true });
 				this.getPalavrasBD();
 				this.setState({ carregando: false });

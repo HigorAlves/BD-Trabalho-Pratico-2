@@ -119,7 +119,7 @@ export default class NavBar extends Component {
 									Analisar Personalidade
 								</Link>
 								<div className="dropdown-divider" />
-								<Link className="dropdown-item disabled" to="#">
+								<Link className="dropdown-item" to="/personalidade">
 									Observar Personalidade
 								</Link>
 							</div>

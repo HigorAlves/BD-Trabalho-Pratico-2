@@ -42,7 +42,7 @@ export default class ListarTweets extends Component {
 		});
 	}
 
-	handleScroll = e => {
+	handleScroll(e) {
 		let ultimoItem = document.querySelector('div > div.card:last-child');
 		let ultimoItemOffset = ultimoItem.offsetTop + ultimoItem.clientHeight;
 		let pageOffset = window.pageYOffset + window.innerHeight;
