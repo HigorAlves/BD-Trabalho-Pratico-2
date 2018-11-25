@@ -124,30 +124,6 @@ export default class NavBar extends Component {
 								</Link>
 							</div>
 						</li>
-						<li className="nav-item dropdown">
-							<Link
-								className={'nav-link dropdown-toggle disabled'}
-								to="/"
-								id="navbarDropdown"
-								role="button"
-								data-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false"
-							>
-								MongoDB
-							</Link>
-							<div className="dropdown-menu" aria-labelledby="navbarDropdown">
-								<Link className="dropdown-item" to="/">
-									Quantidade de Tweets
-								</Link>
-								<Link className="dropdown-item" to="/">
-									Entidades mais usadas
-								</Link>
-								<Link className="dropdown-item" to="/">
-									Sentimentos mais usados
-								</Link>
-							</div>
-						</li>
 						<li className="nav-item">
 							<Link className="nav-link disabled" to="/">
 								Creditos

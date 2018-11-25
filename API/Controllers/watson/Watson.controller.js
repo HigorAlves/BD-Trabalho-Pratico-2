@@ -4,7 +4,7 @@ const { tradutor } = require('../../Services/tradutor');
 const CONST = require('../../Config/consts');
 const { personalityInsights } = require('../../Services/personalityInsigths');
 
-// ANALISA O TWEET DO CANDIDATO PEDIDO E RETONA JA PARA O PEDIDO DO MESMO O RESULTADO DA ANALISE DO WATSON
+// ANALISA O TWEET DO CANDIDATO PEDIDO E RETORNA OS DADOS PARA O TWEET JA O ATUALIZANDO
 analisarNLU = (req, res) => {
 	fetch(`http://localhost:3000/mongodb/textotweets/${req.body.candidato}`)
 		.then(result => result.json())
@@ -41,6 +41,12 @@ analisarNLU = (req, res) => {
 			console.log('ERROR: ', error);
 			res.status(400).send(CONST.FALHOU);
 		})
+}
+
+analisarNLUpalavraChave = (req, res) => {
+	fetch(`http://localhost:3000/mongodb/listartweets/${req.body.palavra}`)
+		.then(result => result.json())
+		.then(result => { })
 }
 
 // TRADUZIR O TEXTO PARA INGLES
