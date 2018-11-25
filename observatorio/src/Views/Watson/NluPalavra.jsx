@@ -34,7 +34,7 @@ export default class NluCandidato extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ carregando: true });
-    fetch(`http://localhost:3000/watson//analisarnlu`, {
+    fetch(`http://localhost:3000/watson/analisarnlu`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
