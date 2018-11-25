@@ -109,7 +109,7 @@ export default class NavBar extends Component {
 								<Link className="dropdown-item" to="/nlucandidato">
 									NLU Candidato
 								</Link>
-								<Link className="dropdown-item disabled" to="#">
+								<Link className="dropdown-item" to="nlupalavra">
 									NLU Palavra Chave
 								</Link>
 								<Link className="dropdown-item" to="/gerartexto">
