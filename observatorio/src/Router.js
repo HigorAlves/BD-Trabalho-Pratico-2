@@ -16,6 +16,8 @@ import CriarTexto from './Views/Watson/CriarTexto';
 import Personalidade from './Views/Watson/Personalidade';
 //ANALISAR PERSONALIDADE: http://localhost:3000/watson/analisarpersonalidade
 
+import Eleicoes from './Views/Eleicoes';
+
 export default class Routers extends Component {
 	render() {
 		return (
@@ -23,6 +25,7 @@ export default class Routers extends Component {
 				<div>
 					<Route exact path="/" component={App} />
 					<Route exact path="/home" component={Home} />
+					<Route exact path="/eleicoes" component={Eleicoes} />
 					<Route exact path="/coletorTweets" component={ColetorTweets} />
 					<Route exact path="/coletorPalavras" component={ColetorPalavras} />
 					<Route exact path="/listarTweets" component={ListarTweets} />

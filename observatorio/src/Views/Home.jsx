@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import Jumbotron from '../Components/Jumbotron';
 import Footer from '../Components/Footer';
@@ -40,9 +41,11 @@ export default class ObservatorioHome extends Component {
 										Veja dados sobre os candidatos e o que as pessoas estão
 										falando dos candidatos
 									</p>
-									<button type="button" className="btn btn-dark">
-										Visitar
+									<Link to='/eleicoes'>
+										<button type="button" className="btn btn-dark">
+											Visitar
 									</button>
+									</Link>
 								</div>
 							</div>
 						</div>
