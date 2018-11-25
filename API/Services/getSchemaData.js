@@ -1,15 +1,24 @@
 var parseSchema = require('mongodb-schema');
 var connect = require('mongodb');
 
-connect('mongodb://localhost:27017/candidatos', { useNewUrlParser: true }, function (err, database) {
-  if (err) return console.error(err);
+getSchema = function () {
+  return new Promise((resolve, reject) => {
+    connect('mongodb://localhost:27017/candidatos', { useNewUrlParser: true }, function (err, database) {
+      if (err) return console.error(err);
 
-  const candidatos = database.db('observatorioufsj');
+      const candidatos = database.db('observatorioufsj');
 
-  parseSchema(candidatos.collection('candidatos').find(), function (err, schema) {
-    if (err) return console.error(err);
+      parseSchema(candidatos.collection('candidatos').find(), function (err, schema) {
+        if (err) return reject(err);
 
-    console.log(JSON.stringify(schema, null, 2));
-    database.close();
-  });
-});
+        database.close();
+        resolve(schema);
+      });
+    });
+  })
+
+}
+
+module.exports = {
+  getSchema
+}
