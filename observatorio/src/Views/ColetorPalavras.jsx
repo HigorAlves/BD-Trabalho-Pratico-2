@@ -15,7 +15,7 @@ export default class ColetorPalavras extends Component {
 			alert: null
 		};
 		this.onSubmit = this.onSubmit.bind(this);
-		this.onChangePalavraChave = this.onChangePalavraChave.bind(this);
+		this.handleChangePalavraChave = this.handleChangePalavraChave.bind(this);
 		this.onChangeQuantidade = this.onChangeQuantidade.bind(this);
 		this.getPalavrasBD = this.getPalavrasBD.bind(this);
 	}
@@ -31,7 +31,7 @@ export default class ColetorPalavras extends Component {
 			});
 	}
 
-	onChangePalavraChave(e) {
+	handleChangePalavraChave(e) {
 		this.setState({ palavraChave: e.target.value });
 	}
 	onChangeQuantidade(e) {
@@ -53,7 +53,6 @@ export default class ColetorPalavras extends Component {
 				quantidade: this.state.quantidade
 			})
 		}).then(res => {
-			console.log(res)
 			if (parseInt(res.status) === 201) {
 				this.setState({ alert: true });
 				this.getPalavrasBD();
@@ -88,14 +87,26 @@ export default class ColetorPalavras extends Component {
 								<div className="form-row">
 									<div className="col-md-4 col-sm-12 mt-2">
 										<label htmlFor="palavraChave">Palavra Chave</label>
-										<input
-											type="text"
+										<select
+											id="inputCandidato"
 											className="form-control"
-											placeholder="#elenao"
-											id="palavraChave"
 											value={this.state.palavraChave}
-											onChange={this.onChangePalavraChave}
-										/>
+											onChange={this.handleChangePalavraChave}
+										>
+											<option hidden value="">
+												Escolher
+											</option>
+											<option value="elenao">#elenao</option>
+											<option value="elesim">#elesim</option>
+											<option value="bolsonaro">#Bolsonaro</option>
+											<option value="bolsonaropresidente">#bolsonaropresidente</option>
+											<option value="haddad">#Haddad</option>
+											<option value="haddadpresidente">#haddadpresidente</option>
+											<option value="MeuBolsominionSecreto">#MeuBolsominionSecreto</option>
+											<option value="DeusFamiliaBolsonaro">#DeusFamiliaBolsonaro</option>
+											<option value="DeusFamiliaBolsonaro17">#DeusFamiliaBolsonaro17</option>
+											<option value="HaddadÉ13">#HaddadÉ13</option>
+										</select>
 									</div>
 									<div className="col-md-4 col-sm-12 mt-2">
 										<label htmlFor="quantidade">Quantidade</label>
