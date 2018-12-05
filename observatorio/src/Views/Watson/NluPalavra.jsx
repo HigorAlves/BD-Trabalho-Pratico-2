@@ -8,7 +8,7 @@ export default class NluCandidato extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      candidato: '',
+      palavra: '',
       quantidade: null,
       carregando: false,
       alerta: null,
@@ -19,29 +19,20 @@ export default class NluCandidato extends Component {
   }
 
   handleChange(e) {
-    this.setState({ candidato: e.target.value });
-    fetch(`http://localhost:3000/mongodb/totaltweets/${e.target.value}`)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ quantidade: data.id });
-      })
-      .catch(error => {
-        console.log(
-          'NÃO FOI POSSIVEL PEGAR A QUANTIDADE DE TWEETS NO BANCO: ' + error
-        );
-      });
+    this.setState({ palavra: e.target.value });
   }
+
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ carregando: true });
-    fetch(`http://localhost:3000/watson/analisarnlu`, {
+    fetch(`http://localhost:3000/watson/analisarnlupalavra`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        candidato: this.state.candidato,
+        palavra: this.state.palavra,
       })
     })
       .then(result => {
@@ -58,6 +49,17 @@ export default class NluCandidato extends Component {
       })
   }
 
+  componentDidMount() {
+    fetch('http://localhost:3000/mongodb/quantidadepalavras')
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ quantidade: res.data });
+      })
+      .catch(error => {
+        console.warn('Não foi possivel pegar a quantidade de Palvras');
+      });
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -72,18 +74,24 @@ export default class NluCandidato extends Component {
               <form onSubmit={this.handleSubmit}>
                 <div className="form-row">
                   <div className="form-group col-md-12 col-sm-12">
-                    <label htmlFor="inputCandidato">Candidato:</label>
+                    <label htmlFor="inputCandidato">Palavra Chave:</label>
                     <select
                       id="inputCandidato"
                       className="form-control"
-                      value={this.state.candidato}
+                      value={this.state.palavra}
                       onChange={this.handleChange}
                     >
                       <option hidden value="">Escolher</option>
-                      <option value="Haddad_Fernando">Fernando Haddad</option>
-                      <option value="ManuelaDavila">Manuela Davila</option>
-                      <option value="jairbolsonaro">Jair Bolsonaro</option>
-                      <option value="GeneraIMourao">General Mourão</option>
+                      <option value="elenao">#elenao</option>
+                      <option value="elesim">#elesim</option>
+                      <option value="bolsonaro">#Bolsonaro</option>
+                      <option value="bolsonaropresidente">#bolsonaropresidente</option>
+                      <option value="haddad">#Haddad</option>
+                      <option value="haddadpresidente">#haddadpresidente</option>
+                      <option value="MeuBolsominionSecreto">#MeuBolsominionSecreto</option>
+                      <option value="DeusFamiliaBolsonaro">#DeusFamiliaBolsonaro</option>
+                      <option value="DeusFamiliaBolsonaro17">#DeusFamiliaBolsonaro17</option>
+                      <option value="HaddadÉ13">#HaddadÉ13</option>
                     </select>
                   </div>
                 </div>

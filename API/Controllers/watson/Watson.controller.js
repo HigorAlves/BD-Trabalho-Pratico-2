@@ -44,9 +44,41 @@ analisarNLU = (req, res) => {
 }
 
 analisarNLUpalavraChave = (req, res) => {
-	fetch(`http://localhost:3000/mongodb/listartweets/${req.body.palavra}`)
+	fetch(`http://localhost:3000/mongodb/textopalavrachave/${req.body.palavra}`)
 		.then(result => result.json())
-		.then(result => { })
+		.then(result => {
+			result.text.map(data => {
+				let ID = data._id;
+				analisarnlu(data)
+					.then(result => {
+						fetch(`http://localhost:3000/mongodb/atualizarpalavra`, {
+							method: 'POST',
+							headers: {
+								Accept: 'application/json',
+								'Content-Type': 'application/json'
+							}, body: JSON.stringify({
+								id: ID,
+								sentiment: result.sentiment,
+								keywords: result.keywords,
+								entitiesNLU: result.entitiesNLU,
+								categories: result.categories
+							})
+						})
+							.catch(error => console.log('ERROR: ', error))
+					})
+					.catch(error => {
+						console.log('ERROR: ', error)
+						res.status(400).send(CONST.FALHOU)
+					})
+			})
+		})
+		.then(result => {
+			res.status(201).send(CONST.SUCESSO)
+		})
+		.catch(error => {
+			console.log('ERROR: ', error);
+			res.status(400).send(CONST.FALHOU);
+		})
 }
 
 // TRADUZIR O TEXTO PARA INGLES
@@ -78,5 +110,6 @@ analisarPersonalidade = (req, res) => {
 module.exports = {
 	analisarNLU,
 	traduzirTexto,
-	analisarPersonalidade
+	analisarPersonalidade,
+	analisarNLUpalavraChave
 };

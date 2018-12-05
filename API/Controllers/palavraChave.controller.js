@@ -77,9 +77,37 @@ listarTweets = function (req, res) {
 	}
 }
 
+pegarTextoTweets = function (req, res) {
+	Palavra.aggregate([
+		{ $match: { palavra_chave: `${req.params.palavra}` } },
+		{ $group: { _id: '$_id', full_text: { $push: '$full_text' } } }
+	])
+		.then(data => {
+			res.status(200).send({ text: data });
+		})
+		.catch(error => {
+			res.status(200).send(CONST.FALHOU);
+			console.log('ERROR: não foi possivel pegar os textos dos tweets: ', error)
+		})
+};
+
+updateTweet = function (req, res) {
+	let id = req.body.id;
+
+	Palavra.findByIdAndUpdate(id, { $set: { sentiment: req.body.sentiment, keywords: req.body.keywords, entitiesNLU: req.body.entitiesNLU, categories: req.body.categories } }, { new: true }, function (error, model) {
+		if (error) {
+			res.status(400).send(CONST.FALHOU)
+		} else {
+			res.status(201).send(CONST.SUCESSO)
+		}
+	})
+}
+
 module.exports = {
 	cadastrar,
 	quantidade,
 	ultimoTweet,
-	listarTweets
+	listarTweets,
+	pegarTextoTweets,
+	updateTweet
 };

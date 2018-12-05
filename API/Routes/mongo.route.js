@@ -26,6 +26,8 @@ router.get('/quantidadepalavras', palavraChave.quantidade);
 router.get('/ultimotweetp/:palavra', palavraChave.ultimoTweet);
 router.get('/listartweets/:palavra/:id', palavraChave.listarTweets);
 router.get('/listartweets/:palavra', palavraChave.listarTweets);
+router.get('/textopalavrachave/:palavra', palavraChave.pegarTextoTweets);
+router.post('/atualizarpalavra', palavraChave.updateTweet);
 
 // ROTAS PARA OS TEXTOS
 router.post('/cadastrartexto', texto.cadastrarTexto); //REGISTRA O TEXTO NO BANCO DE DADOS

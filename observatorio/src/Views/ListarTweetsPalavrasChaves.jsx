@@ -75,6 +75,15 @@ export default class ListarTweetsPalavrasChaves extends Component {
 									>
 										<option hidden value="">Escolher</option>
 										<option value="elenao">#elenao</option>
+										<option value="elesim">#elesim</option>
+										<option value="bolsonaro">#Bolsonaro</option>
+										<option value="bolsonaropresidente">#bolsonaropresidente</option>
+										<option value="haddad">#Haddad</option>
+										<option value="haddadpresidente">#haddadpresidente</option>
+										<option value="MeuBolsominionSecreto">#MeuBolsominionSecreto</option>
+										<option value="DeusFamiliaBolsonaro">#DeusFamiliaBolsonaro</option>
+										<option value="DeusFamiliaBolsonaro17">#DeusFamiliaBolsonaro17</option>
+										<option value="HaddadÉ13">#HaddadÉ13</option>
 									</select>
 								</div>
 							</div>
