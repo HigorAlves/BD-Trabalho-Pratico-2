@@ -17,7 +17,17 @@ export default class Eleicoes extends Component {
       qtTweetsGeneral: 0,
       qtTweetsJair: 0,
       qtTweetsManuela: 0,
-      qtTweetsElenao: 0
+      // QUANTIDAD DE TWEETS POR PALAVRAS
+      qtElenao: 0,
+      qtElesim: 0,
+      qtBolsonaro: 0,
+      qtBolsonaroPresidente: 0,
+      qtHaddad: 0,
+      qtHaddadPresidente: 0,
+      qtMeuBolsominionSecreto: 0,
+      qtDeusFamiliaBolsonaro17: 0,
+      qtDeusFamiliaBolsonaro: 0,
+      qtHaddade13: 0
     }
   }
 
@@ -40,7 +50,53 @@ export default class Eleicoes extends Component {
   getTotalTweetsPalavras() {
     fetch('http://localhost:3000/mongodb/totaltweetspalavra/elenao')
       .then(res => res.json())
-      .then(res => this.setState({ qtTweetsElenao: res.total }))
+      .then(res => this.setState({ qtElenao: res.total }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/mongodb/totaltweetspalavra/elesim')
+      .then(res => res.json())
+      .then(res => this.setState({ qtElesim: res.total }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/mongodb/totaltweetspalavra/bolsonaro')
+      .then(res => res.json())
+      .then(res => this.setState({ qtBolsonaro: res.total }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/mongodb/totaltweetspalavra/bolsonaropresidente')
+      .then(res => res.json())
+      .then(res => this.setState({ qtBolsonaroPresidente: res.total }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/mongodb/totaltweetspalavra/haddad')
+      .then(res => res.json())
+      .then(res => this.setState({ qtHaddad: res.total }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/mongodb/totaltweetspalavra/haddadpresidente')
+      .then(res => res.json())
+      .then(res => this.setState({ qtHaddadPresidente: res.total }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/mongodb/totaltweetspalavra/MeuBolsominionSecreto')
+      .then(res => res.json())
+      .then(res => this.setState({ qtMeuBolsominionSecreto: res.total }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/mongodb/totaltweetspalavra/DeusFamiliaBolsonaro')
+      .then(res => res.json())
+      .then(res => this.setState({ qtDeusFamiliaBolsonaro: res.total }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/mongodb/totaltweetspalavra/DeusFamiliaBolsonaro17')
+      .then(res => res.json())
+      .then(res => this.setState({ qtDeusFamiliaBolsonaro17: res.total }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/mongodb/totaltweetspalavra/HaddadÉ13')
+      .then(res => res.json())
+      .then(res => this.setState({ qtHaddade13: res.total }))
+      .catch(error => console.warn(error))
   }
 
   componentWillMount() {
@@ -96,39 +152,39 @@ export default class Eleicoes extends Component {
                   data={[
                     {
                       label: "#elenão",
-                      data: [['Quantidade', this.state.qtTweetsElenao]]
+                      data: [['Quantidade', this.state.qtElenao]]
                     },
                     {
                       label: "#elesim",
-                      data: [['Quantidade', this.state.qtTweetsManuela]]
+                      data: [['Quantidade', this.state.qtElesim]]
                     },
                     {
                       label: "Bolsonaro",
-                      data: [['Quantidade', this.state.qtTweetsElenao]]
+                      data: [['Quantidade', this.state.qtBolsonaro]]
                     },
                     {
                       label: "BolsonaroPresidente",
-                      data: [['Quantidade', this.state.qtTweetsElenao]]
+                      data: [['Quantidade', this.state.qtBolsonaroPresidente]]
                     },
                     {
                       label: "Haddad",
-                      data: [['Quantidade', this.state.qtTweetsManuela]]
+                      data: [['Quantidade', this.state.qtHaddad]]
                     },
                     {
                       label: "MeuBolsominionSecreto",
-                      data: [['Quantidade', this.state.qtTweetsElenao]]
+                      data: [['Quantidade', this.state.qtMeuBolsominionSecreto]]
                     },
                     {
                       label: "DeusFamiliaBolsonaro",
-                      data: [['Quantidade', this.state.qtTweetsElenao]]
+                      data: [['Quantidade', this.state.qtDeusFamiliaBolsonaro]]
                     },
                     {
                       label: "DeusFamiliaBolsonaro17",
-                      data: [['Quantidade', this.state.qtTweetsManuela]]
+                      data: [['Quantidade', this.state.qtDeusFamiliaBolsonaro17]]
                     },
                     {
                       label: "Haddadé13",
-                      data: [['Quantidade', this.state.qtTweetsElenao]]
+                      data: [['Quantidade', this.state.qtHaddade13]]
                     },
                   ]}
                   series={{ type: 'bar' }}
