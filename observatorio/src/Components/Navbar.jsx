@@ -115,7 +115,7 @@ export default class NavBar extends Component {
 								<Link className="dropdown-item" to="/gerartexto">
 									Criar Texto
 								</Link>
-								<Link className="dropdown-item disabled" to="#">
+								<Link className="dropdown-item" to="/analisarpersonalidade">
 									Analisar Personalidade
 								</Link>
 								<div className="dropdown-divider" />

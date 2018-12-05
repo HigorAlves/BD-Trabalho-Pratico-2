@@ -14,6 +14,7 @@ import ListarTweetsPC from './Views/ListarTweetsPalavrasChaves';
 import NluCandidato from './Views/Watson/NluCandidato';
 import NluPalavra from './Views/Watson/NluPalavra';
 import CriarTexto from './Views/Watson/CriarTexto';
+import AnalisarPersonalidade from './Views/Watson/AnalisarPersonalidade';
 import Personalidade from './Views/Watson/Personalidade';
 //ANALISAR PERSONALIDADE: http://localhost:3000/watson/analisarpersonalidade
 
@@ -34,6 +35,7 @@ export default class Routers extends Component {
 					<Route exact path="/nlucandidato" component={NluCandidato} />
 					<Route exact path="/nlupalavra" component={NluPalavra} />
 					<Route exact path="/gerartexto" component={CriarTexto} />
+					<Route exact path="/analisarpersonalidade" component={AnalisarPersonalidade} />
 					<Route exact path="/personalidade" component={Personalidade} />
 				</div>
 			</Router>
