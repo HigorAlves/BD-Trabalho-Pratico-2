@@ -16,7 +16,7 @@ import NluPalavra from './Views/Watson/NluPalavra';
 import CriarTexto from './Views/Watson/CriarTexto';
 import AnalisarPersonalidade from './Views/Watson/AnalisarPersonalidade';
 import Personalidade from './Views/Watson/Personalidade';
-//ANALISAR PERSONALIDADE: http://localhost:3000/watson/analisarpersonalidade
+
 
 import Eleicoes from './Views/Eleicoes';
 

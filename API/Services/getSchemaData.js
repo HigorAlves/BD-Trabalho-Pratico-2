@@ -10,9 +10,19 @@ getSchema = function () {
 
       parseSchema(candidatos.collection('candidatos').find(), function (err, schema) {
         if (err) return reject(err);
-
         database.close();
-        resolve(schema);
+
+        let tudo = schema.fields[2];
+        // let categorias = {
+        //   // quantidadeUndefined: schema.fields[2].types[0].count,
+        //   quantidadeAnalisada: schema.fields[0].types[1].types[0].fields[0].types[0].count,
+        //   nomes: schema.fields[2].types[1].types[0].fields[0].types[0].values
+        // };
+
+        resolve({
+          field: tudo,
+          // categorias: categorias
+        });
       });
     });
   })

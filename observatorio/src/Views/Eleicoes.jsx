@@ -9,6 +9,9 @@ import { Chart } from "react-charts";
 // Jair Bolsonaro
 // Manuela Davila
 
+//Quantidade de Retweets totais
+//Quantos tweets possitivos / negativos / neutros de cada candidato
+
 export default class Eleicoes extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +30,19 @@ export default class Eleicoes extends Component {
       qtMeuBolsominionSecreto: 0,
       qtDeusFamiliaBolsonaro17: 0,
       qtDeusFamiliaBolsonaro: 0,
-      qtHaddade13: 0
+      qtHaddade13: 0,
+
+      //Quantidade de tweets ja postados
+      qtTotalHaddad: 0,
+      qtTotalManuela: 0,
+      qtTotalBolsonaro: 0,
+      qtTotalGeneral: 0,
+
+      //Quantidade de Seguidores
+      qtSeguidoresHaddad: 0,
+      qtSeguidoresManuela: 0,
+      qtSeguidoresBolsonaro: 0,
+      qtSeguidoresGeneral: 0
     }
   }
 
@@ -99,9 +114,55 @@ export default class Eleicoes extends Component {
       .catch(error => console.warn(error))
   }
 
+  getTotalTweetsPostados() {
+    fetch('http://localhost:3000/twitter/totaltweets/Haddad_Fernando')
+      .then(res => res.json())
+      .then(res => this.setState({ qtTotalHaddad: res.count }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/twitter/totaltweets/ManuelaDavila')
+      .then(res => res.json())
+      .then(res => this.setState({ qtTotalManuela: res.count }))
+      .catch(error => console.log('esse', error))
+
+    fetch('http://localhost:3000/twitter/totaltweets/jairbolsonaro')
+      .then(res => res.json())
+      .then(res => this.setState({ qtTotalBolsonaro: res.count }))
+      .catch(error => console.warn(error))
+
+    fetch('http://localhost:3000/twitter/totaltweets/GeneraIMourao')
+      .then(res => res.json())
+      .then(res => this.setState({ qtTotalGeneral: res.count }))
+      .catch(error => console.warn(error))
+  }
+
+  getTotalFollowers() {
+    fetch('http://localhost:3000/twitter/quantidadeseguidores/Haddad_Fernando')
+      .then(res => res.json())
+      .then(res => this.setState({ qtSeguidoresHaddad: res.followers_count }))
+      .catch()
+
+    fetch('http://localhost:3000/twitter/quantidadeseguidores/ManuelaDavila')
+      .then(res => res.json())
+      .then(res => this.setState({ qtSeguidoresManuela: res.followers_count }))
+      .catch()
+
+    fetch('http://localhost:3000/twitter/quantidadeseguidores/jairbolsonaro')
+      .then(res => res.json())
+      .then(res => this.setState({ qtSeguidoresBolsonaro: res.followers_count }))
+      .catch()
+
+    fetch('http://localhost:3000/twitter/quantidadeseguidores/GeneraIMourao')
+      .then(res => res.json())
+      .then(res => this.setState({ qtSeguidoresGeneral: res.followers_count }))
+      .catch()
+  }
+
   componentWillMount() {
     this.getTotalTweetsCandidatos();
     this.getTotalTweetsPalavras();
+    this.getTotalTweetsPostados();
+    this.getTotalFollowers();
   }
 
   render() {
@@ -199,9 +260,83 @@ export default class Eleicoes extends Component {
               </div>
             </div>
           </div>
+
+          <br />
+          <br />
+
+          <div className='row'>
+            <div className='col-md-4 col-sm-12 mb-5'>
+              <div style={{ maxWidth: "400px", height: "300px" }}>
+                <label htmlFor="inputCandidato">Total de Tweets Postados:</label>
+                <Chart
+                  data={[
+                    {
+                      label: "Fernando Haddad",
+                      data: [['Quantidade', this.state.qtTotalHaddad]]
+                    },
+                    {
+                      label: "General Mourão",
+                      data: [['Quantidade', this.state.qtTotalGeneral]]
+                    },
+                    {
+                      label: "Jair Bolsonaro",
+                      data: [['Quantidade', this.state.qtTotalBolsonaro]]
+                    },
+                    {
+                      label: "Manuela Davila",
+                      data: [['Quantidade', this.state.qtTotalManuela]]
+                    },
+                  ]}
+                  series={{ type: 'bar' }}
+                  axes={[
+                    { primary: true, type: 'ordinal', position: 'bottom' },
+                    { position: 'left', type: 'linear', stacked: false },
+                  ]}
+                  primaryCursor
+                  secondaryCursor
+                  tooltip
+                />
+              </div>
+            </div>
+
+            <div className='col-md-4 col-sm-12 mb-5'>
+              <div style={{ maxWidth: "500px", height: "300px" }}>
+                <label htmlFor="inputCandidato">Quantidade de Seguidores:</label>
+                <Chart
+                  data={[
+                    {
+                      label: "Fernando Haddad",
+                      data: [['Quantidade', this.state.qtSeguidoresHaddad]]
+                    },
+                    {
+                      label: "General Mourão",
+                      data: [['Quantidade', this.state.qtSeguidoresGeneral]]
+                    },
+                    {
+                      label: "Jair Bolsonaro",
+                      data: [['Quantidade', this.state.qtSeguidoresBolsonaro]]
+                    },
+                    {
+                      label: "Manuela Davila",
+                      data: [['Quantidade', this.state.qtSeguidoresManuela]]
+                    },
+                  ]}
+                  series={{ type: 'bar' }}
+                  axes={[
+                    { primary: true, type: 'ordinal', position: 'bottom' },
+                    { position: 'left', type: 'linear', stacked: false },
+                  ]}
+                  primaryCursor
+                  secondaryCursor
+                  tooltip
+                />
+              </div>
+            </div>
+          </div>
+
         </div>
 
-      </React.Fragment>
+      </React.Fragment >
     )
   }
 }

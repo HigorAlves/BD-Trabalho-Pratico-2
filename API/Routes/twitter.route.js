@@ -13,5 +13,6 @@ router.get('/totaltweets/:candidato', controller.totalTweets);
 router.post('/buscapalavra', controller.buscaPalavra);
 //GERA TEXTOS DO CANDIDATO
 router.get('/tweetstotexto/:candidato', controller.tweetsToTexto);
+router.get('/quantidadeseguidores/:candidato', controller.quantidadeSeguidores);
 
 module.exports = router;

@@ -26,10 +26,7 @@ totalTweets = function (req, res) {
 	);
 	const client = new Twitter(TWITTER_AUTH);
 
-	client.get('users/show', { screen_name: req.params.candidato }, function (
-		err,
-		data, response
-	) {
+	client.get('users/show', { screen_name: req.params.candidato }, function (err, data, response) {
 		if (err) {
 			console.log('TWITTER ERROR: ', err);
 			res.status(400).send(Const.FALHOU);
@@ -62,9 +59,24 @@ tweetsToTexto = function (req, res) {
 		})
 }
 
+quantidadeSeguidores = function (req, res) {
+	let candidato = req.params.candidato;
+	const client = new Twitter(TWITTER_AUTH)
+	client.get('users/lookup', { screen_name: candidato }, function (err, data, response) {
+		if (err) {
+			console.log('TWITTER ERROR: ', err);
+			res.status(400).send(Const.FALHOU);
+		} else {
+			let count = data;
+			res.status(200).send(count[0]);
+		}
+	});
+}
+
 module.exports = {
 	cadastrarTweets,
 	totalTweets,
 	buscaPalavra,
-	tweetsToTexto
+	tweetsToTexto,
+	quantidadeSeguidores
 };
