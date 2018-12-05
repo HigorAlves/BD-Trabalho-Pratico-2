@@ -111,6 +111,19 @@ updateTweet = function (req, res) {
   })
 }
 
+qtSentimento = function (req, res) {
+  Model.aggregate([
+    { $match: { screen_name: `${req.body.candidato}`, "sentiment.document.label": `${req.body.sentimento}` } },
+    { $group: { _id: '$screen_name', total: { $sum: 1 } } }
+  ])
+    .then(data => {
+      res.status(200).send({ id: data[0].total })
+    })
+    .catch(error => {
+      res.status(400).send(error)
+    })
+}
+
 module.exports = {
   totalTweets,
   ultimoTweet,
@@ -118,4 +131,5 @@ module.exports = {
   pegarTextoTweets,
   pegarTodosTweets,
   updateTweet,
+  qtSentimento
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/Navbar';
 import Jumbotron from '../Components/Jumbotron';
-import { Chart } from "react-charts";
+import { Bar, Chart } from 'react-charts';
 
 //Ordem lexica
 // Fernando Haddad
@@ -42,7 +42,21 @@ export default class Eleicoes extends Component {
       qtSeguidoresHaddad: 0,
       qtSeguidoresManuela: 0,
       qtSeguidoresBolsonaro: 0,
-      qtSeguidoresGeneral: 0
+      qtSeguidoresGeneral: 0,
+
+      //Quantidade de sentimento
+      qtNeutralHaddad: 0,
+      qtPositiveHaddad: 0,
+      qtNegativeHaddad: 0,
+      qtNeutralManuela: 0,
+      qtPositiveManuela: 0,
+      qtNegativeManuela: 0,
+      qtNeutralBolsonaro: 0,
+      qtPositiveBolsonaro: 0,
+      qtNegativeBolsonaro: 0,
+      qtNeutralGeneral: 0,
+      qtPositiveGeneral: 0,
+      qtNegativeGeneral: 0,
     }
   }
 
@@ -158,11 +172,194 @@ export default class Eleicoes extends Component {
       .catch()
   }
 
+  getSentimento() {
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'Haddad_Fernando',
+        sentimento: 'neutral'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtNeutralHaddad: res.id || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'Haddad_Fernando',
+        sentimento: 'positive'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtPositiveHaddad: res.id || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'Haddad_Fernando',
+        sentimento: 'negative'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtNegativeHaddad: res.id || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'ManuelaDavila',
+        sentimento: 'neutral'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtNeutralManuela: res.id || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'ManuelaDavila',
+        sentimento: 'positive'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtPositiveManuela: res.id || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'ManuelaDavila',
+        sentimento: 'negative'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtNegativeManuela: (res.id || 0) }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'jairbolsonaro',
+        sentimento: 'neutral'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtNeutralBolsonaro: res.id || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'jairbolsonaro',
+        sentimento: 'positive'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtPositiveBolsonaro: res.id || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'jairbolsonaro',
+        sentimento: 'negative'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtNegativeBolsonaro: (res.id || 0) }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'GeneraIMourao',
+        sentimento: 'neutral'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtNeutralGeneral: res.id || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'GeneraIMourao',
+        sentimento: 'positive'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtPositiveGeneral: res.id || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtsentimento', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        candidato: 'GeneraIMourao',
+        sentimento: 'negative'
+      })
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ qtNegativeGeneral: (res.id || 0) }))
+      .catch()
+  }
+
   componentWillMount() {
     this.getTotalTweetsCandidatos();
     this.getTotalTweetsPalavras();
     this.getTotalTweetsPostados();
     this.getTotalFollowers();
+    this.getSentimento();
   }
 
   render() {
@@ -334,9 +531,131 @@ export default class Eleicoes extends Component {
             </div>
           </div>
 
+          <div className='row'>
+            <div className='col-md-3 col-sm-12 mb-5'>
+              <div style={{ maxWidth: "600px", height: "300px" }}>
+                <label htmlFor="inputCandidato">Sentimento Tweets Haddad:</label>
+                <Chart
+                  data={[
+                    {
+                      label: "Positivo",
+                      data: [['Quantidade', this.state.qtPositiveHaddad]]
+                    },
+                    {
+                      label: "Negativo",
+                      data: [['Quantidade', this.state.qtNegativeHaddad]]
+                    },
+                    {
+                      label: "Neutro",
+                      data: [['Quantidade', this.state.qtNeutralHaddad]]
+                    }
+                  ]}
+                  series={{ type: 'bar' }}
+                  axes={[
+                    { primary: true, type: 'ordinal', position: 'bottom' },
+                    { position: 'left', type: 'linear', stacked: false },
+                  ]}
+                  primaryCursor
+                  secondaryCursor
+                  tooltip
+                />
+              </div>
+            </div>
+
+            <div className='col-md-3 col-sm-12 mb-5'>
+              <div style={{ maxWidth: "600px", height: "300px" }}>
+                <label htmlFor="inputCandidato">Sentimento Tweets Davila:</label>
+                <Chart
+                  data={[
+                    {
+                      label: "Positivo",
+                      data: [['Quantidade', this.state.qtPositiveManuela]]
+                    },
+                    {
+                      label: "Negativo",
+                      data: [['Quantidade', this.state.qtNegativeManuela]]
+                    },
+                    {
+                      label: "Neutro",
+                      data: [['Quantidade', this.state.qtNeutralManuela]]
+                    }
+                  ]}
+                  series={{ type: 'bar' }}
+                  axes={[
+                    { primary: true, type: 'ordinal', position: 'bottom' },
+                    { position: 'left', type: 'linear', stacked: false },
+                  ]}
+                  primaryCursor
+                  secondaryCursor
+                  tooltip
+                />
+              </div>
+            </div>
+
+            <div className='col-md-3 col-sm-12 mb-5'>
+              <div style={{ maxWidth: "600px", height: "300px" }}>
+                <label htmlFor="inputCandidato">Sentimento Tweets Bolsonaro:</label>
+                <Chart
+                  data={[
+                    {
+                      label: "Positivo",
+                      data: [['Quantidade', this.state.qtPositiveBolsonaro]]
+                    },
+                    {
+                      label: "Negativo",
+                      data: [['Quantidade', this.state.qtNegativeBolsonaro]]
+                    },
+                    {
+                      label: "Neutro",
+                      data: [['Quantidade', this.state.qtNeutralBolsonaro]]
+                    }
+                  ]}
+                  series={{ type: 'bar' }}
+                  axes={[
+                    { primary: true, type: 'ordinal', position: 'bottom' },
+                    { position: 'left', type: 'linear', stacked: false },
+                  ]}
+                  primaryCursor
+                  secondaryCursor
+                  tooltip
+                />
+              </div>
+            </div>
+
+            <div className='col-md-3 col-sm-12 mb-5'>
+              <div style={{ maxWidth: "375px", height: "300px" }}>
+                <label htmlFor="inputCandidato">Sentimento Tweets Mourão:</label>
+                <Chart
+                  data={[
+                    {
+                      label: "Positivo",
+                      data: [['Quantidade', this.state.qtPositiveGeneral]]
+                    },
+                    {
+                      label: "Negativo",
+                      data: [['Quantidade', this.state.qtNegativeGeneral]]
+                    },
+                    {
+                      label: "Neutro",
+                      data: [['Quantidade', this.state.qtNeutralGeneral]]
+                    }
+                  ]}
+                  series={{ type: 'bar' }}
+                  axes={[
+                    { primary: true, type: 'ordinal', position: 'bottom' },
+                    { position: 'left', type: 'linear', stacked: false },
+                  ]}
+                  primaryCursor
+                  secondaryCursor
+                  tooltip
+                />
+              </div>
+            </div>
+          </div>
+
         </div>
 
-      </React.Fragment >
+      </React.Fragment>
     )
   }
 }

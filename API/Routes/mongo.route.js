@@ -19,6 +19,7 @@ router.get('/ultimotweet/:candidato', candidatos.ultimoTweet);
 router.get('/textotweets/:candidato', candidatos.pegarTextoTweets);
 router.get('/todostweets/:candidato/:id', candidatos.pegarTodosTweets);
 router.get('/todostweets/:candidato', candidatos.pegarTodosTweets);
+router.post('/qtsentimento', candidatos.qtSentimento);
 
 // ROTAS PARA CONTROLE DAS PALAVRAS CHAVES
 router.post('/cadastrarpalavra', palavraChave.cadastrar);
