@@ -103,11 +103,23 @@ updateTweet = function (req, res) {
 	})
 }
 
+quantidadeTweets = function (req, res) {
+	console.log(req.params.palavra)
+	Palavra.aggregate([
+		{ $match: { palavra_chave: `${req.params.palavra}` } },
+		{ $group: { _id: '$palavra_chave', total: { $sum: 1 } } }
+	]).then(data => {
+		console.log(data)
+		res.status(200).send(data[0])
+	}).catch(error => console.log(error))
+}
+
 module.exports = {
 	cadastrar,
 	quantidade,
 	ultimoTweet,
 	listarTweets,
 	pegarTextoTweets,
-	updateTweet
+	updateTweet,
+	quantidadeTweets
 };
