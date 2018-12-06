@@ -10,7 +10,6 @@ import { Bar, Chart } from 'react-charts';
 // Manuela Davila
 
 //Quantidade de Retweets totais
-//Quantos tweets possitivos / negativos / neutros de cada candidato
 
 export default class Eleicoes extends Component {
   constructor(props) {
@@ -57,6 +56,12 @@ export default class Eleicoes extends Component {
       qtNeutralGeneral: 0,
       qtPositiveGeneral: 0,
       qtNegativeGeneral: 0,
+
+      //Soma retweets
+      qtRetweetsHaddad: 0,
+      qtRetweetsManuela: 0,
+      qtRetweetsBolsonaro: 0,
+      qtRetweetsGeneral: 0,
     }
   }
 
@@ -170,6 +175,28 @@ export default class Eleicoes extends Component {
       .then(res => res.json())
       .then(res => this.setState({ qtSeguidoresGeneral: res.followers_count }))
       .catch()
+  }
+
+  getTotalRetweets() {
+    fetch('http://localhost:3000/mongodb/qtretweets/Haddad_Fernando')
+      .then(res => res.json())
+      .then(res => this.setState({ qtRetweetsHaddad: res.soma || 0 }))
+      .catch()
+
+    fetch('http://localhost:3000/mongodb/qtretweets/ManuelaDavila')
+      .then(res => res.json())
+      .then(res => this.setState({ qtRetweetsManuela: res.soma || 0 }))
+      .catch(error => console.log(error))
+
+    fetch('http://localhost:3000/mongodb/qtretweets/jairbolsonaro')
+      .then(res => res.json())
+      .then(res => this.setState({ qtRetweetsBolsonaro: res.soma || 0 }))
+      .catch(error => console.log(error))
+
+    fetch('http://localhost:3000/mongodb/qtretweets/GeneraIMourao')
+      .then(res => res.json())
+      .then(res => this.setState({ qtRetweetsGeneral: res.soma || 0 }))
+      .catch(error => console.log(error))
   }
 
   getSentimento() {
@@ -360,6 +387,7 @@ export default class Eleicoes extends Component {
     this.getTotalTweetsPostados();
     this.getTotalFollowers();
     this.getSentimento();
+    this.getTotalRetweets();
   }
 
   render() {
@@ -516,6 +544,40 @@ export default class Eleicoes extends Component {
                     {
                       label: "Manuela Davila",
                       data: [['Quantidade', this.state.qtSeguidoresManuela]]
+                    },
+                  ]}
+                  series={{ type: 'bar' }}
+                  axes={[
+                    { primary: true, type: 'ordinal', position: 'bottom' },
+                    { position: 'left', type: 'linear', stacked: false },
+                  ]}
+                  primaryCursor
+                  secondaryCursor
+                  tooltip
+                />
+              </div>
+            </div>
+
+            <div className='col-md-4 col-sm-12 mb-5'>
+              <div style={{ maxWidth: "500px", height: "300px" }}>
+                <label htmlFor="inputCandidato">Quantidade de Retweets:</label>
+                <Chart
+                  data={[
+                    {
+                      label: "Fernando Haddad",
+                      data: [['Quantidade', this.state.qtRetweetsHaddad]]
+                    },
+                    {
+                      label: "General Mourão",
+                      data: [['Quantidade', this.state.qtRetweetsGeneral]]
+                    },
+                    {
+                      label: "Jair Bolsonaro",
+                      data: [['Quantidade', this.state.qtRetweetsBolsonaro]]
+                    },
+                    {
+                      label: "Manuela Davila",
+                      data: [['Quantidade', this.state.qtRetweetsManuela]]
                     },
                   ]}
                   series={{ type: 'bar' }}

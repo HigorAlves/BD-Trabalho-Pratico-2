@@ -20,6 +20,7 @@ router.get('/textotweets/:candidato', candidatos.pegarTextoTweets);
 router.get('/todostweets/:candidato/:id', candidatos.pegarTodosTweets);
 router.get('/todostweets/:candidato', candidatos.pegarTodosTweets);
 router.post('/qtsentimento', candidatos.qtSentimento);
+router.get('/qtretweets/:candidato', candidatos.qtRetweets);
 
 // ROTAS PARA CONTROLE DAS PALAVRAS CHAVES
 router.post('/cadastrarpalavra', palavraChave.cadastrar);
